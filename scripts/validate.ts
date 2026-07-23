@@ -1,11 +1,12 @@
 import { SOURCE_SETS, ESSAYS } from '../src/data/bank';
 import { generateExam } from '../src/lib/generator';
 import type { SyllabusPointId } from '../src/data/types';
+import { ALL_POINT_IDS, INDIVIDUAL_IDS } from '../src/data/syllabus';
 
 let errors: string[] = [];
 
 const themeKeys = new Set(SOURCE_SETS.map((s) => s.themeKey));
-const validTags = new Set(['p1','p2','p3','p4','p5','p6','p7']);
+const validTags = new Set<string>(ALL_POINT_IDS);
 
 for (const s of SOURCE_SETS) {
   const [a, b, c] = s.questions;
@@ -35,11 +36,12 @@ for (const e of ESSAYS) {
 
 // generator invariants
 const subsets: SyllabusPointId[][] = [
-  ['p1','p2','p3','p4','p5','p6','p7'],
+  [...ALL_POINT_IDS],
   ['p1','p2'],
-  ['p1','p2','p3'],
-  ['p2','p3','p4'],
-  ['p4','p5','p6','p7'],
+  ['p1','p2','p3','i-hitler'],
+  ['p2','p3','p4','i-stresemann','i-hindenburg'],
+  ['p4','p5','p6',...INDIVIDUAL_IDS],
+  ['p1','p2','p3','p4','p5','p6'],
 ];
 const PROP = new Set(['E1','E2']);
 let gens = 0;

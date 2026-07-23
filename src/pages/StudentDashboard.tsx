@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getSourceSet } from '../data/bank';
-import { ALL_POINT_IDS, ELECTIVE_TITLE, SYLLABUS } from '../data/syllabus';
+import { ALL_POINT_IDS, ELECTIVE_TITLE, INDIVIDUALS, INDIVIDUAL_IDS, SYLLABUS } from '../data/syllabus';
 import type { Attempt, StudentProfile, SyllabusPointId } from '../data/types';
 import { fmtDate, newId, wordCount } from '../lib/format';
 import { GenerationError, generateExam } from '../lib/generator';
@@ -13,8 +13,17 @@ function loadSelection(): SyllabusPointId[] {
   try {
     const raw = localStorage.getItem(KEY_SYLLABUS);
     if (raw) {
-      const parsed = JSON.parse(raw) as SyllabusPointId[];
-      if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      const parsed = JSON.parse(raw) as string[];
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        const valid = new Set<string>(ALL_POINT_IDS);
+        const selection = parsed.filter((id) => valid.has(id)) as SyllabusPointId[];
+        // Selections saved before individuals were split out carry 'p7';
+        // expand it to all individuals.
+        if (parsed.includes('p7')) {
+          for (const id of INDIVIDUAL_IDS) if (!selection.includes(id)) selection.push(id);
+        }
+        if (selection.length > 0) return selection;
+      }
     }
   } catch {
     /* ignore */
@@ -219,6 +228,46 @@ export function StudentDashboard() {
                 </span>
               </label>
             ))}
+            <label className="syllabus-item">
+              <input
+                type="checkbox"
+                checked={INDIVIDUAL_IDS.every((id) => selection.includes(id))}
+                ref={(el) => {
+                  if (el) {
+                    const some = INDIVIDUAL_IDS.some((id) => selection.includes(id));
+                    const all = INDIVIDUAL_IDS.every((id) => selection.includes(id));
+                    el.indeterminate = some && !all;
+                  }
+                }}
+                onChange={() => {
+                  const all = INDIVIDUAL_IDS.every((id) => selection.includes(id));
+                  setSelection((cur) =>
+                    all
+                      ? cur.filter((id) => !INDIVIDUAL_IDS.includes(id))
+                      : [...cur.filter((id) => !INDIVIDUAL_IDS.includes(id)), ...INDIVIDUAL_IDS],
+                  );
+                }}
+              />
+              <span>
+                <strong>Significant individuals</strong>
+                <div className="full">
+                  The role and impact of significant individuals in Weimar and Nazi Germany — tick
+                  each person your class has studied
+                </div>
+              </span>
+            </label>
+            <div className="individuals-grid">
+              {INDIVIDUALS.map((person) => (
+                <label className="individual-item" key={person.id}>
+                  <input
+                    type="checkbox"
+                    checked={selection.includes(person.id)}
+                    onChange={() => toggle(person.id)}
+                  />
+                  <span>{person.name}</span>
+                </label>
+              ))}
+            </div>
             {genError && <div className="form-error">{genError}</div>}
             <div className="actions">
               <button onClick={() => setShowModal(false)}>Cancel</button>

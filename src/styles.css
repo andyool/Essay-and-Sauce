@@ -233,6 +233,23 @@ textarea {
 .syllabus-item input { margin-top: 5px; width: 16px; height: 16px; }
 .syllabus-item .full { font-size: 13px; color: var(--ink-soft); }
 .modal .actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px; }
+.individuals-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2px 14px;
+  margin: 0 6px 6px 36px;
+}
+.individual-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  font-size: 14px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.individual-item:hover { background: var(--bg); }
+.individual-item input { width: 14px; height: 14px; }
 
 /* ---------- exam ---------- */
 .exam-topbar {

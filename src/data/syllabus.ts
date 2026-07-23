@@ -1,4 +1,4 @@
-import type { SyllabusPoint } from './types';
+import type { SyllabusPoint, SyllabusPointId } from './types';
 
 export const ELECTIVE_TITLE = 'Elective 6: Nazism in Germany';
 
@@ -45,11 +45,31 @@ export const SYLLABUS: SyllabusPoint[] = [
     short: 'Persecution of minorities and the Holocaust',
     full: 'Stages and significance of Nazi policies to exterminate minorities in German-controlled lands and the Holocaust, 1933–1945',
   },
-  {
-    id: 'p7',
-    short: 'Significant individuals',
-    full: 'The role and impact of significant individuals in Weimar and Nazi Germany (e.g. Hitler, Stresemann, Hindenburg, Riefenstahl, Krupp, Goebbels, Göring, Himmler, Heydrich, Speer)',
-  },
 ];
 
-export const ALL_POINT_IDS = SYLLABUS.map((p) => p.id);
+// The "role and impact of significant individuals" dot point, split so each
+// person can be ticked off separately as the class covers them.
+export interface Individual {
+  id: SyllabusPointId;
+  name: string;
+}
+
+export const INDIVIDUALS: Individual[] = [
+  { id: 'i-hitler', name: 'Adolf Hitler' },
+  { id: 'i-stresemann', name: 'Gustav Stresemann' },
+  { id: 'i-hindenburg', name: 'Paul von Hindenburg' },
+  { id: 'i-riefenstahl', name: 'Leni Riefenstahl' },
+  { id: 'i-krupp', name: 'Alfred Krupp' },
+  { id: 'i-goebbels', name: 'Joseph Goebbels' },
+  { id: 'i-goering', name: 'Hermann Göring' },
+  { id: 'i-himmler', name: 'Heinrich Himmler' },
+  { id: 'i-heydrich', name: 'Reinhard Heydrich' },
+  { id: 'i-speer', name: 'Albert Speer' },
+];
+
+export const INDIVIDUAL_IDS = INDIVIDUALS.map((i) => i.id);
+
+export const ALL_POINT_IDS: SyllabusPointId[] = [
+  ...SYLLABUS.map((p) => p.id),
+  ...INDIVIDUAL_IDS,
+];

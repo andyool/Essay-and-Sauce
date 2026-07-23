@@ -148,7 +148,7 @@ export const SOURCE_SETS_6: SourceSet[] = [
     themeKey: 'potsdam',
     themeSentence:
       'At Potsdam the new regime staged its marriage with old Prussia — a piece of theatre that reassured the conservative elites even as it consumed them.',
-    tags: ['p3', 'p7'],
+    tags: ['p3', 'i-hindenburg'],
     era: 'late',
     split: '4+6',
     sources: [
@@ -396,7 +396,7 @@ export const SOURCE_SETS_6: SourceSet[] = [
     themeKey: 'july-plot',
     themeSentence:
       'The bomb of 20 July 1944 was the German resistance’s one real blow at Hitler’s life — a failure that unleashed savage vengeance and left a contested moral legacy.',
-    tags: ['p5', 'p7'],
+    tags: ['p5'],
     era: 'late',
     split: '4+6',
     sources: [

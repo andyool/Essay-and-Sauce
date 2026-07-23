@@ -11,7 +11,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'late',
     demand: 3,
     themes: ['gleichschaltung', 'potsdam'],
-    tags: ['p4', 'p7'],
+    tags: ['p4', 'i-hitler'],
     text: 'Evaluate the proposition that Hitler was the undisputed master of the Third Reich in the years 1933 to 1945.',
     notes:
       'This proposition sits on the classic intentionalist–structuralist fault line and rewards genuine historiographical engagement. The case for mastery: the Führerprinzip as the state’s organising fiction; no institution, law or oath stood above Hitler after August 1934; the great decisions — the purge, rearmament, war, the destruction of the Jews — bore his authorisation; rivals rose and fell at his pleasure. The counter-case: the “weak dictator” argument (Hans Mommsen) — a Bonapartist ruler who avoided paperwork, dithered, and presided over polycratic chaos in which agencies (SS, DAF, Four-Year Plan, Gauleiter) fought for territory; Kershaw’s synthesis, “working towards the Führer”, in which radical initiative flowed upward toward Hitler’s known wishes without requiring his orders. Evidence should span the regime’s life: the purge, Blomberg–Fritsch, the radicalisation of persecution, wartime command. Strong responses distinguish supremacy (never challenged) from control (often loose) and argue a nuanced verdict. Both sides must be addressed with specific evidence for the higher marks.',
@@ -99,7 +99,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'mid',
     demand: 3,
     themes: ['potsdam', 'nazi-rise'],
-    tags: ['p2', 'p3', 'p7'],
+    tags: ['p2', 'p3', 'i-hindenburg'],
     text: 'Assess the extent to which Germany’s conservative elites were responsible for the destruction of the Weimar Republic by 1934.',
     notes:
       'A graded verdict weighing the elites — landowners, industrialists, army, bureaucracy, the presidential circle — against other destroyers. The case: presidential government from 1930 was the elites’ project before it was Hitler’s (Brüning by decree, Papen’s Prussian coup, Schleicher’s intrigues); the January 1933 “backstairs” deal (Papen: “we’ve hired him”) conferred power when the Nazi vote was falling; business and Junker pressure on Hindenburg; the Day of Potsdam and Enabling Act votes completing the surrender; an army, judiciary and civil service never loyal to the Republic. Counter-factors: without the Depression and 13 million Nazi voters there was nothing to hire; the left’s division and the constitution’s permissions operated independently; some elites (Schleicher, latterly) sought alternatives to Hitler. Historiography: Wheeler-Bennett and Turner on business and the “hiring” miscalculation; Kershaw on the camarilla. Distinguish creating the vacancy (largely elite work) from filling it (Hitler’s) — the strongest answers grade responsibility per stage.',
@@ -251,7 +251,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'late',
     demand: 2,
     themes: ['july-plot', 'resistance'],
-    tags: ['p5', 'p7'],
+    tags: ['p5'],
     text: 'Evaluate the consequences of the failure of the 20 July 1944 plot for the German resistance and for the Nazi regime.',
     notes:
       'Candidates must address consequences for both the resistance and the regime, though not necessarily equally. For the resistance: annihilation — some five thousand killed in the reprisals, sweeping away not only the military conspirators but the Kreisau Circle, Goerdeler’s civilian network and much surviving conservative, Christian and trade-union opposition; families punished under Sippenhaft; organised resistance effectively ended for the war’s remainder. For the regime: the army’s final subjugation — the Nazi salute imposed, Himmler given the Replacement Army, political officers installed; radicalised terror against all Germans (the People’s Court’s frenzy under Freisler); the propaganda gift of “Providence” briefly reviving the Führer myth; and paranoia accelerating the regime’s self-destruction. Long-term and unintended: the plotters’ deaths, intended as erasure, founded the moral tradition on which post-war Germany would build (the 20 July legacy). Strong conclusions weigh political failure against moral consequence with the distinction argued, not asserted. A narrative of the bomb plot caps in the low bands.',
@@ -265,7 +265,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'late',
     demand: 2,
     themes: ['economy', 'long-knives'],
-    tags: ['p4', 'p7'],
+    tags: ['p4', 'i-goering'],
     text: 'Evaluate the role of Hermann Göring in the Nazi state between 1933 and 1945.',
     notes:
       'An evaluation across the whole span, weighing accumulation against performance. The rise: Prussian interior minister creating the Gestapo and first camps (1933); organiser of the Röhm purge; commander of the Luftwaffe (1935); economic overlord through the Four-Year Plan (1936), sidelining Schacht and building the Reichswerke empire; Aryanisation’s profiteer and, after Kristallnacht, coordinator of anti-Jewish economic policy — his July 1941 authorisation to Heydrich standing in the genocide’s chain of command; designated successor at the war’s outbreak. The decline: the Luftwaffe’s failures (Britain 1940, the Stalingrad airlift promise, the bombed home front) destroying his credibility; indolence, morphine and plunder; power ebbing to Speer, Himmler and Bormann; dismissal and arrest in the war’s last days. The evaluative core: Göring as the regime’s second man whose empire-building exemplified polycratic accumulation without competence — significant early as consolidator and economic mobiliser, later chiefly as failure. Reaching beyond the famous phases (the purge, the trials) strengthens balance. A biography without weighing caps in the low bands.',
@@ -277,7 +277,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'late',
     demand: 2,
     themes: ['propaganda', 'olympics'],
-    tags: ['p4', 'p7'],
+    tags: ['p4', 'i-riefenstahl'],
     text: 'Evaluate the role of Leni Riefenstahl in the projection of the Nazi regime’s image during the 1930s.',
     notes:
       'The scope is the regime’s image — the essay must connect her films to its projection, not recount her career. The case for a decisive role: Triumph of the Will (1935), commissioned by Hitler, converting the 1934 Nuremberg rally (weeks after the Röhm purge) into the definitive image of unity, order and the Führer descending god-like on the faithful — its techniques (aerial opening, moving cameras, the cathedral of light aesthetic) creating the visual grammar by which the regime is still seen; Olympia (1938) marrying the Games’ internationalism to the regime’s modernity and the body-cult of the master race. The qualifications: her aestheticised propaganda worked because it rode staged realities others built (Speer’s architecture, Goebbels’ apparatus, the rallies themselves); its foreign prestige (Venice awards) served the “respectable Germany” performance; and her post-war claims of unpolitical artistry founder on the commissions and privileges she accepted — including Sinti and Roma extras taken from internment. Candidates should evaluate: indispensable image-maker or gifted instrument of an image-making state? A defended verdict is required.',
@@ -289,7 +289,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'late',
     demand: 3,
     themes: ['economy', 'propaganda'],
-    tags: ['p4', 'p7'],
+    tags: ['p4', 'i-speer'],
     text: 'Evaluate the role of Albert Speer in the Nazi state between 1933 and 1945.',
     notes:
       'Two phases must both be weighed. The architect (1933–42): stage-manager of the regime’s self-presentation — the Nuremberg rally grounds and cathedral of light, the 1937 Paris pavilion, the New Chancellery, the megalomaniac Germania plans as General Building Inspector (whose Berlin clearances evicted Jewish tenants); intimate of Hitler and architect of the regime’s aesthetic of power. The minister (1942–45): Armaments Minister after Todt’s death, presiding over the “armaments miracle” — production tripling to its 1944 peak under bombing — through rationalisation, the Central Planning board, and the systematic exploitation of millions of forced and slave labourers, including camp inmates worked to death for his programmes; a technocrat prolonging a lost war. The evaluative core: Speer as the regime’s manager-face — the “good Nazi” myth he built at Nuremberg and in his memoirs (accepting vague responsibility while denying knowledge) against the record (Wolters’ chronicle, the Posen speech audience, his own deportation signatures). Historiography: van der Vat and Kitchen dismantling the myth; Tooze deflating the “miracle”. Both the role and its post-war fabrication belong in a top answer.',
@@ -301,7 +301,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'late',
     demand: 3,
     themes: ['persecution'],
-    tags: ['p4', 'p6', 'p7'],
+    tags: ['p4', 'p6', 'i-heydrich'],
     text: 'Evaluate the role of Reinhard Heydrich in the development of the Nazi terror apparatus and the Holocaust, to 1942.',
     notes:
       'Both named domains must be addressed. Terror apparatus: builder of the SD from 1931; operational planner of the Röhm purge; head of the Security Police (Gestapo and Kripo) from 1936 and of the RSHA from 1939 — the fusion of party intelligence and state police into a single instrument; architect of “preventive” policing and protective custody’s routinisation. Holocaust: organiser of the November 1938 pogrom’s arrests; chief of Jewish “emigration” machinery (the Vienna model); commander of the Einsatzgruppen in Poland and the USSR — the shooting war against Jews, intelligentsia and commissars; recipient of Göring’s July 1941 authorisation; convenor of Wannsee (January 1942), coordinating the ministries behind deportation and murder; as Protector of Bohemia-Moravia, terror and the model ghetto at Theresienstadt — until his assassination (June 1942) and the vengeance of Lidice; the extermination camps of Operation Reinhard bearing his name. Evaluation should weigh the man against the machine: Heydrich as the exemplary technician of ideological policing — indispensable accelerator or replaceable instrument (the machinery outlived him without pause)? A precise, sober treatment is required; sensational biography caps low.',
@@ -313,7 +313,7 @@ export const ESSAYS_3: EssayQuestion[] = [
     era: 'late',
     demand: 3,
     themes: ['economy'],
-    tags: ['p4', 'p7'],
+    tags: ['p4', 'i-krupp'],
     text: 'Evaluate the role of Alfred Krupp and German heavy industry in supporting the Nazi state between 1933 and 1945.',
     notes:
       'The individual and the sector must both be addressed — Krupp as the emblematic case of industry’s bargain. Before 1933: big business mostly funded Hitler’s conservative rivals (the Nazi rise owed more to small donors), though industrialists’ hostility to unions and the left prepared the ground; the February 1933 industrialists’ meeting sealed the alliance after power was won. Under the regime: rearmament’s profits and the destruction of the unions as the bargain’s terms; Gustav Krupp’s conversion to enthusiastic patron (the Adolf Hitler Fund); Alfried’s firm arming the Reich — and, in war, operating plants at Auschwitz and employing tens of thousands of forced and slave labourers, including camp inmates, in conditions that killed; Aryanisation’s acquisitions. The evaluative debate: industry as partner rather than paymaster of Nazism — complicit beneficiary within a command economy that progressively subordinated it (Four-Year Plan, Reichswerke competition). Historiography: Turner against the “big business paid for Hitler” myth; Tooze on primacy of politics; the Nuremberg Krupp trial’s findings. Candidates must weigh support given against autonomy lost, and profit against complicity, with a defended verdict.',

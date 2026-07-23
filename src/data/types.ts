@@ -1,6 +1,12 @@
 // Core data model for the question bank and student attempts.
 
-export type SyllabusPointId = 'p1' | 'p2' | 'p3' | 'p4' | 'p5' | 'p6' | 'p7';
+export type SyllabusPointId =
+  | 'p1' | 'p2' | 'p3' | 'p4' | 'p5' | 'p6'
+  // The "significant individuals" dot point, split so each person is
+  // individually tickable. ('p7' appears in older saved data and is migrated
+  // to the full set of individuals on load.)
+  | 'i-hitler' | 'i-stresemann' | 'i-hindenburg' | 'i-riefenstahl' | 'i-krupp'
+  | 'i-goebbels' | 'i-goering' | 'i-himmler' | 'i-heydrich' | 'i-speer';
 
 export interface SyllabusPoint {
   id: SyllabusPointId;

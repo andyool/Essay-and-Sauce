@@ -111,7 +111,7 @@ export const ESSAYS_2: EssayQuestion[] = [
     era: 'mid',
     demand: 2,
     themes: ['stresemann'],
-    tags: ['p2', 'p7'],
+    tags: ['p2', 'i-stresemann'],
     text: 'Evaluate the role of Gustav Stresemann in the recovery of the Weimar Republic between 1923 and 1929.',
     notes:
       'The active verb is “recovery”: the essay must weigh Stresemann’s agency in it, not biographise. The case: the hundred days of 1923 (ending passive resistance, the Rentenmark, mastering Saxony and Bavaria); then the foreign-policy staircase — Dawes (1924), Locarno (1925), League admission (1926, Nobel Prize), the Young Plan and agreed Rhineland evacuation (1929) — pursued through “fulfilment” as a policy of strength by other means (his candid aim of revision, as the Crown Prince letter shows). The counter-case: recovery’s foundations were laid by many hands (Schacht and the Rentenmark, Allied willingness to renegotiate, American capital) and rested on borrowed money he himself knew was volatile (“dancing on a volcano”); a Vernunftrepublikaner whose party drifted right after his death; the recovery’s fragility revealed within months of it. Reaching beyond the famous phase — his annexationist wartime politics and monarchist past — supports a balanced evaluation of conversion and continuity. Historiography: Wright’s Stresemann as Weimar’s greatest statesman; older suspicions of the nationalist fox. The strongest conclusions grade his role: indispensable to the recovery achieved, unable to make it durable.',
@@ -123,7 +123,7 @@ export const ESSAYS_2: EssayQuestion[] = [
     era: 'mid',
     demand: 2,
     themes: ['nazi-rise'],
-    tags: ['p3', 'p7'],
+    tags: ['p3', 'i-hitler'],
     text: 'Evaluate the role of Adolf Hitler in the rise of the Nazi Party to power by 1933.',
     notes:
       'The question invites weighing Hitler’s personal agency against the conditions that made him possible. His role: the refoundation of 1925 on the Führerprinzip; the oratory and the constructed cult that made him the movement’s sole axis; strategic choices — legality after 1923, the presidential campaign of 1932, holding out for the chancellorship through the November losses and the Strasser crisis; the charismatic appeal that fused disparate resentments. The counter-case: without Versailles, the Depression, elite fear of communism and Weimar’s structural weaknesses, the audience did not exist — “no Depression, no Hitler” (Kershaw); the Party’s organisational machine (Strasser’s work) and the SA’s street power were not his personal creation; and the final step was delivered by Papen and Hindenburg, not won. Reaching beyond the famous phase — the Vienna and putsch years, the Landsberg reorientation — strengthens the evaluation. Historiography: Bullock’s opportunist; Kershaw’s charismatic authority and the office “jobbed” by intrigue. Responses must argue a weighting between man and circumstances; narrative of the rise caps in the low bands.',
@@ -135,7 +135,7 @@ export const ESSAYS_2: EssayQuestion[] = [
     era: 'mid',
     demand: 3,
     themes: ['nazi-rise', 'weimar-crises'],
-    tags: ['p2', 'p3', 'p7'],
+    tags: ['p2', 'p3', 'i-hindenburg'],
     text: 'Evaluate the role of Paul von Hindenburg in the collapse of German democracy between 1930 and 1934.',
     notes:
       'A question with tension built in: the president sworn to the constitution presided over its burial. Candidates should trace his agency at each hinge: the turn to presidential government (Brüning appointed March 1930, Article 48 as routine, the Reichstag dissolved when it objected); the 1932 re-election as the “stop Hitler” candidate, followed within months by Papen’s appointment, the Prussian coup of July 1932, and the camarilla politics (Oskar, Meissner, Papen) that treated the state as a household matter; the refusal of Hitler in August and November 1932, then the reversal of January 1933 under pressure from Papen and the east-Elbian and business lobbies; and after — signing the Fire Decree, blessing the purge, his death in August 1934 releasing the final fusion of offices. The counter-case: an octogenarian instrumentalised by others; the Depression and party fragmentation left no parliamentary alternative. Historiography: Wheeler-Bennett’s “wooden titan”; Kershaw on the camarilla’s decisive miscalculation. A graded verdict on responsibility — enabler, instrument, or author — must be argued, not asserted.',
@@ -147,7 +147,7 @@ export const ESSAYS_2: EssayQuestion[] = [
     era: 'late',
     demand: 2,
     themes: ['propaganda'],
-    tags: ['p4', 'p7'],
+    tags: ['p4', 'i-goebbels'],
     text: 'Evaluate the role of Joseph Goebbels in creating and sustaining the image of the Führer between 1933 and 1945.',
     notes:
       'The scope is the Führer image specifically — not Goebbels’ career at large. His role: the Propaganda Ministry’s monopoly (press directives, radio, newsreel, film); the staging of charisma — the ritual calendar, the Nuremberg spectacles, the birthday and “miracle” broadcasts; the segregation of Hitler from failure (the “if only the Führer knew” reflex) and of the image from the man (concealing the withdrawn wartime Hitler); Total War rhetoric (the Sportpalast speech, February 1943) recasting catastrophe as heroism; and the endgame myth-making to the bunker. The counter-case: the myth’s raw material was not Goebbels’ — pre-1933 devotion, real successes (employment, the Rhineland, Anschluss) authenticated it, and Hitler was his own first propagandist; the image decayed after Stalingrad in step with events no ministry could script, suggesting propaganda sustained belief only while reality cooperated. Historiography: Kershaw’s Hitler Myth (the image as co-production of regime and public expectations); Longerich’s Goebbels as self-dramatising believer. Candidates should evaluate the role across the whole span, including the war years, and grade it: architect, or gifted curator of a myth with many authors.',
@@ -159,7 +159,7 @@ export const ESSAYS_2: EssayQuestion[] = [
     era: 'late',
     demand: 3,
     themes: ['persecution', 'gleichschaltung'],
-    tags: ['p4', 'p6', 'p7'],
+    tags: ['p4', 'p6', 'i-himmler'],
     text: 'Evaluate the role of Heinrich Himmler in the development of the Nazi state and its policies of persecution between 1933 and 1945.',
     notes:
       'Two domains must both be addressed: the state’s architecture and the machinery of persecution, though not necessarily equally. State: from commander of a Party bodyguard to master of a state within the state — the SS freed and elevated after the Röhm purge (1934), the police unified under him (1936), the SD and Gestapo fused, the camps systematised (Dachau model, Eicke), the Waffen-SS and wartime economic empire (WVHA). Persecution: the camp system’s expansion from political prisoners to racial categories; the Einsatzgruppen under his authority; the assignment and administration of the “Final Solution” (with Heydrich to 1942), the Posen speeches (1943) as self-documentation of genocide; racial resettlement (RKF) in the occupied east. Weighing: an ideological entrepreneur who built the instruments Hitler’s goals required — the structuralist point that his empire grew by “working towards the Führer” — against the argument that without this organiser the regime’s ideology lacked its executive. Historiography: Longerich’s biography; Kershaw’s “working towards the Führer”; Browning on the machinery of murder. Responses confined to the camps, or to organisational history without persecution, will not achieve the higher marks.',
