@@ -30,6 +30,10 @@ export class LocalStore implements Store {
   readonly mode = 'local' as const;
   private teacher = false;
 
+  async awaitAuthReady(): Promise<void> {
+    // Nothing to restore in local mode.
+  }
+
   async joinClass(name: string, classCode: string): Promise<StudentProfile> {
     const code = classCode.trim().toUpperCase();
     const classes = read<ClassInfo[]>(KEY_CLASSES, []);

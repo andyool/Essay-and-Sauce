@@ -21,7 +21,7 @@ export function AttemptViewPage() {
   const [attempt, setAttempt] = useState<Attempt | null>(null);
   const [missing, setMissing] = useState(false);
   const [isOwner, setIsOwner] = useState(false);
-  const isTeacher = store.isTeacherSignedIn();
+  const [isTeacher, setIsTeacher] = useState(store.isTeacherSignedIn());
 
   useEffect(() => {
     if (!id) return;
@@ -32,6 +32,7 @@ export function AttemptViewPage() {
       }
       setAttempt(a);
     });
+    void store.awaitAuthReady().then(() => setIsTeacher(store.isTeacherSignedIn()));
     store.getCurrentStudent().then((s) => setIsOwner(!!s));
     return un;
     // eslint-disable-next-line react-hooks/exhaustive-deps

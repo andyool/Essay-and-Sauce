@@ -37,12 +37,17 @@ export function TeacherPage() {
   const [, setTick] = useState(0);
 
   // In local mode there is no real teacher auth — flip the flag so the store
-  // reports consistently.
+  // reports consistently. In cloud mode, wait for Firebase to restore any
+  // persisted teacher sign-in before deciding to show the login form.
   useEffect(() => {
-    if (store.mode === 'local' && !store.isTeacherSignedIn()) {
-      void store.teacherSignIn('', '');
+    if (store.mode === 'local') {
+      if (!store.isTeacherSignedIn()) void store.teacherSignIn('', '');
       setSignedIn(true);
+      return;
     }
+    void store.awaitAuthReady().then(() => {
+      if (store.isTeacherSignedIn()) setSignedIn(true);
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

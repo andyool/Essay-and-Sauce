@@ -5,6 +5,9 @@ export type Unsubscribe = () => void;
 export interface Store {
   readonly mode: 'local' | 'cloud';
 
+  /** Resolves once any persisted sign-in has been restored (no-op locally). */
+  awaitAuthReady(): Promise<void>;
+
   // ---- student session ----
   /** Join (or rejoin) a class; creates/updates the student profile. */
   joinClass(name: string, classCode: string): Promise<StudentProfile>;
