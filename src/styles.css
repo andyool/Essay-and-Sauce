@@ -587,9 +587,83 @@ table.roster tr:hover td { background: #fafbfe; }
   color: var(--amber);
   margin-bottom: 6px;
 }
-.feedback-edit textarea { width: 100%; }
+.feedback-edit textarea { width: 100%; margin-top: 10px; }
 .mark-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14.5px; flex-wrap: wrap; }
 .mark-row input[type='number'] { width: 76px; padding: 7px 10px; }
+
+/* The running mark, added up from the key below it. */
+.mark-total {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+.mark-total .score {
+  font-size: 26px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--amber);
+  line-height: 1.1;
+}
+.mark-total .score .outof { font-size: 16px; font-weight: 600; color: var(--ink-soft); }
+.mark-total .how { font-size: 13.5px; color: var(--ink-soft); }
+.mark-total .spacer { flex: 1; }
+.mark-total button { padding: 5px 11px; font-size: 13.5px; }
+
+/* Marking key with its numbers as buttons. */
+.key-picker { margin-top: 4px; }
+.pick-section + .pick-section { margin-top: 16px; }
+.pick-head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+}
+.pick-head .key-heading { margin-top: 0; }
+.pick-head .how { font-size: 12.5px; color: var(--ink-faint); }
+table.key-table.pickable td { transition: background 0.12s; }
+table.key-table.pickable td.marks { width: 92px; padding: 5px 6px; text-align: center; }
+table.key-table.pickable tr:hover td { background: var(--bg); }
+table.key-table.pickable tr.picked td { background: var(--amber-soft); }
+table.key-table.pickable tr.picked td:first-child { font-weight: 600; }
+.mark-pill {
+  min-width: 40px;
+  padding: 6px 8px;
+  margin: 2px;
+  font-size: 15px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-soft);
+}
+.mark-pill:hover { border-color: var(--amber); color: var(--amber); }
+.mark-pill.on {
+  background: var(--amber);
+  border-color: var(--amber);
+  color: #fff;
+}
+.pick-foot {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin-top: -2px;
+}
+.pick-foot .unmarked { color: var(--ink-faint); font-style: italic; }
+.link-btn {
+  border: none;
+  background: none;
+  padding: 0;
+  font-size: 13.5px;
+  color: var(--blue);
+  text-decoration: underline;
+}
+.link-btn:hover { color: var(--accent); }
 
 .teacher-feedback {
   background: var(--amber-soft);

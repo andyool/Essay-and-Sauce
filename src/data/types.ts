@@ -99,6 +99,12 @@ export type FeedbackPart = 'a' | 'b' | 'c' | 'essay';
 export interface TeacherFeedback {
   marks: Record<FeedbackPart, number | null>;
   comments: Record<FeedbackPart, string>;
+  /** Which rows of the marking key were clicked, so the teacher's working
+   *  reappears when they come back to an attempt. One entry per row of the
+   *  key, numbered straight through its sections (see lib/marking.ts): the
+   *  marks awarded by that row, or null where it was not awarded. Absent on
+   *  feedback saved before the key became clickable. */
+  picks?: Record<FeedbackPart, (number | null)[]>;
   overall: string;
   returnedAt: number | null;
   updatedAt: number;

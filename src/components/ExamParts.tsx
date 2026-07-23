@@ -1,5 +1,6 @@
 import type { KeySection, SAQuestion, SourceDoc } from '../data/types';
 import { ESSAY_RUBRIC, ESSAY_TOTAL } from '../data/rubric';
+import { isChecklist, rowMarks, sectionMax, sectionScore, sectionStarts } from '../lib/marking';
 
 export function SourceCard({ source }: { source: SourceDoc }) {
   return (
@@ -91,6 +92,101 @@ export function MarkingKey({ q }: { q: SAQuestion }) {
   );
 }
 
+/** The marking key with its mark numbers turned into buttons. Pressing one
+ *  awards those marks; pressing it again takes them back. Within a ladder
+ *  section only one descriptor can hold marks, so pressing a different band
+ *  moves the award there. */
+export function MarkingKeyPicker({
+  sections,
+  picks,
+  onPick,
+  onClearSection,
+}: {
+  sections: KeySection[];
+  /** Marks awarded per row, numbered straight through the sections. */
+  picks: (number | null)[];
+  onPick: (section: number, row: number, marks: number) => void;
+  onClearSection: (section: number) => void;
+}) {
+  const starts = sectionStarts(sections);
+  return (
+    <div className="key-picker">
+      {sections.map((sec, si) => {
+        const { got, picked } = sectionScore(sections, picks, si);
+        const max = sectionMax(sec);
+        const checklist = isChecklist(sec);
+        return (
+          <div className="pick-section" key={si}>
+            <div className="pick-head">
+              <span className="key-heading">
+                {sec.heading ?? (sections.length > 1 ? 'Part ' + (si + 1) + ' of the key' : 'Marking key')}
+              </span>
+              <span className="how">
+                {checklist ? 'award each point earned' : 'choose the one description that fits'}
+              </span>
+            </div>
+            <table className="key-table pickable">
+              <tbody>
+                {sec.rows.map((row, ri) => {
+                  const awarded = picks[starts[si] + ri] ?? null;
+                  const options = rowMarks(row.marks);
+                  const single = options.length === 1;
+                  return (
+                    <tr
+                      key={ri}
+                      className={awarded !== null ? 'picked' : ''}
+                      onClick={single ? () => onPick(si, ri, options[0]) : undefined}
+                      style={single ? { cursor: 'pointer' } : undefined}
+                    >
+                      <td>{row.descriptor}</td>
+                      <td className="marks">
+                        {options.map((m) => (
+                          <button
+                            type="button"
+                            key={m}
+                            className={'mark-pill' + (awarded === m ? ' on' : '')}
+                            aria-pressed={awarded === m}
+                            title={
+                              awarded === m ? 'Take back these marks' : 'Award ' + m + ' marks'
+                            }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              onPick(si, ri, m);
+                            }}
+                          >
+                            {m}
+                          </button>
+                        ))}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+            <div className="pick-foot">
+              {picked ? (
+                <>
+                  <span>
+                    <strong>
+                      {got} / {max}
+                    </strong>{' '}
+                    awarded
+                  </span>
+                  <button type="button" className="link-btn" onClick={() => onClearSection(si)}>
+                    clear
+                  </button>
+                </>
+              ) : (
+                <span className="unmarked">not yet marked — {max} available</span>
+              )}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
 export function EssayRubric() {
   return (
     <details className="key">
@@ -125,5 +221,18 @@ export function EssayNotes({ notes }: { notes: string }) {
       <div className="label">Markers’ notes</div>
       {notes}
     </div>
+  );
+}
+
+/** The markers' notes on their own, for marking — where the key table itself
+ *  has been replaced by the clickable one. */
+export function MarkersNotesKey({ label, notes }: { label: string; notes: string }) {
+  return (
+    <details className="key">
+      <summary>{label}</summary>
+      <div className="key-inner">
+        <EssayNotes notes={notes} />
+      </div>
+    </details>
   );
 }
