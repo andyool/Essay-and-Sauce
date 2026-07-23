@@ -104,6 +104,37 @@ export interface TeacherFeedback {
   updatedAt: number;
 }
 
+// ---- Exam timing ----
+
+/** How the clock behaves during an attempt.
+ *  'off'      — no countdown; working time is still measured, for information.
+ *  'practice' — countdown the student may pause, and which runs into overtime
+ *               rather than stopping them.
+ *  'strict'   — exam conditions: no pausing, and the paper is submitted
+ *               automatically the moment the time runs out. */
+export type TimerMode = 'off' | 'practice' | 'strict';
+
+/** The clock for one attempt. It only runs while the student has the exam
+ *  open and has started it: `elapsedMs` banks the time from earlier runs and
+ *  `runningSince` marks the start of the current one. */
+export interface ExamTiming {
+  mode: TimerMode;
+  /** Total working time allowed, in minutes (0 when the mode is 'off'). */
+  totalMinutes: number;
+  /** Suggested minutes for Section One; the rest is for Section Two. */
+  sectionOneMinutes: number;
+  /** When the student first started the clock; null until they do. */
+  startedAt: number | null;
+  /** Working time banked from earlier runs, in ms. */
+  elapsedMs: number;
+  /** When the current run started, or null while the clock is stopped. */
+  runningSince: number | null;
+  /** When the countdown first reached zero. */
+  expiredAt: number | null;
+  /** True when strict mode submitted the paper on the student's behalf. */
+  autoSubmitted: boolean;
+}
+
 export interface Attempt {
   id: string;
   studentUid: string;
@@ -123,6 +154,9 @@ export interface Attempt {
   essayChoice: number | null; // index into essayIds
   essayText: string;
   page: 1 | 2;
+  /** The clock for this attempt. Absent on attempts made before timing
+   *  existed, which are treated as untimed. */
+  timing?: ExamTiming;
   /** Present once the teacher has started marking this attempt. */
   feedback?: TeacherFeedback;
 }

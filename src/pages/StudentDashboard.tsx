@@ -2,12 +2,62 @@ import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getSourceSet } from '../data/bank';
 import { ALL_POINT_IDS, ELECTIVE_TITLE, INDIVIDUALS, INDIVIDUAL_IDS, SYLLABUS } from '../data/syllabus';
-import type { Attempt, StudentProfile, SyllabusPointId } from '../data/types';
+import type { Attempt, StudentProfile, SyllabusPointId, TimerMode } from '../data/types';
 import { feedbackComplete, feedbackTotal, fmtDate, newId, wordCount } from '../lib/format';
 import { GenerationError, generateExam } from '../lib/generator';
+import {
+  DEFAULT_DURATION,
+  DURATION_MINUTES,
+  describeDuration,
+  newTiming,
+  suggestedSectionOne,
+  timingBrief,
+} from '../lib/timing';
 import { getStore } from '../store';
 
 const KEY_SYLLABUS = 'eas.syllabusSelection';
+const KEY_TIMER = 'eas.timerSettings';
+
+interface TimerSettings {
+  mode: TimerMode;
+  totalMinutes: number;
+}
+
+function loadTimerSettings(): TimerSettings {
+  try {
+    const raw = localStorage.getItem(KEY_TIMER);
+    if (raw) {
+      const parsed = JSON.parse(raw) as Partial<TimerSettings>;
+      const mode: TimerMode =
+        parsed.mode === 'off' || parsed.mode === 'practice' || parsed.mode === 'strict'
+          ? parsed.mode
+          : 'practice';
+      const minutes = DURATION_MINUTES.find((m) => m === parsed.totalMinutes) ?? DEFAULT_DURATION;
+      return { mode, totalMinutes: minutes };
+    }
+  } catch {
+    /* ignore */
+  }
+  return { mode: 'practice', totalMinutes: DEFAULT_DURATION };
+}
+
+const TIMER_CHOICES: { mode: TimerMode; label: string; help: string }[] = [
+  {
+    mode: 'practice',
+    label: 'Practice timer',
+    help: 'A countdown you can pause. It keeps going past zero instead of stopping you, so you can see how much extra time you needed.',
+  },
+  {
+    mode: 'strict',
+    label: 'Exam conditions',
+    help: 'No pausing, and the paper is submitted automatically the moment the time runs out — like the real thing.',
+  },
+  {
+    mode: 'off',
+    label: 'No timer',
+    help: 'Work at your own pace. Your time is still measured, just for information.',
+  },
+];
 
 function loadSelection(): SyllabusPointId[] {
   try {
@@ -41,6 +91,7 @@ export function StudentDashboard() {
   const [selection, setSelection] = useState<SyllabusPointId[]>(loadSelection);
   const [genError, setGenError] = useState('');
   const [busy, setBusy] = useState(false);
+  const [timer, setTimer] = useState<TimerSettings>(loadTimerSettings);
 
   useEffect(() => {
     let cancelled = false;
@@ -76,6 +127,7 @@ export function StudentDashboard() {
     setBusy(true);
     try {
       localStorage.setItem(KEY_SYLLABUS, JSON.stringify(selection));
+      localStorage.setItem(KEY_TIMER, JSON.stringify(timer));
       // Seen material: everything from previous attempts, oldest first so the
       // generator reuses the longest-ago sets when the bank is exhausted.
       const chrono = attempts.slice().sort((a, b) => a.createdAt - b.createdAt);
@@ -100,6 +152,7 @@ export function StudentDashboard() {
         essayChoice: null,
         essayText: '',
         page: 1,
+        timing: newTiming(timer.mode, timer.totalMinutes),
       };
       await store.createAttempt(attempt);
       navigate('/exam/' + attempt.id);
@@ -182,6 +235,7 @@ export function StudentDashboard() {
                       ? ' · submitted ' + fmtDate(a.submittedAt)
                       : ''}
                     {' · ' + words + ' words written'}
+                    {a.timing ? ' · ' + timingBrief(a.timing, a.status) : ''}
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
@@ -276,6 +330,54 @@ export function StudentDashboard() {
                 </label>
               ))}
             </div>
+            <h3 className="modal-section">How long have you got?</h3>
+            <p style={{ color: 'var(--ink-soft)', fontSize: 14.5 }}>
+              A full WACE Modern History paper allows three hours of working time. This practice
+              paper is about half the length, so 1½ hours is the closest match — but shorter
+              settings are useful for drilling one section under pressure.
+            </p>
+            <div className="timer-choices">
+              {TIMER_CHOICES.map((c) => (
+                <label
+                  className={'timer-choice' + (timer.mode === c.mode ? ' selected' : '')}
+                  key={c.mode}
+                >
+                  <input
+                    type="radio"
+                    name="timerMode"
+                    checked={timer.mode === c.mode}
+                    onChange={() => setTimer((t) => ({ ...t, mode: c.mode }))}
+                  />
+                  <span>
+                    <strong>{c.label}</strong>
+                    <div className="full">{c.help}</div>
+                  </span>
+                </label>
+              ))}
+            </div>
+            {timer.mode !== 'off' && (
+              <div className="duration-row">
+                <span className="label">Working time</span>
+                <div className="duration-buttons">
+                  {DURATION_MINUTES.map((m) => (
+                    <button
+                      key={m}
+                      className={timer.totalMinutes === m ? 'active' : ''}
+                      onClick={() => setTimer((t) => ({ ...t, totalMinutes: m }))}
+                    >
+                      {m % 60 === 0 ? m / 60 + ' h' : Math.floor(m / 60) + '½ h'}
+                    </button>
+                  ))}
+                </div>
+                <div className="duration-note">
+                  {describeDuration(timer.totalMinutes)} — suggested{' '}
+                  {suggestedSectionOne(timer.totalMinutes)} min for Section One (source analysis) and{' '}
+                  {timer.totalMinutes - suggestedSectionOne(timer.totalMinutes)} min for Section Two
+                  (essay).
+                  {timer.mode === 'strict' && ' The paper submits itself when the clock hits zero.'}
+                </div>
+              </div>
+            )}
             {genError && <div className="form-error">{genError}</div>}
             <div className="actions">
               <button onClick={() => setShowModal(false)}>Cancel</button>

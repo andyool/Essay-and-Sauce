@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getSourceSet } from '../data/bank';
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
 import { feedbackComplete, feedbackTotal, fmtDate, timeAgo, wordCount } from '../lib/format';
+import { modeLabel, remaining, timingBrief } from '../lib/timing';
 import { getStore } from '../store';
 import { TEACHER_EMAILS } from '../store/firebaseConfig';
 
@@ -252,6 +253,8 @@ export function TeacherPage() {
                   wordCount(a.essayText);
                 const snippet = latestSnippet(a);
                 const recentlyTyping = Date.now() - a.updatedAt < 30000;
+                const timing = a.timing;
+                const outOfTime = !!timing && timing.mode !== 'off' && remaining(timing) <= 0;
                 return (
                   <Link
                     to={'/attempt/' + a.id}
@@ -270,6 +273,11 @@ export function TeacherPage() {
                         {a.page === 1 ? 'Source Analysis' : 'Essay'} · {words} words · active{' '}
                         {timeAgo(a.updatedAt)}
                       </div>
+                      {timing && (
+                        <div className={'meta clock-line' + (outOfTime ? ' over' : '')}>
+                          {modeLabel(timing.mode)} · {timingBrief(timing, a.status)}
+                        </div>
+                      )}
                       {snippet ? (
                         <div className="snippet">…{snippet}</div>
                       ) : (
@@ -359,6 +367,7 @@ export function TeacherPage() {
                   <th>Status</th>
                   <th>Started</th>
                   <th>Words</th>
+                  <th>Time</th>
                   <th>Mark</th>
                   <th></th>
                 </tr>
@@ -384,6 +393,9 @@ export function TeacherPage() {
                       </td>
                       <td>{fmtDate(a.createdAt)}</td>
                       <td>{words}</td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
+                        {a.timing ? timingBrief(a.timing, a.status) : '—'}
+                      </td>
                       <td style={{ whiteSpace: 'nowrap' }}>
                         {a.feedback?.returnedAt
                           ? (feedbackComplete(a.feedback)

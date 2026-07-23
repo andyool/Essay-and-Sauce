@@ -2,14 +2,128 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EssayRubric, SAQuestionText, SourceCard } from '../components/ExamParts';
 import { getEssay, getSourceSet } from '../data/bank';
-import type { Answers, Attempt } from '../data/types';
+import type { Answers, Attempt, ExamTiming } from '../data/types';
 import { wordCount } from '../lib/format';
+import {
+  HEARTBEAT_MS,
+  clock,
+  describeDuration,
+  elapsed,
+  limitMs,
+  modeBlurb,
+  modeLabel,
+  remaining,
+  reopenTiming,
+  shortDuration,
+  startTiming,
+  stopTiming,
+} from '../lib/timing';
 import { getStore } from '../store';
 
 type SaveState = 'saved' | 'pending' | 'saving';
 
 const IDLE_SAVE_MS = 2500; // save this long after the last keystroke
 const MAX_SAVE_GAP_MS = 15000; // …but at least this often while typing
+
+/** Minutes-remaining marks at which the room gets an announcement, as a
+ *  supervisor would give. Largest first. */
+const ANNOUNCE_AT = [30, 10, 5];
+
+const WARNING_MS = 10 * 60_000;
+const CRITICAL_MS = 5 * 60_000;
+
+function announceText(mins: number, mode: ExamTiming['mode']): string {
+  const head =
+    mins === 30 ? 'Thirty minutes' : mins === 10 ? 'Ten minutes' : mins + ' minutes';
+  if (mins === 5) {
+    return (
+      head +
+      ' of working time remaining — start bringing your answer to a close.' +
+      (mode === 'strict' ? ' The paper submits itself at zero.' : '')
+    );
+  }
+  return head + ' of working time remaining.';
+}
+
+/** The countdown in the top bar. */
+function TimerChip({ timing, now }: { timing: ExamTiming; now: number }) {
+  if (timing.mode === 'off') {
+    return (
+      <span className="timer-chip untimed" title="Untimed practice — this is your working time so far">
+        {clock(elapsed(timing, now))}
+      </span>
+    );
+  }
+  const left = remaining(timing, now);
+  const state =
+    left <= 0 ? ' over' : left <= CRITICAL_MS ? ' critical' : left <= WARNING_MS ? ' warning' : '';
+  return (
+    <span
+      className={'timer-chip' + state}
+      title={modeLabel(timing.mode) + ' — ' + describeDuration(timing.totalMinutes) + ' of working time'}
+    >
+      {left <= 0 ? '+' + clock(-left) + ' over' : clock(left)}
+    </span>
+  );
+}
+
+/** Shown instead of the paper whenever a timed clock is stopped: before the
+ *  first start, after a pause, and when picking the exam back up later. */
+function ClockGate({
+  timing,
+  onStart,
+  onExit,
+}: {
+  timing: ExamTiming;
+  onStart: () => void;
+  onExit: () => void;
+}) {
+  const first = timing.startedAt === null;
+  const left = remaining(timing);
+  const over = left <= 0;
+  const sectionTwo = timing.totalMinutes - timing.sectionOneMinutes;
+  return (
+    <div className="page narrow">
+      <div className="clock-gate">
+        <div className="eyebrow">{modeLabel(timing.mode)}</div>
+        <h2>{first ? 'Ready when you are' : over ? 'Paused in overtime' : 'Clock paused'}</h2>
+        <div className={'big-clock' + (over ? ' over' : '')}>
+          {over ? '+' + clock(-left) : clock(left)}
+        </div>
+        <div className="clock-sub">
+          {first
+            ? describeDuration(timing.totalMinutes) + ' of working time'
+            : over
+              ? 'past the ' + describeDuration(timing.totalMinutes) + ' allowed'
+              : 'remaining of ' + describeDuration(timing.totalMinutes)}
+        </div>
+        <p className="blurb">{modeBlurb(timing.mode)}</p>
+        <div className="split">
+          <div>
+            <strong>Section One</strong>
+            <span>Source analysis · 20 marks</span>
+            <span>suggested {timing.sectionOneMinutes} min</span>
+          </div>
+          <div>
+            <strong>Section Two</strong>
+            <span>Essay · 30 marks</span>
+            <span>suggested {sectionTwo} min</span>
+          </div>
+        </div>
+        <p className="blurb">
+          The clock only runs while this page is open. If you close it, it stops — but your teacher
+          can see how long the paper really took.
+        </p>
+        <div className="actions">
+          <button className="primary big" onClick={onStart}>
+            {first ? 'Start the clock' : 'Resume the clock'}
+          </button>
+          <button onClick={onExit}>Back to dashboard</button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export function ExamPage() {
   const { id } = useParams<{ id: string }>();
@@ -18,25 +132,15 @@ export function ExamPage() {
   const [attempt, setAttempt] = useState<Attempt | null>(null);
   const [missing, setMissing] = useState(false);
   const [saveState, setSaveState] = useState<SaveState>('saved');
+  const [now, setNow] = useState(() => Date.now());
+  const [announcement, setAnnouncement] = useState<string | null>(null);
   const pendingRef = useRef<Partial<Attempt>>({});
   const timerRef = useRef<number | null>(null);
   const lastSaveRef = useRef(Date.now());
-
-  useEffect(() => {
-    if (!id) return;
-    store.getAttempt(id).then((a) => {
-      if (!a) {
-        setMissing(true);
-        return;
-      }
-      if (a.status === 'submitted') {
-        navigate('/attempt/' + a.id, { replace: true });
-        return;
-      }
-      setAttempt(a);
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  // Mirrors `attempt` for callbacks that must not close over a stale render.
+  const attemptRef = useRef<Attempt | null>(null);
+  const submittingRef = useRef(false);
+  const prevRemainingRef = useRef<number | null>(null);
 
   const flush = useCallback(async () => {
     if (!id) return;
@@ -61,6 +165,7 @@ export function ExamPage() {
   const queue = useCallback(
     (patch: Partial<Attempt>) => {
       setAttempt((a) => (a ? { ...a, ...patch } : a));
+      if (attemptRef.current) attemptRef.current = { ...attemptRef.current, ...patch };
       pendingRef.current = { ...pendingRef.current, ...patch };
       setSaveState('pending');
       if (timerRef.current) window.clearTimeout(timerRef.current);
@@ -70,19 +175,144 @@ export function ExamPage() {
     [flush],
   );
 
-  // Flush when the tab is hidden or the component unmounts.
+  // Clock changes are written straight through rather than queued: they are
+  // rare, and they must not wait behind the typing debounce.
+  const writeTiming = useCallback(
+    (next: ExamTiming) => {
+      setAttempt((a) => (a ? { ...a, timing: next } : a));
+      if (attemptRef.current) attemptRef.current = { ...attemptRef.current, timing: next };
+      if (id) void store.updateAttempt(id, { timing: next }).catch(() => {});
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [id],
+  );
+
+  const stopClock = useCallback(() => {
+    const cur = attemptRef.current?.timing;
+    if (!cur || cur.runningSince === null) return;
+    writeTiming(stopTiming(cur));
+  }, [writeTiming]);
+
+  const autoSubmit = useCallback(async () => {
+    const cur = attemptRef.current;
+    const t = cur?.timing;
+    if (!cur || !t || submittingRef.current) return;
+    submittingRef.current = true;
+    const stopped: ExamTiming = {
+      ...t,
+      elapsedMs: limitMs(t),
+      runningSince: null,
+      expiredAt: t.expiredAt ?? Date.now(),
+      autoSubmitted: true,
+    };
+    queue({ status: 'submitted', submittedAt: Date.now(), timing: stopped });
+    await flush();
+    navigate('/attempt/' + cur.id, { replace: true });
+  }, [queue, flush, navigate]);
+
   useEffect(() => {
-    const onHide = () => {
+    if (!id) return;
+    store.getAttempt(id).then((a) => {
+      if (!a) {
+        setMissing(true);
+        return;
+      }
+      if (a.status === 'submitted') {
+        navigate('/attempt/' + a.id, { replace: true });
+        return;
+      }
+      const timing = reopenTiming(a.timing);
+      const fresh = timing ? { ...a, timing } : a;
+      setAttempt(fresh);
+      attemptRef.current = fresh;
+      if (timing && timing !== a.timing) void store.updateAttempt(a.id, { timing }).catch(() => {});
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
+  useEffect(() => {
+    attemptRef.current = attempt;
+  }, [attempt]);
+
+  const running = attempt?.timing?.runningSince != null;
+
+  // Tick once a second while the clock runs.
+  useEffect(() => {
+    if (!running) return;
+    setNow(Date.now());
+    const t = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(t);
+  }, [running]);
+
+  // Roll the running clock into storage periodically, so a crash or a killed
+  // tab costs at most one heartbeat of working time.
+  useEffect(() => {
+    if (!running) return;
+    const t = window.setInterval(() => {
+      const cur = attemptRef.current?.timing;
+      if (!cur || cur.runningSince === null) return;
+      const at = Date.now();
+      writeTiming({ ...cur, elapsedMs: elapsed(cur, at), runningSince: at });
+    }, HEARTBEAT_MS);
+    return () => window.clearInterval(t);
+  }, [running, writeTiming]);
+
+  // Announcements, expiry and (in strict mode) the automatic submit.
+  useEffect(() => {
+    const t = attemptRef.current?.timing;
+    if (!t || t.mode === 'off' || t.runningSince === null) return;
+    const left = remaining(t, now);
+    const prev = prevRemainingRef.current;
+    prevRemainingRef.current = left;
+
+    if (left <= 0) {
+      if (t.mode === 'strict') {
+        void autoSubmit();
+        return;
+      }
+      if (t.expiredAt === null) writeTiming({ ...t, expiredAt: Date.now() });
+      if (prev !== null && prev > 0) {
+        setAnnouncement(
+          'Time is up. In the real exam you would stop writing now — anything from here is overtime.',
+        );
+      }
+      return;
+    }
+    if (prev === null) return; // first tick of this run: nothing was crossed
+    for (const mins of ANNOUNCE_AT) {
+      const mark = mins * 60_000;
+      // Skip marks the paper was never long enough to reach.
+      if (prev > mark && left <= mark && limitMs(t) > mark + 60_000) {
+        setAnnouncement(announceText(mins, t.mode));
+        break;
+      }
+    }
+  }, [now, autoSubmit, writeTiming]);
+
+  useEffect(() => {
+    if (!announcement) return;
+    const t = window.setTimeout(() => setAnnouncement(null), 15000);
+    return () => window.clearTimeout(t);
+  }, [announcement]);
+
+  // Flush and stop the clock when the tab is hidden or the page goes away.
+  useEffect(() => {
+    const onVisibility = () => {
       if (document.visibilityState === 'hidden') void flush();
     };
-    document.addEventListener('visibilitychange', onHide);
-    window.addEventListener('pagehide', onHide);
-    return () => {
-      document.removeEventListener('visibilitychange', onHide);
-      window.removeEventListener('pagehide', onHide);
+    const onPageHide = () => {
       void flush();
+      stopClock();
     };
-  }, [flush]);
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('pagehide', onPageHide);
+    return () => {
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('pagehide', onPageHide);
+      void flush();
+      stopClock();
+    };
+  }, [flush, stopClock]);
 
   if (missing) {
     return (
@@ -105,6 +335,12 @@ export function ExamPage() {
     );
   }
 
+  const timing = attempt.timing ?? null;
+  const timed = timing !== null && timing.mode !== 'off';
+  const used = timing ? elapsed(timing, now) : 0;
+  const left = timing ? remaining(timing, now) : Number.POSITIVE_INFINITY;
+  const overtime = timed && left <= 0;
+
   const setAnswer = (letter: keyof Answers, value: string) => {
     queue({ answers: { ...attempt.answers, [letter]: value } });
   };
@@ -115,7 +351,27 @@ export function ExamPage() {
     window.scrollTo({ top: 0 });
   };
 
+  function startClock() {
+    const t = attemptRef.current?.timing;
+    if (!t) return;
+    prevRemainingRef.current = null;
+    writeTiming(startTiming(t));
+  }
+
+  function pauseClock() {
+    stopClock();
+    prevRemainingRef.current = null;
+  }
+
   async function saveAndExit() {
+    if (timed && !overtime && timing!.mode === 'strict' && timing!.runningSince !== null) {
+      const ok = window.confirm(
+        'You are sitting this paper under exam conditions. Leaving stops the clock, and your ' +
+          'teacher can see that the exam was left and how long it really took. Leave anyway?',
+      );
+      if (!ok) return;
+    }
+    stopClock();
     await flush();
     navigate('/dashboard');
   }
@@ -133,12 +389,26 @@ export function ExamPage() {
         ? 'Submit this exam? Note: ' + warnings.join('; ') + '. You cannot edit after submitting.'
         : 'Submit this exam? You cannot edit after submitting.';
     if (!window.confirm(msg)) return;
-    queue({ status: 'submitted', submittedAt: Date.now() });
+    const cur = attemptRef.current?.timing;
+    queue({
+      status: 'submitted',
+      submittedAt: Date.now(),
+      ...(cur ? { timing: stopTiming(cur) } : {}),
+    });
     await flush();
     navigate('/attempt/' + attempt!.id);
   }
 
+  // A stopped clock means the paper is not being sat right now: show the gate
+  // rather than the questions.
+  if (timed && timing!.runningSince === null && !submittingRef.current) {
+    return <ClockGate timing={timing!} onStart={startClock} onExit={() => void saveAndExit()} />;
+  }
+
   const saveLabel = saveState === 'saved' ? 'Saved ✓' : saveState === 'saving' ? 'Saving…' : 'Typing…';
+  const sectionOneMs = timed ? timing!.sectionOneMinutes * 60_000 : 0;
+  const pastSectionOne = timed && used > sectionOneMs;
+  const sectionTwoMinutes = timed ? timing!.totalMinutes - timing!.sectionOneMinutes : 0;
 
   return (
     <div>
@@ -155,10 +425,25 @@ export function ExamPage() {
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          {timing && <TimerChip timing={timing} now={now} />}
+          {timing?.mode === 'practice' && (
+            <button onClick={pauseClock} title="Stop the clock and hide the paper">
+              Pause
+            </button>
+          )}
           <span className={'save-state' + (saveState !== 'saved' ? ' saving' : '')}>{saveLabel}</span>
           <button onClick={saveAndExit}>Save &amp; exit</button>
         </div>
       </div>
+
+      {announcement && (
+        <div className="announce-bar" role="status">
+          <span>{announcement}</span>
+          <button onClick={() => setAnnouncement(null)} aria-label="Dismiss">
+            ✕
+          </button>
+        </div>
+      )}
 
       <div className="exam-paper">
         <div className="paper-head">
@@ -172,6 +457,14 @@ export function ExamPage() {
           </div>
         </div>
 
+        {overtime && timing!.mode === 'practice' && (
+          <div className="time-up-banner">
+            <strong>Time is up.</strong> In the real exam you would have stopped writing{' '}
+            {shortDuration(-left)} ago. Finish if you need to — your overtime is recorded, so you can
+            see what to trim next time.
+          </div>
+        )}
+
         {attempt.page === 1 ? (
           <div className="paper-body">
             <p className="section-note">
@@ -179,6 +472,15 @@ export function ExamPage() {
               space beneath its question. Sources are constructed for skills practice in the style
               of the period.
             </p>
+            {timed && (
+              <div className={'section-timing' + (pastSectionOne && !overtime ? ' over' : '')}>
+                Suggested time for this section: <strong>{timing!.sectionOneMinutes} minutes</strong>{' '}
+                of {describeDuration(timing!.totalMinutes)}.{' '}
+                {pastSectionOne
+                  ? 'You have used ' + shortDuration(used) + ' — aim to move on to Section Two.'
+                  : 'You have used ' + shortDuration(used) + '.'}
+              </div>
+            )}
             {sourceSet.sources.map((s) => (
               <SourceCard key={s.n} source={s} />
             ))}
@@ -211,6 +513,14 @@ export function ExamPage() {
               Choose <strong>one</strong> of the three questions below and write an extended answer.
               Your essay should be a sustained argument supported by detailed and accurate evidence.
             </p>
+            {timed && (
+              <div className={'section-timing' + (overtime ? ' over' : '')}>
+                Suggested time for this section: <strong>{sectionTwoMinutes} minutes</strong>.{' '}
+                {overtime
+                  ? 'You are into overtime.'
+                  : shortDuration(left) + ' of working time remaining.'}
+              </div>
+            )}
             {essays.map((e, i) => (
               <label
                 key={e!.id}

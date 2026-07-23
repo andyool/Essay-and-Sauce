@@ -4,6 +4,16 @@ import { EssayNotes, EssayRubric, MarkingKey, SAQuestionText, SourceCard } from 
 import { getEssay, getSourceSet } from '../data/bank';
 import type { Attempt, FeedbackPart, TeacherFeedback } from '../data/types';
 import { feedbackComplete, feedbackTotal, fmtDate, timeAgo, wordCount } from '../lib/format';
+import {
+  clock,
+  describeDuration,
+  elapsed,
+  limitMs,
+  modeLabel,
+  remaining,
+  shortDuration,
+  timeAway,
+} from '../lib/timing';
 import { getStore } from '../store';
 
 const EMPTY_FEEDBACK: TeacherFeedback = {
@@ -37,6 +47,60 @@ function FeedbackBox({ fb, part, max }: { fb: TeacherFeedback; part: FeedbackPar
   );
 }
 
+/** How the clock went: shown to the student on review, and to the teacher
+ *  while marking or watching live. */
+function TimingSummary({ attempt }: { attempt: Attempt }) {
+  const t = attempt.timing;
+  if (!t) return null;
+  const live = attempt.status === 'in-progress';
+  const used = elapsed(t);
+  const away = timeAway(t, attempt.submittedAt);
+  const over = t.mode !== 'off' && t.expiredAt !== null ? Math.max(0, used - limitMs(t)) : 0;
+
+  const lines: string[] = [];
+  if (live) {
+    if (t.mode === 'off') {
+      lines.push(shortDuration(used) + ' of working time so far.');
+    } else {
+      const left = remaining(t);
+      lines.push(
+        left > 0
+          ? clock(left) + ' of working time remaining' + (t.runningSince === null ? ' — clock stopped, the exam is not open.' : '.')
+          : 'Working time has run out — ' + shortDuration(-left) + ' into overtime.',
+      );
+    }
+  } else if (t.mode === 'off') {
+    lines.push('Took ' + shortDuration(used) + ' of working time (untimed).');
+  } else {
+    lines.push(
+      'Used ' + shortDuration(used) + ' of the ' + describeDuration(t.totalMinutes) + ' allowed.',
+    );
+    if (t.autoSubmitted) {
+      lines.push('The clock reached zero and the paper was submitted automatically.');
+    } else if (over > 0) {
+      lines.push('Ran ' + shortDuration(over) + ' past the time — that much would have been lost.');
+    } else if (limitMs(t) - used > 60_000) {
+      lines.push('Finished with ' + shortDuration(limitMs(t) - used) + ' to spare.');
+    }
+  }
+  if (away !== null && away > 3 * 60_000) {
+    lines.push(
+      'Not sat in one go: ' + shortDuration(away) + ' passed with the exam closed, so the clock was stopped.',
+    );
+  }
+
+  const urgent = t.autoSubmitted || over > 0;
+  return (
+    <div className={'timing-summary' + (urgent ? ' urgent' : '')}>
+      <div className="head">
+        <span className="badge timing">{modeLabel(t.mode)}</span>
+        {t.mode !== 'off' && <span className="paper-length">{describeDuration(t.totalMinutes)} paper</span>}
+      </div>
+      <div>{lines.join(' ')}</div>
+    </div>
+  );
+}
+
 export function AttemptViewPage() {
   const { id } = useParams<{ id: string }>();
   const store = getStore();
@@ -52,6 +116,7 @@ export function AttemptViewPage() {
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveMsg, setSaveMsg] = useState('');
+  const [, setTick] = useState(0);
 
   useEffect(() => {
     if (!id) return;
@@ -67,6 +132,14 @@ export function AttemptViewPage() {
     return un;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+
+  // Keep "last activity" and the watcher's countdown moving between writes.
+  const watching = attempt?.status === 'in-progress';
+  useEffect(() => {
+    if (!watching) return;
+    const t = window.setInterval(() => setTick((x) => x + 1), 1000);
+    return () => window.clearInterval(t);
+  }, [watching]);
 
   // Seed the working copy from the stored attempt until the teacher edits it.
   useEffect(() => {
@@ -208,6 +281,8 @@ export function AttemptViewPage() {
           </span>
         </div>
       )}
+
+      <TimingSummary attempt={attempt} />
 
       {returned && (
         <div className="feedback-banner">
