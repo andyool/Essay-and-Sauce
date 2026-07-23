@@ -127,9 +127,16 @@ export class LocalStore implements Store {
     return cls;
   }
 
-  async listStudents(): Promise<StudentProfile[]> {
-    const s = read<StudentProfile | null>(KEY_STUDENT, null);
-    return s ? [s] : [];
+  // Only this browser's student exists in local mode, but polling still shows
+  // them appearing on the roster the moment they join in another tab.
+  subscribeStudents(cb: (students: StudentProfile[]) => void): Unsubscribe {
+    const emit = () => {
+      const s = read<StudentProfile | null>(KEY_STUDENT, null);
+      cb(s ? [s] : []);
+    };
+    emit();
+    const timer = window.setInterval(emit, 2000);
+    return () => window.clearInterval(timer);
   }
 
   async listAllAttempts(): Promise<Attempt[]> {

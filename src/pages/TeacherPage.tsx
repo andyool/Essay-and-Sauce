@@ -9,6 +9,9 @@ import { TEACHER_EMAILS } from '../store/firebaseConfig';
 
 type Tab = 'live' | 'students' | 'attempts' | 'classes';
 
+/** A student profile row joined a class less than this ago counts as new. */
+const JUST_JOINED_MS = 10 * 60 * 1000;
+
 function latestSnippet(a: Attempt): string {
   if (a.page === 2 && a.essayText.trim()) return a.essayText.trim().slice(-320);
   for (const letter of ['c', 'b', 'a'] as const) {
@@ -16,6 +19,163 @@ function latestSnippet(a: Attempt): string {
   }
   if (a.essayText.trim()) return a.essayText.trim().slice(-320);
   return '';
+}
+
+// A student who signs out and back in gets a fresh session, so the same person
+// can own several profile rows and their attempts can carry several uids.
+// Group everything by their stable identity (class + name).
+function identityOf(x: { studentKey?: string; studentUid?: string; uid?: string }): string {
+  return x.studentKey ?? x.studentUid ?? x.uid ?? '?';
+}
+
+function attemptWords(a: Attempt): number {
+  return (
+    wordCount(a.answers.a) + wordCount(a.answers.b) + wordCount(a.answers.c) + wordCount(a.essayText)
+  );
+}
+
+function markLabel(a: Attempt): string {
+  if (a.feedback?.returnedAt) {
+    return feedbackComplete(a.feedback)
+      ? feedbackTotal(a.feedback) + '/50'
+      : feedbackTotal(a.feedback) + ' (partial)';
+  }
+  if (a.feedback) return 'Draft';
+  return a.status === 'submitted' ? 'To mark' : '—';
+}
+
+/** The attempts table, used both for "All attempts" and for one student's
+ *  history (where the student and class columns would just repeat). */
+function AttemptsTable({
+  attempts,
+  showStudent = false,
+  onDelete,
+}: {
+  attempts: Attempt[];
+  showStudent?: boolean;
+  onDelete: (a: Attempt) => void;
+}) {
+  return (
+    <table className="roster">
+      <thead>
+        <tr>
+          {showStudent && <th>Student</th>}
+          {showStudent && <th>Class</th>}
+          <th>Paper</th>
+          <th>Status</th>
+          <th>Started</th>
+          <th>Words</th>
+          <th>Time</th>
+          <th>Mark</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        {attempts.map((a) => (
+          <tr key={a.id}>
+            {showStudent && <td>{a.studentName}</td>}
+            {showStudent && <td>{a.classCode}</td>}
+            <td>{getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId}</td>
+            <td>
+              <span className={'badge ' + (a.status === 'submitted' ? 'submitted' : 'progress')}>
+                {a.status === 'submitted' ? 'Submitted' : 'In progress'}
+              </span>
+            </td>
+            <td>{fmtDate(a.createdAt)}</td>
+            <td>{attemptWords(a)}</td>
+            <td style={{ whiteSpace: 'nowrap' }}>{a.timing ? timingBrief(a.timing, a.status) : '—'}</td>
+            <td style={{ whiteSpace: 'nowrap' }}>{markLabel(a)}</td>
+            <td style={{ whiteSpace: 'nowrap' }}>
+              <Link to={'/attempt/' + a.id}>Open</Link>
+              {' · '}
+              <a
+                href="#delete"
+                className="danger-link"
+                onClick={(e) => {
+                  e.preventDefault();
+                  onDelete(a);
+                }}
+              >
+                Delete
+              </a>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  );
+}
+
+/** One student's history, opened from the roster: everything they have sat,
+ *  newest first, without going near the all-attempts list. */
+function StudentDetail({
+  student,
+  classTitle,
+  attempts,
+  onBack,
+  onDelete,
+}: {
+  student: StudentProfile;
+  classTitle?: string;
+  attempts: Attempt[];
+  onBack: () => void;
+  onDelete: (a: Attempt) => void;
+}) {
+  const submitted = attempts.filter((a) => a.status === 'submitted').length;
+  const inProgress = attempts.length - submitted;
+  const returned = attempts.filter(
+    (a) => a.feedback?.returnedAt && feedbackComplete(a.feedback),
+  );
+  const average =
+    returned.length > 0
+      ? Math.round(
+          (returned.reduce((sum, a) => sum + feedbackTotal(a.feedback!), 0) / returned.length) * 10,
+        ) / 10
+      : null;
+
+  return (
+    <div className="student-detail">
+      <button className="back-link" onClick={onBack}>
+        ← All students
+      </button>
+      <div className="student-head">
+        <div>
+          <h2>{student.name}</h2>
+          <div className="meta">
+            {classTitle ? classTitle + ' · ' : ''}Class {student.classCode} · joined{' '}
+            {fmtDate(student.createdAt)}
+          </div>
+        </div>
+        <div className="stat-chips">
+          <div className="chip">
+            <b>{attempts.length}</b>
+            <span>attempt{attempts.length === 1 ? '' : 's'}</span>
+          </div>
+          <div className="chip">
+            <b>{submitted}</b>
+            <span>submitted</span>
+          </div>
+          {inProgress > 0 && (
+            <div className="chip">
+              <b>{inProgress}</b>
+              <span>in progress</span>
+            </div>
+          )}
+          {average !== null && (
+            <div className="chip">
+              <b>{average}/50</b>
+              <span>average mark</span>
+            </div>
+          )}
+        </div>
+      </div>
+      {attempts.length === 0 ? (
+        <div className="empty">{student.name} hasn’t started a paper yet.</div>
+      ) : (
+        <AttemptsTable attempts={attempts} onDelete={onDelete} />
+      )}
+    </div>
+  );
 }
 
 export function TeacherPage() {
@@ -35,7 +195,14 @@ export function TeacherPage() {
   const [classFilter, setClassFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [newClassName, setNewClassName] = useState('');
+  /** Identity of the student whose history is open on the Students tab. */
+  const [openStudent, setOpenStudent] = useState<string | null>(null);
   const [, setTick] = useState(0);
+
+  function chooseTab(t: Tab) {
+    setTab(t);
+    setOpenStudent(null);
+  }
 
   // In local mode there is no real teacher auth — flip the flag so the store
   // reports consistently. In cloud mode, wait for Firebase to restore any
@@ -55,13 +222,8 @@ export function TeacherPage() {
   const refresh = useCallback(async () => {
     if (!signedIn) return;
     try {
-      const [att, stu, cls] = await Promise.all([
-        store.listAllAttempts(),
-        store.listStudents(),
-        store.listClasses(),
-      ]);
+      const [att, cls] = await Promise.all([store.listAllAttempts(), store.listClasses()]);
       setAttempts(att);
-      setStudents(stu);
       setClasses(cls);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not load data.');
@@ -73,13 +235,17 @@ export function TeacherPage() {
     void refresh();
   }, [refresh]);
 
-  // Live subscription + a ticker so "last activity" labels stay fresh.
+  // Live subscriptions (attempts in progress, and the class roster, which
+  // grows the moment a student joins) + a ticker so "last activity" labels
+  // stay fresh.
   useEffect(() => {
     if (!signedIn) return;
-    const un = store.subscribeActiveAttempts(setActive);
+    const unActive = store.subscribeActiveAttempts(setActive);
+    const unStudents = store.subscribeStudents(setStudents);
     const t = window.setInterval(() => setTick((x) => x + 1), 5000);
     return () => {
-      un();
+      unActive();
+      unStudents();
       window.clearInterval(t);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -124,6 +290,7 @@ export function TeacherPage() {
     }
     await store.deleteAttempt(a.id);
     setAttempts((cur) => cur.filter((x) => x.id !== a.id));
+    setActive((cur) => cur.filter((x) => x.id !== a.id));
   }
 
   async function createClass(e: React.FormEvent) {
@@ -134,30 +301,42 @@ export function TeacherPage() {
     void refresh();
   }
 
+  // The full list is a snapshot, loaded on sign-in and on ↻ Refresh; the live
+  // subscription keeps in-progress work current. Merging the two means a paper
+  // started since the last refresh still shows up in the tables below.
+  const allAttempts = useMemo(() => {
+    const byId = new Map<string, Attempt>();
+    for (const a of attempts) byId.set(a.id, a);
+    for (const a of active) byId.set(a.id, a);
+    return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
+  }, [attempts, active]);
+
   const filteredAttempts = useMemo(() => {
-    return attempts.filter((a) => {
+    return allAttempts.filter((a) => {
       if (classFilter !== 'all' && a.classCode !== classFilter) return false;
       if (search && !a.studentName.toLowerCase().includes(search.toLowerCase())) return false;
       return true;
     });
-  }, [attempts, classFilter, search]);
+  }, [allAttempts, classFilter, search]);
 
-  // A student who signs out and back in gets a fresh session, so the same
-  // person can own several profile rows. Group everything by their stable
-  // identity (class + name) for the roster.
-  const identityOf = (x: { studentKey?: string; studentUid?: string; uid?: string }) =>
-    x.studentKey ?? x.studentUid ?? x.uid ?? '?';
+  // Attempts written before studentKey existed carry only the session uid;
+  // reunite them with their student through the profile that session created.
+  const identityByUid = useMemo(() => {
+    const m = new Map<string, string>();
+    for (const s of students) m.set(s.uid, identityOf(s));
+    return m;
+  }, [students]);
 
   const attemptsByStudent = useMemo(() => {
     const m = new Map<string, Attempt[]>();
-    for (const a of attempts) {
-      const k = identityOf(a);
+    for (const a of allAttempts) {
+      const k = a.studentKey ?? identityByUid.get(a.studentUid) ?? a.studentUid;
       const list = m.get(k) ?? [];
       list.push(a);
       m.set(k, list);
     }
     return m;
-  }, [attempts]);
+  }, [allAttempts, identityByUid]);
 
   const rosterStudents = useMemo(() => {
     const m = new Map<string, StudentProfile>();
@@ -168,6 +347,30 @@ export function TeacherPage() {
     }
     return [...m.values()].sort((a, b) => a.name.localeCompare(b.name));
   }, [students]);
+
+  const roster = useMemo(
+    () => rosterStudents.filter((s) => classFilter === 'all' || s.classCode === classFilter),
+    [rosterStudents, classFilter],
+  );
+
+  const openProfile = openStudent
+    ? (rosterStudents.find((s) => identityOf(s) === openStudent) ?? null)
+    : null;
+
+  const classSelect = (
+    <select
+      className="class-select"
+      value={classFilter}
+      onChange={(e) => setClassFilter(e.target.value)}
+    >
+      <option value="all">All classes</option>
+      {classes.map((c) => (
+        <option key={c.id} value={c.code}>
+          {c.name} ({c.code})
+        </option>
+      ))}
+    </select>
+  );
 
   if (!signedIn) {
     return (
@@ -219,16 +422,16 @@ export function TeacherPage() {
       {error && <div className="form-error">{error}</div>}
 
       <div className="tabs">
-        <button className={tab === 'live' ? 'active' : ''} onClick={() => setTab('live')}>
+        <button className={tab === 'live' ? 'active' : ''} onClick={() => chooseTab('live')}>
           Live now {active.length > 0 ? `(${active.length})` : ''}
         </button>
-        <button className={tab === 'students' ? 'active' : ''} onClick={() => setTab('students')}>
-          Students
+        <button className={tab === 'students' ? 'active' : ''} onClick={() => chooseTab('students')}>
+          Students {rosterStudents.length > 0 ? `(${rosterStudents.length})` : ''}
         </button>
-        <button className={tab === 'attempts' ? 'active' : ''} onClick={() => setTab('attempts')}>
+        <button className={tab === 'attempts' ? 'active' : ''} onClick={() => chooseTab('attempts')}>
           All attempts
         </button>
-        <button className={tab === 'classes' ? 'active' : ''} onClick={() => setTab('classes')}>
+        <button className={tab === 'classes' ? 'active' : ''} onClick={() => chooseTab('classes')}>
           Classes
         </button>
         <button onClick={() => void refresh()} title="Reload students, attempts and classes">
@@ -296,10 +499,30 @@ export function TeacherPage() {
         </>
       )}
 
-      {tab === 'students' && (
+      {tab === 'students' && openProfile && (
+        <StudentDetail
+          student={openProfile}
+          classTitle={classes.find((c) => c.code === openProfile.classCode)?.name}
+          attempts={attemptsByStudent.get(identityOf(openProfile)) ?? []}
+          onBack={() => setOpenStudent(null)}
+          onDelete={deleteAttempt}
+        />
+      )}
+
+      {tab === 'students' && !openProfile && (
         <>
-          {rosterStudents.length === 0 ? (
-            <div className="empty">No students have joined yet. Share a class code from the Classes tab.</div>
+          <div className="filter-bar">
+            {classSelect}
+            <span className="roster-note">
+              Updating live — students appear here as they join. Click a name for their attempts.
+            </span>
+          </div>
+          {roster.length === 0 ? (
+            <div className="empty">
+              {rosterStudents.length === 0
+                ? 'No students have joined yet. Share a class code from the Classes tab.'
+                : 'No students have joined this class yet.'}
+            </div>
           ) : (
             <table className="roster">
               <thead>
@@ -312,17 +535,27 @@ export function TeacherPage() {
                 </tr>
               </thead>
               <tbody>
-                {rosterStudents.map((s) => {
+                {roster.map((s) => {
                   const list = attemptsByStudent.get(identityOf(s)) ?? [];
                   const submitted = list.filter((a) => a.status === 'submitted').length;
-                  const last = list.length > 0 ? Math.max(...list.map((a) => a.updatedAt)) : null;
+                  const last = Math.max(s.lastActiveAt, ...list.map((a) => a.updatedAt));
+                  const isNew = Date.now() - s.createdAt < JUST_JOINED_MS;
                   return (
-                    <tr key={s.uid}>
-                      <td>{s.name}</td>
+                    <tr
+                      key={s.uid}
+                      className="clickable"
+                      onClick={() => setOpenStudent(identityOf(s))}
+                    >
+                      <td>
+                        <button className="name-link" title={'Open ' + s.name + '’s attempts'}>
+                          {s.name}
+                        </button>
+                        {isNew && <span className="badge live just-joined">Just joined</span>}
+                      </td>
                       <td>{s.classCode}</td>
                       <td>{list.length}</td>
                       <td>{submitted}</td>
-                      <td>{last ? timeAgo(last) : '—'}</td>
+                      <td>{timeAgo(last)}</td>
                     </tr>
                   );
                 })}
@@ -334,19 +567,8 @@ export function TeacherPage() {
 
       {tab === 'attempts' && (
         <>
-          <div style={{ display: 'flex', gap: 10, marginBottom: 14, flexWrap: 'wrap' }}>
-            <select
-              value={classFilter}
-              onChange={(e) => setClassFilter(e.target.value)}
-              style={{ font: 'inherit', padding: '8px 10px', borderRadius: 8, border: '1px solid var(--line)' }}
-            >
-              <option value="all">All classes</option>
-              {classes.map((c) => (
-                <option key={c.id} value={c.code}>
-                  {c.name} ({c.code})
-                </option>
-              ))}
-            </select>
+          <div className="filter-bar">
+            {classSelect}
             <input
               type="text"
               placeholder="Search by student name…"
@@ -358,74 +580,7 @@ export function TeacherPage() {
           {filteredAttempts.length === 0 ? (
             <div className="empty">No attempts match.</div>
           ) : (
-            <table className="roster">
-              <thead>
-                <tr>
-                  <th>Student</th>
-                  <th>Class</th>
-                  <th>Paper</th>
-                  <th>Status</th>
-                  <th>Started</th>
-                  <th>Words</th>
-                  <th>Time</th>
-                  <th>Mark</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredAttempts.map((a) => {
-                  const words =
-                    wordCount(a.answers.a) +
-                    wordCount(a.answers.b) +
-                    wordCount(a.answers.c) +
-                    wordCount(a.essayText);
-                  return (
-                    <tr key={a.id}>
-                      <td>{a.studentName}</td>
-                      <td>{a.classCode}</td>
-                      <td>{getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId}</td>
-                      <td>
-                        <span
-                          className={'badge ' + (a.status === 'submitted' ? 'submitted' : 'progress')}
-                        >
-                          {a.status === 'submitted' ? 'Submitted' : 'In progress'}
-                        </span>
-                      </td>
-                      <td>{fmtDate(a.createdAt)}</td>
-                      <td>{words}</td>
-                      <td style={{ whiteSpace: 'nowrap' }}>
-                        {a.timing ? timingBrief(a.timing, a.status) : '—'}
-                      </td>
-                      <td style={{ whiteSpace: 'nowrap' }}>
-                        {a.feedback?.returnedAt
-                          ? (feedbackComplete(a.feedback)
-                              ? feedbackTotal(a.feedback) + '/50'
-                              : feedbackTotal(a.feedback) + ' (partial)')
-                          : a.feedback
-                            ? 'Draft'
-                            : a.status === 'submitted'
-                              ? 'To mark'
-                              : '—'}
-                      </td>
-                      <td style={{ whiteSpace: 'nowrap' }}>
-                        <Link to={'/attempt/' + a.id}>Open</Link>
-                        {' · '}
-                        <a
-                          href="#delete"
-                          className="danger-link"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            void deleteAttempt(a);
-                          }}
-                        >
-                          Delete
-                        </a>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <AttemptsTable attempts={filteredAttempts} showStudent onDelete={deleteAttempt} />
           )}
         </>
       )}
@@ -459,8 +614,19 @@ export function TeacherPage() {
               </thead>
               <tbody>
                 {classes.map((c) => (
-                  <tr key={c.id}>
-                    <td>{c.name}</td>
+                  <tr
+                    key={c.id}
+                    className="clickable"
+                    onClick={() => {
+                      setClassFilter(c.code);
+                      chooseTab('students');
+                    }}
+                  >
+                    <td>
+                      <button className="name-link" title={'Show the ' + c.name + ' roster'}>
+                        {c.name}
+                      </button>
+                    </td>
                     <td>
                       <span className="class-code">{c.code}</span>
                     </td>

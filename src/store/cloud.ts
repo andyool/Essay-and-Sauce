@@ -239,12 +239,23 @@ export class CloudStore implements Store {
     return cls;
   }
 
-  async listStudents(): Promise<StudentProfile[]> {
-    await this.initialAuth;
-    const snap = await getDocs(collection(this.db, 'students'));
-    return snap.docs
-      .map((d) => d.data() as StudentProfile)
-      .sort((a, b) => a.name.localeCompare(b.name));
+  subscribeStudents(cb: (students: StudentProfile[]) => void): Unsubscribe {
+    let inner: Unsubscribe | null = null;
+    let cancelled = false;
+    void this.initialAuth.then(() => {
+      if (cancelled) return;
+      inner = onSnapshot(collection(this.db, 'students'), (snap) => {
+        cb(
+          snap.docs
+            .map((d) => d.data() as StudentProfile)
+            .sort((a, b) => a.name.localeCompare(b.name)),
+        );
+      });
+    });
+    return () => {
+      cancelled = true;
+      if (inner) inner();
+    };
   }
 
   async listAllAttempts(): Promise<Attempt[]> {

@@ -29,7 +29,9 @@ export interface Store {
   isTeacherSignedIn(): boolean;
   listClasses(): Promise<ClassInfo[]>;
   createClass(name: string): Promise<ClassInfo>;
-  listStudents(): Promise<StudentProfile[]>;
+  /** Live class roster: fires straight away, then again whenever a student
+   *  joins a class or rejoins on another device. */
+  subscribeStudents(cb: (students: StudentProfile[]) => void): Unsubscribe;
   listAllAttempts(): Promise<Attempt[]>;
   /** Live view: all in-progress attempts, updating in near-realtime. */
   subscribeActiveAttempts(cb: (attempts: Attempt[]) => void): Unsubscribe;
