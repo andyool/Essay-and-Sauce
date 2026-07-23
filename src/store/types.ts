@@ -15,7 +15,7 @@ export interface Store {
   signOutStudent(): Promise<void>;
 
   // ---- attempts ----
-  listMyAttempts(uid: string): Promise<Attempt[]>;
+  listMyAttempts(student: StudentProfile): Promise<Attempt[]>;
   getAttempt(id: string): Promise<Attempt | null>;
   createAttempt(attempt: Attempt): Promise<void>;
   updateAttempt(id: string, patch: Partial<Attempt>): Promise<void>;

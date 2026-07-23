@@ -43,7 +43,7 @@ export function StudentDashboard() {
         return;
       }
       setStudent(s);
-      const list = await store.listMyAttempts(s.uid);
+      const list = await store.listMyAttempts(s);
       if (!cancelled) {
         setAttempts(list);
         setLoading(false);
@@ -76,6 +76,7 @@ export function StudentDashboard() {
       const attempt: Attempt = {
         id: newId(),
         studentUid: student.uid,
+        studentKey: student.studentKey,
         studentName: student.name,
         classId: student.classId,
         classCode: student.classCode,

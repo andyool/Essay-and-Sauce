@@ -141,15 +141,32 @@ export function TeacherPage() {
     });
   }, [attempts, classFilter, search]);
 
+  // A student who signs out and back in gets a fresh session, so the same
+  // person can own several profile rows. Group everything by their stable
+  // identity (class + name) for the roster.
+  const identityOf = (x: { studentKey?: string; studentUid?: string; uid?: string }) =>
+    x.studentKey ?? x.studentUid ?? x.uid ?? '?';
+
   const attemptsByStudent = useMemo(() => {
     const m = new Map<string, Attempt[]>();
     for (const a of attempts) {
-      const list = m.get(a.studentUid) ?? [];
+      const k = identityOf(a);
+      const list = m.get(k) ?? [];
       list.push(a);
-      m.set(a.studentUid, list);
+      m.set(k, list);
     }
     return m;
   }, [attempts]);
+
+  const rosterStudents = useMemo(() => {
+    const m = new Map<string, StudentProfile>();
+    for (const s of students) {
+      const k = identityOf(s);
+      const prev = m.get(k);
+      if (!prev || s.lastActiveAt > prev.lastActiveAt) m.set(k, s);
+    }
+    return [...m.values()].sort((a, b) => a.name.localeCompare(b.name));
+  }, [students]);
 
   if (!signedIn) {
     return (
@@ -273,7 +290,7 @@ export function TeacherPage() {
 
       {tab === 'students' && (
         <>
-          {students.length === 0 ? (
+          {rosterStudents.length === 0 ? (
             <div className="empty">No students have joined yet. Share a class code from the Classes tab.</div>
           ) : (
             <table className="roster">
@@ -287,8 +304,8 @@ export function TeacherPage() {
                 </tr>
               </thead>
               <tbody>
-                {students.map((s) => {
-                  const list = attemptsByStudent.get(s.uid) ?? [];
+                {rosterStudents.map((s) => {
+                  const list = attemptsByStudent.get(identityOf(s)) ?? [];
                   const submitted = list.filter((a) => a.status === 'submitted').length;
                   const last = list.length > 0 ? Math.max(...list.map((a) => a.updatedAt)) : null;
                   return (
@@ -424,7 +441,7 @@ export function TeacherPage() {
                       <span className="class-code">{c.code}</span>
                     </td>
                     <td>{fmtDate(c.createdAt)}</td>
-                    <td>{students.filter((s) => s.classCode === c.code).length}</td>
+                    <td>{rosterStudents.filter((s) => s.classCode === c.code).length}</td>
                   </tr>
                 ))}
               </tbody>

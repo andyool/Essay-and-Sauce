@@ -11,6 +11,13 @@ service cloud.firestore {
       return request.auth != null;
     }
 
+    // The caller's stable student identity (class + name), as registered in
+    // their student profile. Lets a student who signed out and back in (new
+    // session, same name) reconnect to their own attempts.
+    function callerKey() {
+      return get(/databases/$(database)/documents/students/$(request.auth.uid)).data.studentKey;
+    }
+
     // Classes: any signed-in user may look up a class by its join code;
     // only the teacher may create or change classes.
     match /classes/{classId} {
@@ -18,7 +25,7 @@ service cloud.firestore {
       allow create, update, delete: if isTeacher();
     }
 
-    // Student profiles: each student may manage only their own profile;
+    // Student profiles: each session may manage only its own profile;
     // the teacher may read all.
     match /students/{uid} {
       allow read: if isTeacher() || (isSignedIn() && request.auth.uid == uid);
@@ -26,18 +33,26 @@ service cloud.firestore {
       allow delete: if isTeacher();
     }
 
-    // Attempts: students create and edit only their own; the teacher can
-    // read (and, if ever needed, delete) everything.
+    // Attempts: a student may access attempts created in this session
+    // (studentUid) or in any earlier session under the same name in the same
+    // class (studentKey). The identity fields themselves are immutable.
     match /attempts/{attemptId} {
       allow read: if isTeacher()
-        || (isSignedIn() && resource.data.studentUid == request.auth.uid);
+        || (isSignedIn()
+            && (resource.data.studentUid == request.auth.uid
+                || resource.data.studentKey == callerKey()));
       allow create: if isSignedIn()
-        && request.resource.data.studentUid == request.auth.uid;
+        && request.resource.data.studentUid == request.auth.uid
+        && request.resource.data.studentKey == callerKey();
       allow update: if isSignedIn()
-        && resource.data.studentUid == request.auth.uid
-        && request.resource.data.studentUid == request.auth.uid;
+        && (resource.data.studentUid == request.auth.uid
+            || resource.data.studentKey == callerKey())
+        && request.resource.data.studentUid == resource.data.studentUid
+        && request.resource.data.studentKey == resource.data.studentKey;
       allow delete: if isTeacher()
-        || (isSignedIn() && resource.data.studentUid == request.auth.uid);
+        || (isSignedIn()
+            && (resource.data.studentUid == request.auth.uid
+                || resource.data.studentKey == callerKey()));
     }
   }
 }

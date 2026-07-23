@@ -1,4 +1,5 @@
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
+import { makeStudentKey } from '../lib/format';
 import type { Store, Unsubscribe } from './types';
 
 // LocalStore: single-browser fallback used until Firebase is configured.
@@ -49,6 +50,7 @@ export class LocalStore implements Store {
       name: name.trim(),
       classId: cls.id,
       classCode: code,
+      studentKey: makeStudentKey(cls.id, name),
       createdAt: existing?.createdAt ?? Date.now(),
       lastActiveAt: Date.now(),
     };
@@ -64,9 +66,9 @@ export class LocalStore implements Store {
     localStorage.removeItem(KEY_STUDENT);
   }
 
-  async listMyAttempts(uid: string): Promise<Attempt[]> {
+  async listMyAttempts(student: StudentProfile): Promise<Attempt[]> {
     return Object.values(readAttempts())
-      .filter((a) => a.studentUid === uid)
+      .filter((a) => a.studentUid === student.uid || (a.studentKey && a.studentKey === student.studentKey))
       .sort((a, b) => b.createdAt - a.createdAt);
   }
 

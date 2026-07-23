@@ -23,8 +23,15 @@ import {
   type Firestore,
 } from 'firebase/firestore';
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
+import { makeStudentKey } from '../lib/format';
 import { TEACHER_EMAILS } from './firebaseConfig';
 import type { Store, Unsubscribe } from './types';
+
+// A student "signing out" should not destroy their anonymous Firebase session
+// (it can never be signed back into). Instead we set this flag and keep the
+// session; rejoining with the same name reuses it, while a different name
+// rotates to a fresh session so shared devices stay separate.
+const KEY_SOFT_SIGNOUT = 'eas.studentSignedOut';
 
 // CloudStore: Firestore-backed implementation.
 //  - Students sign in anonymously; their profile lives at students/{uid}.
@@ -73,45 +80,90 @@ export class CloudStore implements Store {
   // ---- student session ----
 
   async joinClass(name: string, classCode: string): Promise<StudentProfile> {
-    const user = await this.ensureAnonAuth();
     const code = classCode.trim().toUpperCase();
+    let user = await this.ensureAnonAuth();
     const q = query(collection(this.db, 'classes'), where('code', '==', code));
     const snap = await getDocs(q);
     if (snap.empty) {
       throw new Error('No class found with code "' + code + '". Check the code with your teacher.');
     }
     const clsDoc = snap.docs[0];
+    const studentKey = makeStudentKey(clsDoc.id, name);
+
+    // If this browser's session belongs to a DIFFERENT student (another name),
+    // rotate to a fresh anonymous session so identities stay separate on
+    // shared devices. Same name → keep the session and its work.
     const existing = await getDoc(doc(this.db, 'students', user.uid));
+    if (existing.exists()) {
+      const prev = existing.data() as StudentProfile;
+      const prevKey = prev.studentKey ?? makeStudentKey(prev.classId, prev.name);
+      if (prevKey !== studentKey) {
+        await signOut(this.auth);
+        user = (await signInAnonymously(this.auth)).user;
+      }
+    }
+
+    const fresh = await getDoc(doc(this.db, 'students', user.uid));
     const profile: StudentProfile = {
       uid: user.uid,
       name: name.trim(),
       classId: clsDoc.id,
       classCode: code,
-      createdAt: existing.exists() ? (existing.data() as StudentProfile).createdAt : Date.now(),
+      studentKey,
+      createdAt: fresh.exists() ? (fresh.data() as StudentProfile).createdAt : Date.now(),
       lastActiveAt: Date.now(),
     };
     await setDoc(doc(this.db, 'students', user.uid), profile);
+    localStorage.removeItem(KEY_SOFT_SIGNOUT);
     return profile;
   }
 
   async getCurrentStudent(): Promise<StudentProfile | null> {
+    if (localStorage.getItem(KEY_SOFT_SIGNOUT)) return null;
     const user = await this.user();
     if (!user || !user.isAnonymous) return null;
     const snap = await getDoc(doc(this.db, 'students', user.uid));
-    return snap.exists() ? (snap.data() as StudentProfile) : null;
+    if (!snap.exists()) return null;
+    const profile = snap.data() as StudentProfile;
+    // Backfill the stable identity on profiles created before it existed.
+    if (!profile.studentKey) {
+      profile.studentKey = makeStudentKey(profile.classId, profile.name);
+      await setDoc(doc(this.db, 'students', user.uid), profile);
+    }
+    return profile;
   }
 
   async signOutStudent(): Promise<void> {
-    await signOut(this.auth);
+    const user = await this.user();
+    if (user && !user.isAnonymous) {
+      await signOut(this.auth);
+      return;
+    }
+    // Keep the anonymous session so the same student can reconnect;
+    // just hide the signed-in state until the next join.
+    localStorage.setItem(KEY_SOFT_SIGNOUT, '1');
   }
 
   // ---- attempts ----
 
-  async listMyAttempts(uid: string): Promise<Attempt[]> {
+  async listMyAttempts(student: StudentProfile): Promise<Attempt[]> {
     await this.initialAuth;
-    const q = query(collection(this.db, 'attempts'), where('studentUid', '==', uid));
-    const snap = await getDocs(q);
-    return snap.docs.map((d) => d.data() as Attempt).sort((a, b) => b.createdAt - a.createdAt);
+    const byId = new Map<string, Attempt>();
+    const uidSnap = await getDocs(
+      query(collection(this.db, 'attempts'), where('studentUid', '==', student.uid)),
+    );
+    for (const d of uidSnap.docs) byId.set(d.id, d.data() as Attempt);
+    // Work from earlier sessions/devices, found via the stable identity. This
+    // query needs the updated security rules; tolerate denial until then.
+    try {
+      const keySnap = await getDocs(
+        query(collection(this.db, 'attempts'), where('studentKey', '==', student.studentKey)),
+      );
+      for (const d of keySnap.docs) byId.set(d.id, d.data() as Attempt);
+    } catch {
+      /* rules not updated yet — same-session attempts still listed above */
+    }
+    return [...byId.values()].sort((a, b) => b.createdAt - a.createdAt);
   }
 
   async getAttempt(id: string): Promise<Attempt | null> {

@@ -26,6 +26,12 @@ export function wordCount(text: string): number {
   return t.split(/\s+/).length;
 }
 
+/** Stable student identity: class + normalised name ("  Alex  NGUYEN " → "alex nguyen"). */
+export function makeStudentKey(classId: string, name: string): string {
+  const norm = name.trim().toLowerCase().replace(/\s+/g, ' ');
+  return classId + '|' + norm;
+}
+
 export function newId(): string {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) return crypto.randomUUID();
   return 'id-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);

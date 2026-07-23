@@ -88,6 +88,8 @@ export type AttemptStatus = 'in-progress' | 'submitted';
 export interface Attempt {
   id: string;
   studentUid: string;
+  /** See StudentProfile.studentKey. Older attempts may lack this field. */
+  studentKey?: string;
   studentName: string;
   classId: string;
   classCode: string;
@@ -109,6 +111,9 @@ export interface StudentProfile {
   name: string;
   classId: string;
   classCode: string;
+  /** Stable identity: class + normalised name. Lets a student reconnect to
+   *  their work after signing out or switching devices. */
+  studentKey: string;
   createdAt: number;
   lastActiveAt: number;
 }
