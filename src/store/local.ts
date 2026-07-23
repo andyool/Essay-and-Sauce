@@ -84,6 +84,12 @@ export class LocalStore implements Store {
     write(KEY_ATTEMPTS, all);
   }
 
+  async deleteAttempt(id: string): Promise<void> {
+    const all = readAttempts();
+    delete all[id];
+    write(KEY_ATTEMPTS, all);
+  }
+
   subscribeAttempt(id: string, cb: (a: Attempt | null) => void): Unsubscribe {
     cb(readAttempts()[id] ?? null);
     const timer = window.setInterval(() => cb(readAttempts()[id] ?? null), 2000);

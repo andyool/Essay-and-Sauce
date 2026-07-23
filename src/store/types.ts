@@ -16,6 +16,8 @@ export interface Store {
   getAttempt(id: string): Promise<Attempt | null>;
   createAttempt(attempt: Attempt): Promise<void>;
   updateAttempt(id: string, patch: Partial<Attempt>): Promise<void>;
+  /** Permanently delete an attempt (students: own attempts; teacher: any). */
+  deleteAttempt(id: string): Promise<void>;
   subscribeAttempt(id: string, cb: (a: Attempt | null) => void): Unsubscribe;
 
   // ---- teacher ----

@@ -11,11 +11,20 @@ export interface SyllabusPoint {
 
 export type Era = 'early' | 'mid' | 'late' | 'whole';
 
+export interface SourceImage {
+  /** Path under public/, e.g. 'sources/boycott-1933.jpg' */
+  src: string;
+  alt: string;
+  /** Attribution/credit line shown in small print under the image. */
+  credit: string;
+}
+
 export interface SourceDoc {
   n: 1 | 2 | 3;
   kind: 'visual' | 'text';
   attribution: string;
-  body: string;          // extract text, or a detailed description of the visual source
+  body: string;          // extract text, or a description of the visual source
+  image?: SourceImage;   // the visual itself, when available
   note?: string;         // transcription/identification note beneath a visual
   footnotes?: string[];  // glossed vocabulary
 }

@@ -20,9 +20,14 @@ export const SOURCE_SETS_3: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A photograph taken outside a Jewish-owned department store in Berlin on 1 April 1933, the day of the national boycott of Jewish businesses organised by the Nazi Party.',
-        body: 'The photograph shows two uniformed SA men standing with legs apart in front of the glass doors of a large department store. Between them they hold a printed placard. Shoppers pass in the street; a man in a bowler hat has stopped to read the placard, his expression unreadable. On the store window behind, a six-pointed star and the word “Jude” have been painted in white. A second, smaller placard is pasted to the glass door.',
-        note: 'Note: the large placard reads “Deutsche! Wehrt Euch! Kauft nicht bei Juden!” (“Germans! Defend yourselves! Do not buy from Jews!”). The smaller placard reads “Dieses Geschäft ist in jüdischen Händen” (“This business is in Jewish hands”).',
+          'Source 1: A photograph taken outside a Jewish-owned clothing shop in Berlin on 1 April 1933, the day of the national boycott of Jewish businesses organised by the Nazi Party.',
+        image: {
+          src: 'sources/boycott-1933.jpg',
+          alt: 'SA men fixing a boycott placard reading "Deutsche! Wehrt Euch! Kauft nicht bei Juden!" to the window of a Jewish-owned shop, Berlin, 1 April 1933',
+          credit: 'Bundesarchiv, Bild 102-14468 / Georg Pahl / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows two uniformed SA men, one wearing a swastika armband, fixing a printed placard to the display window of a clothing shop; dressed mannequins are visible behind the glass. One SA man presses the placard flat while the other stands facing the street. At the left of the frame a well-dressed woman with a handbag watches, her expression guarded; other passers-by move along the footpath behind her. Smaller printed notices are already pasted to the top of the window.',
+        note: 'Note: the placard reads “Deutsche! Wehrt Euch! Kauft nicht bei Juden!” (“Germans! Defend yourselves! Do not buy from Jews!”).',
         footnotes: [
           'SA — the Sturmabteilung or stormtroopers, the Nazi Party’s paramilitary organisation.',
         ],
@@ -144,9 +149,14 @@ export const SOURCE_SETS_3: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A propaganda poster issued by the Nazi Party welfare organisation, 1937.',
-        body: 'The poster shows a young fair-haired mother in simple rural dress, seated, cradling an infant. Three more children lean against her — a boy in Hitler Youth uniform, a girl in the dress of the League of German Girls, and a smaller child holding wheat stalks. Behind the group rises a sunlit farmhouse and ploughed fields. Above them, an enormous eagle with outstretched wings shelters the whole family, the folds of its wings shading into the red of a swastika banner. The text across the top reads “MUTTER UND KIND” (“Mother and Child”); across the base, “Die NSDAP schützt die Volksgemeinschaft” (“The NSDAP protects the people’s community”).',
-        note: 'Note: the League of German Girls (Bund Deutscher Mädel) was the girls’ wing of the Hitler Youth.',
+          'Source 1: A press photograph of a ceremony awarding the Cross of Honour of the German Mother (“Mother’s Cross”), Berlin, May 1943.',
+        image: {
+          src: 'sources/mothers-cross.jpg',
+          alt: 'A uniformed official presents the Mother\'s Cross to a woman while League of German Girls members with flowers look on, 1943',
+          credit: 'Bundesarchiv, Bild 183-J06142 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a Party official in uniform fastening the Mother’s Cross, on its ribbon, around the neck of a middle-aged woman in dark clothes. The woman holds a bunch of flowers and a certificate; her face is worn and unsmiling. Beside her stand two teenage girls in the white blouses and neckerchiefs of the League of German Girls (BDM), one bearing more flowers for the next recipient; other mothers wait seated in the rows behind.',
+        note: 'Note: the Cross of Honour of the German Mother was instituted in December 1938 and awarded in bronze for four or five children, silver for six or seven, and gold for eight or more. Members of the Hitler Youth were instructed to salute wearers of the gold cross. The League of German Girls (Bund Deutscher Mädel) was the girls’ wing of the Hitler Youth.',
       },
       {
         n: 2,
@@ -178,13 +188,13 @@ export const SOURCE_SETS_3: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that motherhood and the family are the heart of the people’s community, flourishing under the protection of the Nazi Party)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that motherhood is a service to the nation which the state honours as it honours a soldier’s valour)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains the purpose of the source with detailed reasons specific to it (e.g. to glorify the maternal ideal and encourage childbearing, to present the Party as guardian of family and nation, and to model the approved roles for each family member), supported by details from the source', marks: '3' },
+              { descriptor: 'Explains the purpose of the source with detailed reasons specific to it (e.g. to glorify the maternal ideal and encourage childbearing, to present the Party as the grateful guardian of family and nation, and — in 1943 — to sustain the cult of motherhood as the war consumed Germany’s sons), supported by details from the source', marks: '3' },
               { descriptor: 'Explains the purpose with some accurate and relevant support from the source', marks: '2' },
               { descriptor: 'Identifies a purpose in general terms', marks: '1' },
             ],
@@ -192,7 +202,7 @@ export const SOURCE_SETS_3: SourceSet[] = [
           },
         ],
         notes:
-          'The message is a quick identification; the marks sit in the purpose explanation. Generic purposes (“propaganda”, “to persuade”) are insufficient for full marks: candidates should tie the purpose to the poster’s specific devices — the idealised rural mother, the children already enrolled in Party organisations, the sheltering eagle, the slogan naming the NSDAP as protector — and to the regime’s pronatalist aims.',
+          'The message is a quick identification; the marks sit in the purpose explanation. Generic purposes (“propaganda”, “to persuade”) are insufficient for full marks: candidates should tie the purpose to the photograph’s specific staging — the military-style decoration ceremony for childbearing, the uniformed official as the state’s representative, the BDM girls positioned as the next generation of mothers, the press release of the image — and to the regime’s pronatalist aims and wartime needs.',
       },
       {
         letter: 'b',
@@ -265,12 +275,16 @@ export const SOURCE_SETS_3: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A cartoon published in a Berlin liberal weekly magazine, October 1925, following the signing of the Locarno Treaties.',
-        body: 'The cartoon shows a figure in a frock coat, recognisable as Foreign Minister Gustav Stresemann, climbing a tall ladder that rises out of a dark, storm-tossed sea. The waves below are labelled “Inflation”, “Ruhrkampf” (Ruhr struggle) and “1923”. The ladder’s lower rungs are labelled “Dawes-Plan” and “Locarno”; the upper rungs are unlabelled and vanish into bright clouds, at the top of which shines a sun bearing the words “Völkerbund” (League of Nations). At the foot of the ladder, two small figures — one in the peaked cap of the nationalist veterans’ leagues, the other wearing a Soviet-style star — saw at the ladder’s legs with hacksaws. The caption reads “Der Aufstieg” (“The Ascent”).',
-        note: 'Note: Germany was admitted to the League of Nations in September 1926. The sawing figures represent the enemies of the Republic on the nationalist right and communist left.',
+          'Source 1: A press photograph taken at Locarno, Switzerland, October 1925, during the negotiation of the Locarno Treaties. From left: Gustav Stresemann (Germany), Austen Chamberlain (Britain) and Aristide Briand (France), the foreign ministers of the three powers.',
+        image: {
+          src: 'sources/locarno-1925.jpg',
+          alt: 'Stresemann, Chamberlain and Briand seated together at a small table during the Locarno conference, 1925',
+          credit: 'Bundesarchiv, Bild 183-R03618 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows the three foreign ministers seated close together around a small round table in a hotel room, posed for the camera. Stresemann sits at ease with his legs crossed; Chamberlain, monocle in eye, sits between the German and French ministers; Briand rests his hand on the table beside a tray of cigarettes. Six years after Versailles, the image of a German minister seated as an equal beside the victors of the war was itself the news.',
+        note: 'Note: at Locarno Germany freely accepted its western borders with France and Belgium, easing relations with both powers. Germany was admitted to the League of Nations in September 1926, and Stresemann, Briand and Chamberlain each received the Nobel Peace Prize for the settlement.',
         footnotes: [
-          'Dawes Plan — the 1924 agreement restructuring reparations and opening the way to American loans.',
-          'Locarno — the 1925 treaties in which Germany accepted its western borders, easing relations with France and Britain.',
+          'Monocle — a single eyeglass.',
         ],
       },
       {
@@ -297,20 +311,20 @@ export const SOURCE_SETS_3: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Explain the message of Source 1. In your answer, refer to specific details from the source.',
+        text: 'Explain how Source 1 reflects the changed position of Germany in Europe by 1925.',
         marks: 3,
         key: [
           {
             rows: [
-              { descriptor: 'Explains the message of the source (e.g. that under Stresemann Germany is climbing steadily out of the catastrophe of 1923 towards international acceptance — but that the ascent remains endangered by the Republic’s internal enemies) with detailed, accurate and relevant supporting evidence from the source', marks: '3' },
-              { descriptor: 'Explains the message of the source with some accurate and relevant evidence', marks: '2' },
-              { descriptor: 'Identifies or provides a general comment about the message of the source', marks: '1' },
+              { descriptor: 'Explains how the source reflects Germany’s changed position by connecting specific details of the photograph (the German foreign minister posed at ease and as an equal beside the British and French ministers, the informal negotiating table) to accurate and specific contextual details (the isolation and occupation of 1923, the Dawes Plan, the Locarno settlement and the path to League membership)', marks: '3' },
+              { descriptor: 'Explains the connection between the source and Germany’s changed position with some accurate and relevant details', marks: '2' },
+              { descriptor: 'Identifies the context of the source with a general comment', marks: '1' },
             ],
             subtotal: 3,
           },
         ],
         notes:
-          '“Explain” requires the how and/or why. The message should be stated as a claim and supported from the labelled details: the stormy sea of inflation and the Ruhr struggle below, the rungs of the Dawes Plan and Locarno, the sun of the League above, and — essential for the full answer — the sawing figures of the nationalist right and communist left, which qualify the optimism. Answers noting only the ascent, without the threat to the ladder, have not captured the full message.',
+          '“Explain” requires the how and/or why. The photograph’s force lies in its ordinariness: two years after French troops occupied the Ruhr, the German foreign minister sits smoking with the victors as a colleague. Candidates should connect the staging — equality at the table, the relaxed poses, the very publication of the image — to the recovery of Germany’s international standing between 1923 and 1925 (the end of passive resistance, the Dawes Plan, Locarno). Only basic contextual placement is required.',
       },
       {
         letter: 'b',
@@ -369,7 +383,7 @@ export const SOURCE_SETS_3: SourceSet[] = [
           },
         ],
         notes:
-          'Theme first: the set itself stages the debate — conditional optimism with enemies at the ladder (Source 1), the statesman’s defence (Source 2), the historian’s “lodger’s stability” (Source 3). Strong responses test the representations with own knowledge: the Dawes Plan and American credit, the 1928 election (Nazi vote 2.6 per cent — evidence for stability), Hindenburg’s election in 1925, the fragility of coalitions, agricultural depression, and the speed of unravelling after October 1929 as retrospective evidence about the foundations. Omissions earn marks only when tied to evaluation — e.g. the set is elite and political throughout: no worker, farmer or ordinary voter appears, so the era’s social experience of “stability” goes untested by the set. An explicit verdict on extent (e.g. the sources together represent the era’s stability as real but conditional — and largely accurately) should be defended. Balance of sources and own knowledge is required for the top marks.',
+          'Theme first: the set itself stages the debate — international rehabilitation performed for the cameras (Source 1), the statesman’s defence (Source 2), the historian’s “lodger’s stability” (Source 3). Strong responses test the representations with own knowledge: the Dawes Plan and American credit, the 1928 election (Nazi vote 2.6 per cent — evidence for stability), Hindenburg’s election in 1925, the fragility of coalitions, agricultural depression, and the speed of unravelling after October 1929 as retrospective evidence about the foundations. Omissions earn marks only when tied to evaluation — e.g. the set is elite and political throughout: no worker, farmer or ordinary voter appears, so the era’s social experience of “stability” goes untested by the set. An explicit verdict on extent (e.g. the sources together represent the era’s stability as real but conditional — and largely accurately) should be defended. Balance of sources and own knowledge is required for the top marks.',
       },
     ],
   },
@@ -391,11 +405,17 @@ export const SOURCE_SETS_3: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A cartoon published in a German nationalist weekly newspaper, Berlin, spring 1919.',
-        body: 'The cartoon shows a German soldier in field-grey uniform and steel helmet standing upright in a trench, rifle raised, facing a horizon of enemy bayonets. He does not see what is behind him: rising out of the shadow at his back, a gaunt figure in civilian dress drives a long dagger between his shoulder blades. The civilian’s sleeve carries the label “Politiker” (politician); behind him, half-hidden, a second figure waves a red flag labelled “Revolution”. At the soldier’s feet lies a scroll marked “Waffenstillstand” (armistice). The caption beneath reads “Der Dolchstoß” (“The stab in the back”).',
-        note: 'Note: the “stab-in-the-back” legend claimed that the German army was undefeated in the field and had been betrayed by civilians and revolutionaries at home. In fact the army’s own Supreme Command had told the Kaiser in late September 1918 that the war was lost and demanded that an armistice be sought.',
+          'Source 1: A nationalist propaganda postcard circulated in Germany and Austria, around 1919, depicting the “stab-in-the-back” legend.',
+        image: {
+          src: 'sources/stab-in-the-back.jpg',
+          alt: 'Antisemitic 1919 postcard showing a German soldier in a trench being stabbed from behind by a caricatured figure — the "stab-in-the-back" legend',
+          credit: 'Postcard, c. 1919. Public domain, via Wikimedia Commons',
+        },
+        body: 'The drawing shows a German soldier in a steel helmet lying forward on the parapet of a trench, rifle in hand, facing the enemy beneath a black storm cloud. Behind him, rising out of the landscape at his back, looms a grinning figure who drives a dagger down between the soldier’s shoulders. The attacker is drawn as a crude antisemitic caricature and is marked with a Star of David: the postcard blames “the Jew” for the army’s defeat. The soldier does not see the blow coming.',
+        note: 'Note: this postcard shows how the “stab-in-the-back” legend was antisemitic from its beginning — blame for the defeat was directed at Jews, socialists and republican politicians, the supposed “enemies within”. The legend was false: the army’s own Supreme Command had told the Kaiser in late September 1918 that the war was lost and demanded that an armistice be sought. The caricature is reproduced here as historical evidence of the propaganda Germans encountered after 1918.',
         footnotes: [
           'Armistice — the agreement of 11 November 1918 that ended the fighting.',
+          'Caricature — a deliberately distorted, mocking depiction.',
         ],
       },
       {
@@ -429,21 +449,21 @@ export const SOURCE_SETS_3: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. defeat and the Armistice of November 1918, the November Revolution, demobilisation, nationalist reaction against the new Republic in early 1919)', marks: '2' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. defeat and the Armistice of November 1918, the November Revolution, demobilisation, nationalist and antisemitic agitation against the new Republic in 1919)', marks: '2' },
               { descriptor: 'Identifies the context of the source by including some details', marks: '1' },
             ],
             subtotal: 2,
           },
           {
             rows: [
-              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. to spread the stab-in-the-back legend — shifting blame for defeat from the army onto politicians and revolutionaries, defending the army’s honour and delegitimising the new Republic)', marks: '2' },
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. to spread the stab-in-the-back legend — shifting blame for defeat from the army onto scapegoats at home, above all Jews and revolutionaries, defending the army’s honour and delegitimising the new Republic)', marks: '2' },
               { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
             ],
             subtotal: 2,
           },
         ],
         notes:
-          '“Account for” attached to purpose asks for the reasons the source was created. The context element requires placement in the aftermath of defeat and revolution; the purpose element requires reasons specific to this cartoon — the nationalist press’s campaign to blame the “November criminals” rather than the military leadership. Generic purposes (“propaganda”) are insufficient for full marks.',
+          '“Account for” attached to purpose asks for the reasons the source was created. The context element requires placement in the aftermath of defeat and revolution; the purpose element requires reasons specific to this postcard — the campaign to blame the “November criminals” and, in this explicitly antisemitic version, Jewish Germans, rather than the military leadership that had actually sought the armistice. Candidates should be credited for recognising the antisemitic scapegoating as central to the source’s purpose, not incidental to it. Generic purposes (“propaganda”) are insufficient for full marks.',
       },
       {
         letter: 'b',
@@ -501,7 +521,7 @@ export const SOURCE_SETS_3: SourceSet[] = [
           },
         ],
         notes:
-          'The key linking idea should be stated early — e.g. that Germany ended the war beaten and exhausted in every dimension, and that the battle over who was to blame began at once and burdened the new Republic from birth. The analysis should proceed by circumstance, not by source: military defeat and its concealment (Sources 1 and 3), economic and social exhaustion — blockade, hunger, influenza, demobilisation (Source 2), political overturn — the Kaiser’s fall, councils, street violence (Sources 2 and 3), and the ideological poison of the stab-in-the-back legend (Sources 1 and 3). Own knowledge for higher marks: the Kiel mutiny, the abdication and the proclamation of the Republic on 9 November 1918, the Ebert–Groener pact, the Spartacist rising of January 1919, and the two million war dead behind the letter’s grief. Omissions count only when tied to evaluation — e.g. the set shows Berlin and the front, but not the food queues’ statistics or the situation of women and workers, so the social picture rests on one witness. A source-by-source walkthrough caps in the middle bands; balance of source evidence and own knowledge is required at the top.',
+          'The key linking idea should be stated early — e.g. that Germany ended the war beaten and exhausted in every dimension, and that the battle over who was to blame began at once and burdened the new Republic from birth. The analysis should proceed by circumstance, not by source: military defeat and its concealment (Sources 1 and 3), economic and social exhaustion — blockade, hunger, influenza, demobilisation (Source 2), political overturn — the Kaiser’s fall, councils, street violence (Sources 2 and 3), and the ideological poison of the stab-in-the-back legend with its antisemitic scapegoating (Sources 1 and 3). Own knowledge for higher marks: the Kiel mutiny, the abdication and the proclamation of the Republic on 9 November 1918, the Ebert–Groener pact, the Spartacist rising of January 1919, and the two million war dead behind the letter’s grief. Omissions count only when tied to evaluation — e.g. the set shows Berlin and the front, but not the food queues’ statistics or the situation of women and workers, so the social picture rests on one witness. A source-by-source walkthrough caps in the middle bands; balance of source evidence and own knowledge is required at the top.',
       },
     ],
   },

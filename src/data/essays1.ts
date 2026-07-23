@@ -36,7 +36,7 @@ export const ESSAYS_1: EssayQuestion[] = [
     demand: 3,
     themes: ['weimar-crises', 'end-of-war'],
     tags: ['p1', 'p2'],
-    text: 'Evaluate the proposition that the Weimar Republic was doomed from its foundation.',
+    text: 'Evaluate the proposition that the Weimar Republic was doomed from its foundation in 1919.',
     notes:
       'A transformation-denying proposition inviting argument about inevitability. Candidates should define the founding burdens: birth from defeat and revolution, the Ebert–Groener pact and dependence on old elites, the stab-in-the-back legend, Versailles, a constitution with Article 48 and pure proportional representation, and a judiciary, army and civil service inherited hostile. The counter-case is the strongest test of the proposition: survival of 1919–1923 (Kapp Putsch, risings, hyperinflation, the Munich putsch all weathered); the stabilisation and international rehabilitation of 1924–29; the Nazi vote at 2.6 per cent in 1928 — doom required a world depression and specific choices (Brüning’s deflation, Hindenburg’s camarilla) that were not written in 1919. Historiography: Detlev Peukert’s Republic as a crisis-ridden experiment of “classical modernity”; Ian Kershaw and Richard Evans against inevitability; older views (Bracher) stressing structural weakness. For candidates to achieve full marks they must address the whole period and not camp on 1919 or 1933. The strongest conclusions distinguish “heavily burdened” from “doomed”.',
   },
@@ -62,7 +62,7 @@ export const ESSAYS_1: EssayQuestion[] = [
     demand: 3,
     themes: ['versailles', 'weimar-crises'],
     tags: ['p1', 'p2'],
-    text: 'Debate the proposition that the Treaty of Versailles played only a minor role in the failure of the Weimar Republic.',
+    text: 'Debate the proposition that the Treaty of Versailles played only a minor role in the failure of the Weimar Republic by 1933.',
     notes:
       'As this is a debate question, for candidates to gain the higher marks, they must address evidence that both supports and refutes this claim. Supporting the claim: the treaty’s material burden was manageable (reparations actually paid were a fraction of the headline sum — Sally Marks’ argument); the Republic stabilised and prospered 1924–29 with the treaty in force; the fatal crisis came from the Depression and domestic intrigue, and the treaty was already being revised (Locarno, the Young Plan, reparations effectively ended at Lausanne 1932 — before Hitler took power). Refuting it: Versailles delegitimised the Republic at birth, fused democracy with national humiliation, armed every nationalist attack (“November criminals”), motivated the Kapp Putsch and the Ruhr crisis with its hyperinflation, and gave Nazi propaganda its master theme. Historiography: Marks and Margaret MacMillan against the “Carthaginian peace” myth; Richard Evans on the treaty’s poisonous political legacy. The strongest responses distinguish material burden (arguably minor) from political-psychological damage (major), and reach a defended verdict rather than a split difference.',
   },
@@ -74,7 +74,7 @@ export const ESSAYS_1: EssayQuestion[] = [
     demand: 2,
     themes: ['gleichschaltung'],
     tags: ['p4'],
-    text: 'Debate the proposition that the Reichstag Fire was a significant turning point in the Nazi consolidation of power.',
+    text: 'Debate the proposition that the Reichstag Fire was a significant turning point in the Nazi consolidation of power between 1933 and 1934.',
     notes:
       'As this is a debate question, for candidates to gain the higher marks, they must address evidence that both supports and refutes this claim. Supporting: the fire (27 February 1933) produced the Reichstag Fire Decree the next day, suspending civil liberties for the duration of the regime, licensing mass arrests of Communists, and framing the terror-charged election of 5 March; it converted Hitler’s chancellorship into emergency rule. Refuting: the decree only accelerated a course already set — the coalition of January 1933, SA violence already unleashed, and the Enabling Act (needing Centre Party votes, not the fire) as the real legal foundation; consolidation was a process of many steps (party bans, union destruction, the Night of the Long Knives, Hindenburg’s death) of which no single one was decisive. Historiography: Richard Evans treats the decree as the dictatorship’s charter; Ian Kershaw stresses cumulative process over single turning points. Candidates who narrate February–March 1933 without weighing “turning point” against “one step among many” cannot reach the higher marks.',
   },
@@ -112,7 +112,7 @@ export const ESSAYS_1: EssayQuestion[] = [
     demand: 2,
     themes: ['resistance', 'volksgemeinschaft'],
     tags: ['p4', 'p5'],
-    text: 'Assess the extent to which terror and repression were responsible for the absence of widespread resistance to the Nazi regime.',
+    text: 'Assess the extent to which terror and repression were responsible for the absence of widespread resistance to the Nazi regime between 1933 and 1945.',
     notes:
       'A graded verdict is required: how far does terror explain quiescence, and what else must? The case: the first eighteen months destroyed every organisational base of opposition (parties, unions, press); the camps, Gestapo and People’s Court made the price of dissent visible and familial; “protective custody” numbers and the 1933 terror wave. Counter-factors: substantial genuine consent — economic recovery, foreign-policy triumphs, the Führer myth; the regime’s care to ride popular opinion (retreat over church struggles, secrecy over “euthanasia” until Galen’s protest); the thinness of the Gestapo and its dependence on voluntary denunciation; the divisions and isolation of opponents from one another. Historiography: Gellately on denunciation and consent; Peukert on everyday nonconformity; Hans Mommsen on the structural isolation of resistance. Candidates should engage with the range of resistance that did occur (left networks, church protest, youth dissent, 20 July 1944) as the test of what suppressed the rest. The strongest conclusions argue terror and consent operated as a system, then still assign relative weight.',
   },
@@ -126,7 +126,7 @@ export const ESSAYS_1: EssayQuestion[] = [
     demand: 2,
     themes: ['weimar-crises'],
     tags: ['p2', 'p3'],
-    text: 'Assess the relative importance of the factors that caused the failure of the Weimar Republic.',
+    text: 'Assess the relative importance of the factors that caused the failure of the Weimar Republic by 1933.',
     notes:
       '“Relative importance” is the operative phrase: description of each cause is not enough — causes must be weighed against each other, with a hierarchy defended. Candidates should marshal the standard multi-causal field: the founding burdens (defeat, Versailles, the stab-in-the-back legend); structural weaknesses (Article 48, proportional representation, hostile elites in army, judiciary and bureaucracy); chronic economic vulnerability (inflation 1923, dependence on American credit, Depression from 1929); the behaviour of the parties (KPD–SPD enmity, the flight of the middle-class parties); and the agency of individuals (Hindenburg’s camarilla, Papen’s “taming” miscalculation, Hitler’s tactical skill). A reliable discriminator is the distinction between long-term burdens, without which the crisis lacked its explosive charge, and the short-term triggers of 1930–33, without which the burdens need not have been fatal. Historiography: Bracher (structure) against Kershaw and Evans (contingency and choice); Peukert on the Depression as the crisis of a whole model of modernity. Best used evidence includes election statistics 1928–1932 and the chancellorship sequence Brüning–Papen–Schleicher. A ranked, defended hierarchy separates the top band from a survey.',
   },

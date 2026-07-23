@@ -5,8 +5,16 @@ export function SourceCard({ source }: { source: SourceDoc }) {
   return (
     <div className={'source-card' + (source.kind === 'visual' ? ' visual' : '')}>
       <div className="attribution">{source.attribution}</div>
-      {source.kind === 'visual' && <div className="visual-label">Description of a visual source</div>}
-      <div className="body">{source.body}</div>
+      {source.image && (
+        <figure className="source-figure">
+          <img src={import.meta.env.BASE_URL + source.image.src} alt={source.image.alt} loading="lazy" />
+          <figcaption>{source.image.credit}</figcaption>
+        </figure>
+      )}
+      {source.kind === 'visual' && !source.image && (
+        <div className="visual-label">Description of a visual source</div>
+      )}
+      <div className={'body' + (source.image ? ' caption-style' : '')}>{source.body}</div>
       {source.note && <div className="note">{source.note}</div>}
       {source.footnotes && source.footnotes.length > 0 && (
         <div className="footnotes">

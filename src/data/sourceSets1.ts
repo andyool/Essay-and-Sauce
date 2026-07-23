@@ -21,11 +21,16 @@ export const SOURCE_SETS_1: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A cartoon published in Simplicissimus, a Munich satirical magazine, October 1923.',
-        body: 'The cartoon shows a thin housewife in a patched coat pushing a wheelbarrow piled high with bundles of banknotes towards a bakery. In the bakery window a single small loaf of bread carries a price tag reading “201,000,000,000 Mark”. Behind her stretches a long queue of grey, hollow-cheeked figures. At the edge of the frame a one-legged war veteran, his Iron Cross medal pinned to a ragged army coat, holds out an empty hat into which a passer-by drops a thick bundle of notes without breaking stride. The caption beneath the cartoon reads “Der Einkauf” (“The Shopping Trip”).',
-        note: 'Note: the banner in the bakery window is labelled “Brot” (bread). The wheelbarrow is labelled “ein Laib” (one loaf).',
+          'Source 1: A press photograph taken in Berlin during the hyperinflation crisis, 1923.',
+        image: {
+          src: 'sources/hyperinflation-1923.jpg',
+          alt: 'A man pastes banknotes onto a wall as wallpaper, Germany 1923',
+          credit: 'Bundesarchiv, Bild 102-00104 / Georg Pahl / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a young man in a suit and bow tie pasting banknotes directly onto the wall of his room, using a pot of paste on a stool beside him. Dozens of one-mark notes are already smoothed onto the wall in neat overlapping rows, with 1,000-mark notes pasted above them. At the height of the inflation, banknotes of small denominations were worth less than the wallpaper they could replace.',
+        note: 'Note: the larger notes at the top of the wall are 1,000-mark notes; the smaller notes are one-mark notes. Photographs like this one were staged for the press to illustrate the collapse of the currency.',
         footnotes: [
-          'Iron Cross — a German military decoration awarded for bravery in the First World War.',
+          'Denomination — the face value printed on a banknote.',
         ],
       },
       {
@@ -58,7 +63,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the hyperinflation crisis of 1923, the French and Belgian occupation of the Ruhr, passive resistance, the collapse of the mark, the strain on wage earners, savers and war victims)', marks: '3' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the hyperinflation crisis of 1923, the French and Belgian occupation of the Ruhr, passive resistance funded by printing money, the collapse of the mark to worthlessness, the strain on wage earners and savers)', marks: '3' },
               { descriptor: 'Outlines the context of the source by including some accurate details represented in and/or surrounding the source', marks: '2' },
               { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
             ],
@@ -66,7 +71,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context refers to the circumstances at the time the source was produced. Candidates should place the cartoon in late 1923: the hyperinflation at its height (prices in the billions), following the Ruhr occupation and the policy of passive resistance funded by printing money. Specific details from the source (the price tag, the wheelbarrow of notes, the impoverished veteran) should be connected to those circumstances. Not all points are required for full marks; each salient point is rewarded.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context refers to the circumstances at the time the source was produced. Candidates should place the photograph in 1923: the hyperinflation at its height (prices in the billions), following the Ruhr occupation and the policy of passive resistance funded by printing money. Specific details from the source (banknotes used as wallpaper, the mix of one-mark and 1,000-mark notes, the staging for the press) should be connected to those circumstances. Not all points are required for full marks; each salient point is rewarded.',
       },
       {
         letter: 'b',
@@ -145,11 +150,16 @@ export const SOURCE_SETS_1: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A cartoon published in Kladderadatsch, a Berlin satirical magazine, July 1919, shortly after the signing of the Treaty of Versailles.',
-        body: 'The cartoon shows a female figure representing Germany — labelled “Deutschland” — chained to a great rock labelled “Versailles”. Three vultures circle above her, labelled “Kriegsschuld” (war guilt), “Reparationen” (reparations) and “Gebietsverluste” (territorial losses). On a cliff opposite stand three well-fed figures in top hats and morning coats, recognisable as the leaders of France, Britain and the United States; the French figure holds the end of the chain. The caption beneath reads “Der Diktatfrieden” (“The dictated peace”).',
-        note: 'Note: the chained figure of Germania was a standard national personification of Germany, as Britannia was of Britain.',
+          'Source 1: A German poster by the graphic artist Louis Oppenheim, published in 1919 during the national campaign against the terms of the peace treaty.',
+        image: {
+          src: 'sources/versailles-1919.jpg',
+          alt: 'German poster of 1919 titled "Was wir verlieren sollen!" listing Germany\'s losses under the Treaty of Versailles',
+          credit: 'Louis Oppenheim, 1919. Public domain, via Wikimedia Commons',
+        },
+        body: 'Beneath the headline “Was wir verlieren sollen!” (“What we are to lose!”), the poster arranges Germany’s losses under the treaty as a series of pictures with labelled placards: a map of lost territory — “20% of our production areas”; a standing man with the top of his body cut away — “10% of the population”; a heap of coal above factories — “one third of our hard-coal output”; a family standing before grain sacks — “one quarter of our total production of bread grain and potatoes”; an ore heap above ironworks — “four fifths of our iron-ore reserves”; and a merchant ship with palm trees, struck through by a black bar — “our entire colonies and our merchant fleet”.',
+        note: 'Note: the placard captions translated above appear on the poster in German (e.g. “20% unserer Produktionsgebiete”, “10% der Bevölkerung”, “1/3 der Steinkohlenerzeugung”, “4/5 der Eisenerzschätze”).',
         footnotes: [
-          'Diktat — a settlement imposed without negotiation; the term used by German nationalists for the Treaty of Versailles.',
+          'Merchant fleet — a nation’s commercial trading ships.',
         ],
       },
       {
@@ -183,13 +193,13 @@ export const SOURCE_SETS_1: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that the Treaty of Versailles is an unjust, imposed punishment that chains Germany to permanent suffering at the hands of the Allies)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that the treaty will strip Germany of the land, people and resources it needs to live — an intolerable, crippling punishment)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the chained figure of Germania, the labelled vultures of war guilt, reparations and territorial losses, the well-fed Allied leaders holding the chain, the caption “Der Diktatfrieden”)', marks: '3' },
+              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the accusing headline “What we are to lose!”, the man with part of his body cut away representing lost population, the labelled percentages of coal, grain and iron ore, the family before the grain sacks, the struck-through ship and colonies)', marks: '3' },
               { descriptor: 'Explains how the source conveys the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Outlines a feature of the source connected to the message', marks: '1' },
             ],
@@ -197,7 +207,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
           },
         ],
         notes:
-          'The message should be stated as a claim (“The message of Source 1 is that…”). “Explain” requires the why and/or how: candidates should decode the symbolism — the chain, the rock, the vultures, the contrast between suffering Germania and the prosperous Allied leaders — and connect each device to the message. Full marks require specific reference to labelled elements or the caption.',
+          'The message should be stated as a claim (“The message of Source 1 is that…”). “Explain” requires the why and/or how: candidates should decode the poster’s devices — the headline, the mutilated human figure, the statistical placards that translate the treaty into bread, coal and work, the crossed-out ship and colonies — and connect each device to the message that the treaty means national ruin. Full marks require specific reference to labelled elements.',
       },
       {
         letter: 'b',
@@ -248,7 +258,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
           },
         ],
         notes:
-          'The theme should lead: the sources collectively represent Versailles as a burden and, crucially, as a political weapon — the cartoon voices the national sense of injustice, Scheidemann shows the Republic’s own leaders branding the treaty unjust at its birth, and the historian argues the legend outgrew the reality. Strong responses assess significance using own knowledge across the period: the “stab-in-the-back” and “November criminals” myths, the Kapp Putsch, reparations crises and the Ruhr occupation, and Nazi exploitation of Versailles in propaganda through to 1933 — while weighing the treaty against other forces that undermined the Republic (economic catastrophe, constitutional weakness, elite hostility). Omissions earn marks only when tied to evaluation (e.g. the set contains no defender of the treaty’s workability besides Source 3, and no evidence from the stable mid-1920s, which may overstate its constant salience). For higher marks candidates must balance source evidence and own knowledge; a source-by-source recount caps in the middle bands.',
+          'The theme should lead: the sources collectively represent Versailles as a burden and, crucially, as a political weapon — the poster voices the national sense of dispossession, Scheidemann shows the Republic’s own leaders branding the treaty unjust at its birth, and the historian argues the legend outgrew the reality. Strong responses assess significance using own knowledge across the period: the “stab-in-the-back” and “November criminals” myths, the Kapp Putsch, reparations crises and the Ruhr occupation, and Nazi exploitation of Versailles in propaganda through to 1933 — while weighing the treaty against other forces that undermined the Republic (economic catastrophe, constitutional weakness, elite hostility). Omissions earn marks only when tied to evaluation (e.g. the set contains no defender of the treaty’s workability besides Source 3, and no evidence from the stable mid-1920s, which may overstate its constant salience). For higher marks candidates must balance source evidence and own knowledge; a source-by-source recount caps in the middle bands.',
       },
     ],
   },
@@ -270,8 +280,13 @@ export const SOURCE_SETS_1: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A Nazi Party election poster produced for the Reichstag election of July 1932.',
-        body: 'The poster is dominated by a dense crowd of grey, gaunt faces — men and women of all ages, unemployed workers in caps and threadbare collars — pressed together and staring out at the viewer with exhausted, pleading expressions. The crowd fills the frame from edge to edge and recedes into darkness. Across the bottom of the poster, in heavy white block letters, runs the slogan “UNSERE LETZTE HOFFNUNG: HITLER” (“Our last hope: Hitler”). The name HITLER is set larger than every other word. No swastika, uniform or portrait of Hitler appears anywhere on the poster.',
+          'Source 1: A photograph of a Nazi Party propaganda vehicle in Berlin during a Reichstag election campaign of 1932. The Berlin Cathedral is visible behind.',
+        image: {
+          src: 'sources/election-posters-1932.jpg',
+          alt: 'NSDAP propaganda truck covered in election posters, Berlin 1932, with a uniformed trumpeter holding a swastika flag',
+          credit: 'Bundesarchiv, Bild 102-03126 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a Nazi Party campaign truck plastered with election posters, while a uniformed party man sounds a trumpet hung with a swastika banner. The posters read: “Arbeit, Freiheit und Brot! Wählt Nationalsozialisten, Liste 8” (“Work, freedom and bread! Vote National Socialists, List 8”); a poster of a mother, father and infant captioned “Rettet die deutsche Familie” (“Save the German family”); and a photo-montage titled “Das ist Adolf Hitler, der Mensch und… Führer des deutschen Volkes” (“This is Adolf Hitler, the man and… leader of the German people”).',
         note: 'Note: at the July 1932 election the Nazi Party won 37.3 per cent of the vote, its best result in a free election; registered unemployment in Germany at the time exceeded five and a half million.',
       },
       {
@@ -306,7 +321,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Explains the message of the source (e.g. that only Hitler can rescue a desperate Germany, presenting the Nazi leader as the sole remaining hope of the suffering masses) with detailed, accurate and relevant supporting evidence from the source', marks: '3' },
+              { descriptor: 'Explains the message of the source (e.g. that the Nazi Party is the answer to the Depression’s miseries — promising work, bread and the rescue of the family, with Hitler as the leader of the whole people) with detailed, accurate and relevant supporting evidence from the source', marks: '3' },
               { descriptor: 'Explains the message of the source with some accurate and relevant evidence', marks: '2' },
               { descriptor: 'Identifies or provides a general comment about the message of the source', marks: '1' },
             ],
@@ -314,7 +329,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
           },
         ],
         notes:
-          '“Explain” requires the why and/or how. The message should be stated as a claim (“The message of Source 1 is that…”) and supported from specific details: the mass of despairing faces representing the victims of the Depression, the word “last” framing every alternative as exhausted, the outsized name HITLER as the answer, and the deliberate absence of party symbols to broaden the appeal beyond committed Nazis. Any legitimate reading supported from the source is rewarded.',
+          '“Explain” requires the why and/or how. The message should be stated as a claim (“The message of Source 1 is that…”) and supported from specific details: the slogan promising “work, freedom and bread” aimed directly at the Depression’s victims, the family poster promising rescue of ordinary households, the presentation of Hitler as “leader of the German people” rather than of a party, and the loud public showmanship of the campaign truck itself. Any legitimate reading supported from the source is rewarded.',
       },
       {
         letter: 'b',
@@ -366,7 +381,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
           },
         ],
         notes:
-          'Theme first: the set represents the rise as built on despair (Source 1’s imagery, Source 2’s testimony), on fear of communism and loss (Sources 2 and 3), and on the Party’s propaganda and organisational machine (Sources 1 and 3). Strong responses test this picture against the wider record: the legacy of Versailles and the pre-1929 history of the Party, the ideology and Hitler’s cultivated appeal, election statistics (2.6% in 1928; 37.3% in July 1932; the fall to 33.1% in November 1932), and — decisively — what the sources omit: the backstairs intrigue of Papen, Schleicher and Hindenburg that delivered the Chancellorship in January 1933 when the electoral tide was ebbing. The omission earns marks only when tied to evaluation: the set represents the electoral road well but overstates it, since votes alone never gave Hitler power. For higher marks, balance of source evidence and own knowledge across the period is required; a source-by-source walkthrough caps in the middle bands. Reward any legitimate reading supported by evidence.',
+          'Theme first: the set represents the rise as built on despair and the Party’s promises to its victims (Source 1’s slogans, Source 2’s testimony), on fear of communism and loss (Sources 2 and 3), and on the Party’s propaganda and organisational machine (Sources 1 and 3). Strong responses test this picture against the wider record: the legacy of Versailles and the pre-1929 history of the Party, the ideology and Hitler’s cultivated appeal, election statistics (2.6% in 1928; 37.3% in July 1932; the fall to 33.1% in November 1932), and — decisively — what the sources omit: the backstairs intrigue of Papen, Schleicher and Hindenburg that delivered the Chancellorship in January 1933 when the electoral tide was ebbing. The omission earns marks only when tied to evaluation: the set represents the electoral road well but overstates it, since votes alone never gave Hitler power. For higher marks, balance of source evidence and own knowledge across the period is required; a source-by-source walkthrough caps in the middle bands. Reward any legitimate reading supported by evidence.',
       },
     ],
   },
@@ -388,11 +403,16 @@ export const SOURCE_SETS_1: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A poster produced by the Reich Ministry of Public Enlightenment and Propaganda for the Reichstag election and plebiscite of March 1936, displayed throughout Germany.',
-        body: 'The poster shows a portrait of Adolf Hitler in three-quarter profile, lit from below so that his face appears to glow against a dark background. He wears a plain brown uniform without decorations, his expression stern and far-seeing, his gaze directed above and beyond the viewer. Behind his head spreads the dark outline of an eagle with wings outstretched. Beneath the portrait, rendered small and indistinct, an enormous crowd stretches to the horizon, arms raised in salute. Across the base of the poster, in gothic capitals, runs the text “EIN VOLK, EIN REICH, EIN FÜHRER!” (“One People, one Empire, one Leader!”).',
-        note: 'Note: the March 1936 plebiscite, held days after German troops re-entered the demilitarised Rhineland, returned an official “yes” vote of 98.8 per cent.',
+          'Source 1: A press photograph, Berlin, late 1930s, showing the ceremonial distribution of 500 “Volksempfänger” (people’s receiver) radio sets to Berlin citizens. The event was organised by the Reich Ministry of Public Enlightenment and Propaganda.',
+        image: {
+          src: 'sources/radio-distribution.jpg',
+          alt: 'A uniformed Nazi official hands Volksempfänger radio sets across a table to a crowd of civilians, Berlin, late 1930s',
+          credit: 'Bundesarchiv, Bild 183-H14243 / Nau / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a Party official in uniform, a swastika armband on his sleeve, handing a boxed Volksempfänger radio across a table to a queue of waiting Berliners — most of them elderly men and women in worn coats and hats. Each holds a paper voucher. The recipients press forward, watched from behind by uniformed SS men; one man clutches his new radio set to his chest. The scene is arranged to face the camera.',
+        note: 'Note: the Volksempfänger was a deliberately cheap, mass-produced radio receiver introduced in 1933 at Goebbels’ initiative. By 1939 over 70 per cent of German households owned a radio — the highest proportion in the world. The sets received German stations clearly; listening to foreign broadcasts became a criminal offence in wartime.',
         footnotes: [
-          'Plebiscite — a national yes/no vote staged by the government on a single question.',
+          'Voucher — a paper entitlement exchanged for goods.',
         ],
       },
       {
@@ -421,13 +441,13 @@ export const SOURCE_SETS_1: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the origin of Source 1 (a poster produced by the Reich Ministry of Public Enlightenment and Propaganda for the election and plebiscite of March 1936)', marks: '1' },
+              { descriptor: 'Correctly identifies the origin of Source 1 (a press photograph of a propaganda-ministry radio distribution in Berlin, late 1930s)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains the message of the source (e.g. that Hitler is the embodiment of a united German nation and empire, a quasi-sacred leader to whom the whole people gives itself) with detailed, accurate and relevant evidence from the source', marks: '3' },
+              { descriptor: 'Explains the message of the source (e.g. that the regime is a generous benefactor bringing the modern world into every ordinary German home — while, implicitly, placing its own voice in every parlour) with detailed, accurate and relevant evidence from the source', marks: '3' },
               { descriptor: 'Explains the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Identifies or provides a general comment about the message of the source', marks: '1' },
             ],
@@ -435,7 +455,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
           },
         ],
         notes:
-          'Origin refers to provenance: candidates should identify at least two details of who created the source, when and what type it is. The message explanation should decode the devices: the glowing, upward-lit portrait presenting Hitler as visionary and almost sacred; the eagle of state power; the miniature crowd merging into a single mass beneath the leader; the slogan fusing people, empire and leader into one. Full marks require specific reference to details of the source.',
+          'Origin refers to provenance: candidates should identify at least two details of who created the source, when and what type it is. The message explanation should decode the staging: the uniformed official as giver and the grateful queue as receivers; the radios handed over like gifts before the camera; the watching SS men; and the propaganda purpose of the gift itself — a cheap receiver that carried the regime’s voice into the home. Full marks require specific reference to details of the source.',
       },
       {
         letter: 'b',
@@ -480,7 +500,7 @@ export const SOURCE_SETS_1: SourceSet[] = [
           },
         ],
         notes:
-          'The response should lead with the theme — propaganda as an instrument of consolidation — and use the sources as evidence: the 1936 poster as the Führer myth in action, Goebbels’ address as the regime’s intent and method, the historian as a measure of its real and limited effects. Own knowledge for higher marks might include the Gleichschaltung of press and radio, the cheap Volksempfänger receiver, the Nuremberg rallies and the 1936 Olympics, Riefenstahl’s films, and the staged plebiscites — weighed against the other instruments of consolidation the set largely omits: terror and the camps, legal emasculation of opposition, economic recovery and rearmament. The omission earns marks only when tied to evaluation (e.g. the set, read alone, overstates persuasion and understates coercion — consent and terror operated together). Candidates must address propaganda as represented in the sources, not just the topic generally, and for the top band must balance source evidence with own knowledge of the whole period. A source-by-source recount cannot reach the top bands. Not all points are required; reward any legitimate, evidenced reading.',
+          'The response should lead with the theme — propaganda as an instrument of consolidation — and use the sources as evidence: the radio distribution as the machinery reaching into the home, Goebbels’ address as the regime’s intent and method, the historian as a measure of its real and limited effects. Own knowledge for higher marks might include the Gleichschaltung of press and radio, the cheap Volksempfänger receiver, the Nuremberg rallies and the 1936 Olympics, Riefenstahl’s films, and the staged plebiscites — weighed against the other instruments of consolidation the set largely omits: terror and the camps, legal emasculation of opposition, economic recovery and rearmament. The omission earns marks only when tied to evaluation (e.g. the set, read alone, overstates persuasion and understates coercion — consent and terror operated together). Candidates must address propaganda as represented in the sources, not just the topic generally, and for the top band must balance source evidence with own knowledge of the whole period. A source-by-source recount cannot reach the top bands. Not all points are required; reward any legitimate, evidenced reading.',
       },
     ],
   },

@@ -78,18 +78,14 @@ export function generateExam(
     );
   }
 
-  // Prefer unseen source sets; fall back to least-recently-seen (earlier in the
-  // seen list = seen longer ago, so reuse from the front).
-  const unseenSets = eligibleSets.filter((s) => !seenSets.has(s.id));
-  let setCandidates: SourceSet[];
-  if (unseenSets.length > 0) {
-    setCandidates = shuffle(unseenSets);
-  } else {
-    const order = new Map(seenSourceSetIds.map((id, i) => [id, i]));
-    setCandidates = eligibleSets
-      .slice()
-      .sort((a, b) => (order.get(a.id) ?? -1) - (order.get(b.id) ?? -1));
-  }
+  // Try unseen source sets first (shuffled), then fall back to seen ones in
+  // least-recently-seen order, so a valid exam is found whenever one exists.
+  const unseenSets = shuffle(eligibleSets.filter((s) => !seenSets.has(s.id)));
+  const order = new Map(seenSourceSetIds.map((id, i) => [id, i]));
+  const seenLru = eligibleSets
+    .filter((s) => seenSets.has(s.id))
+    .sort((a, b) => (order.get(a.id) ?? -1) - (order.get(b.id) ?? -1));
+  const setCandidates: SourceSet[] = [...unseenSets, ...seenLru];
 
   for (const sourceSet of setCandidates) {
     // Essay questions must not collide with the source set's theme.

@@ -36,7 +36,8 @@ service cloud.firestore {
       allow update: if isSignedIn()
         && resource.data.studentUid == request.auth.uid
         && request.resource.data.studentUid == request.auth.uid;
-      allow delete: if isTeacher();
+      allow delete: if isTeacher()
+        || (isSignedIn() && resource.data.studentUid == request.auth.uid);
     }
   }
 }

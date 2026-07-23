@@ -86,7 +86,7 @@ export const ESSAYS_2: EssayQuestion[] = [
     demand: 2,
     themes: ['gleichschaltung'],
     tags: ['p4'],
-    text: 'Evaluate the consequences of the Night of the Long Knives for the Nazi regime and for the German army.',
+    text: 'Evaluate the consequences of the Night of the Long Knives for the Nazi regime and for the German army, to 1938.',
     notes:
       'Candidates must address consequences for both the regime and the army, though not necessarily equally. For the regime: the purge of 30 June 1934 removed the SA as a rival power and the “second revolution” as a spectre; murdered conservative critics (Schleicher, Papen’s circle) as well, announcing that terror now reached the elite; elevated the SS (freed from SA control, rewarded with the camps) — the seedbed of the regime’s most radical institution; and, retrospectively legalised and publicly defended, established the Führer as the source of law (“supreme judge of the German people”). For the army: the immediate prize — the SA threat removed, rearmament secured — purchased at the price of complicity in murder (including of two generals) and, within five weeks, the personal oath to Hitler after Hindenburg’s death; the bargain that began the officer corps’ moral and institutional subordination. Unintended consequences (the SS’s rise) belong in the top-band answer. Historiography: Kershaw on the purge as founding crime accepted with relief; Evans on the elites’ Faustian bargain. Recounting the events of the purge without evaluating consequences caps in the low bands.',
   },

@@ -102,6 +102,24 @@ export function TeacherPage() {
     navigate('/');
   }
 
+  async function deleteAttempt(a: Attempt) {
+    if (
+      !window.confirm(
+        'Delete ' +
+          a.studentName +
+          '’s ' +
+          (a.status === 'submitted' ? 'submitted' : 'in-progress') +
+          ' exam (' +
+          (getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId) +
+          ')? This permanently removes it, including all their answers. This cannot be undone.',
+      )
+    ) {
+      return;
+    }
+    await store.deleteAttempt(a.id);
+    setAttempts((cur) => cur.filter((x) => x.id !== a.id));
+  }
+
   async function createClass(e: React.FormEvent) {
     e.preventDefault();
     if (!newClassName.trim()) return;
@@ -343,8 +361,19 @@ export function TeacherPage() {
                       </td>
                       <td>{fmtDate(a.createdAt)}</td>
                       <td>{words}</td>
-                      <td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
                         <Link to={'/attempt/' + a.id}>Open</Link>
+                        {' · '}
+                        <a
+                          href="#delete"
+                          className="danger-link"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            void deleteAttempt(a);
+                          }}
+                        >
+                          Delete
+                        </a>
                       </td>
                     </tr>
                   );

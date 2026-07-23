@@ -21,7 +21,14 @@
 // security rules, not by hiding the config.)
 // ============================================================================
 
-export const FIREBASE_CONFIG: Record<string, string> | null = null;
+export const FIREBASE_CONFIG: Record<string, string> | null = {
+  apiKey: 'AIzaSyDQJ1oe8n8Oa16myCEcHvIyLQETLRLHFcU',
+  authDomain: 'essay-and-sauce.firebaseapp.com',
+  projectId: 'essay-and-sauce',
+  storageBucket: 'essay-and-sauce.firebasestorage.app',
+  messagingSenderId: '1021235283679',
+  appId: '1:1021235283679:web:cb1c21fd52b61d0966cb6a',
+};
 
 // Email address(es) allowed to use the teacher dashboard in cloud mode.
 // Must match the account(s) you create in Firebase Authentication and the

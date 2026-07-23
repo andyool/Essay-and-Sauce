@@ -9,6 +9,7 @@ import {
 } from 'firebase/auth';
 import {
   collection,
+  deleteDoc,
   deleteField,
   doc,
   getDoc,
@@ -117,6 +118,10 @@ export class CloudStore implements Store {
       clean[k] = v === undefined ? deleteField() : v;
     }
     await updateDoc(doc(this.db, 'attempts', id), clean);
+  }
+
+  async deleteAttempt(id: string): Promise<void> {
+    await deleteDoc(doc(this.db, 'attempts', id));
   }
 
   subscribeAttempt(id: string, cb: (a: Attempt | null) => void): Unsubscribe {

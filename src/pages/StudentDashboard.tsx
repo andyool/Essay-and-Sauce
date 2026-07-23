@@ -106,6 +106,18 @@ export function StudentDashboard() {
     navigate('/');
   }
 
+  async function deleteAttempt(a: Attempt) {
+    const set = getSourceSet(a.sourceSetId);
+    const what =
+      (a.status === 'submitted' ? 'your submitted exam' : 'your in-progress exam') +
+      (set ? ' “' + set.title + '”' : '');
+    if (!window.confirm('Delete ' + what + '? This permanently removes it, including everything you wrote. This cannot be undone.')) {
+      return;
+    }
+    await store.deleteAttempt(a.id);
+    setAttempts((cur) => cur.filter((x) => x.id !== a.id));
+  }
+
   if (loading || !student) {
     return <div className="page narrow">Loading…</div>;
   }
@@ -175,6 +187,9 @@ export function StudentDashboard() {
                       <button>Review</button>
                     </Link>
                   )}
+                  <button className="danger-ghost" title="Delete this exam" onClick={() => void deleteAttempt(a)}>
+                    Delete
+                  </button>
                 </div>
               </div>
             );

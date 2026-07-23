@@ -20,11 +20,16 @@ export const SOURCE_SETS_2: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A cartoon published in a London evening newspaper, July 1933, in the week the Nazi government declared the NSDAP the only legal party in Germany.',
-        body: 'The cartoon shows Hitler, drawn several times larger than life, sweeping a giant broom across a map of Germany. Tumbling before the broom are small human figures clutching banners labelled “Social Democrats”, “Communists”, “Centre Party” and “Nationalists”, together with torn papers labelled “Trade Unions” and “Free Press”. They are being swept towards an enormous dustbin at the map’s edge, its lid held open by a grinning stormtrooper; the bin is labelled “VERBOTEN” (forbidden). In the swept-clean space behind the broom stands a single flagpole flying the swastika. The caption reads: “The One-Party State — German efficiency: one bin does for all.”',
-        note: 'Note: the figure holding the bin wears the uniform of the SA (stormtroopers). By 14 July 1933 all political parties other than the NSDAP had been banned or dissolved.',
+          'Source 1: A photograph of the public burning of books on the Opernplatz, Berlin, on the night of 10 May 1933. The burnings were organised by the National Socialist German Students’ League in university cities across Germany.',
+        image: {
+          src: 'sources/book-burning-1933.jpg',
+          alt: 'Crowd giving the Nazi salute around a large pyre of burning books, Opernplatz Berlin, night of 10 May 1933',
+          credit: 'Bundesarchiv, Bild 102-14597 / Georg Pahl / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a great pyre of books burning in the darkness of the Opernplatz. Around it stands a dense crowd — uniformed SA men, students in civilian clothes, and young women in party formations — most with their right arms raised in the Nazi salute. Scattered books and papers litter the cobblestones in the foreground; smoke rises into the night sky. The works burned that night included those of Heinrich Heine, Thomas Mann, Erich Kästner, Sigmund Freud and Karl Marx — books condemned as “un-German”.',
+        note: 'Note: the burnings of 10 May 1933 were staged simultaneously in 34 university towns, with Goebbels addressing the Berlin crowd in person. A century earlier the poet Heine had written: “Where they burn books, they will in the end also burn people.”',
         footnotes: [
-          'Verboten — German for “forbidden”.',
+          'Pyre — a heap of material for burning.',
         ],
       },
       {
@@ -56,7 +61,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Explains how the source reflects the circumstances of 1933 by connecting specific details of the source (the swept parties, the banned unions and press, the SA figure, the single swastika) to accurate and specific contextual details (the banning of parties, destruction of the unions, censorship, SA terror, the one-party state declared July 1933)', marks: '3' },
+              { descriptor: 'Explains how the source reflects the circumstances of 1933 by connecting specific details of the source (the pyre of “un-German” books, the saluting crowd, the student organisers, the staged night-time ritual) to accurate and specific contextual details (the coordination of culture and universities, censorship and the purge of libraries, the willing participation of students, the wider destruction of opposition in spring 1933)', marks: '3' },
               { descriptor: 'Explains the connection between the source and its circumstances with some accurate and relevant details', marks: '2' },
               { descriptor: 'Identifies the context of the source with a general comment', marks: '1' },
             ],
@@ -64,7 +69,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           },
         ],
         notes:
-          '“Explain” requires the why and/or how: candidates must connect details within the cartoon to the events of 1933 — the elimination of the parties named on the banners, the seizure of the unions (2 May 1933), press censorship, and the role of SA violence — rather than merely describe the drawing. Basic contextual placement only is required; no knowledge beyond 1933 is expected.',
+          '“Explain” requires the why and/or how: candidates must connect details within the photograph to the events of 1933 — the Gleichschaltung of culture and the universities, the purge of “un-German” authors from libraries and bookshops, the enthusiasm of student organisations, and the wider destruction of opposition that spring — rather than merely describe the scene. Basic contextual placement only is required; no knowledge beyond 1933 is expected.',
       },
       {
         letter: 'b',
@@ -121,7 +126,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           },
         ],
         notes:
-          'The key linking idea should be stated early (e.g. “The key theme that links the sources is the elimination of all organised opposition — by force from above and surrender from below — within eighteen months”). The response should be organised by developments, not by sources: the legal-terroristic assault (Reichstag Fire Decree, Enabling Act — Sources 1 and 2), the human cost and moral resistance (Source 2), and the complicity of self-coordination (Source 3), each established with source evidence and extended with own knowledge (the union seizure of 2 May 1933, the July one-party law, the Night of the Long Knives and the army oath of August 1934). Omissions earn marks only when tied to evaluation — e.g. the set shows parties and unions but not the coordination of the states (Länder), churches or culture, so it captures the political but not the full social reach of Gleichschaltung. Higher marks require balance of source evidence and own knowledge; a source-by-source recount caps in the middle bands.',
+          'The key linking idea should be stated early (e.g. “The key theme that links the sources is the elimination of all organised opposition — by force from above and surrender from below — within eighteen months”). The response should be organised by developments, not by sources: the legal-terroristic assault (Reichstag Fire Decree, Enabling Act — Source 2 and its setting), the destruction of intellectual freedom with mass and student participation (Source 1), and the complicity of self-coordination (Sources 1 and 3), each established with source evidence and extended with own knowledge (the union seizure of 2 May 1933, the July one-party law, the Night of the Long Knives and the army oath of August 1934). Omissions earn marks only when tied to evaluation — e.g. the set shows parties and unions but not the coordination of the states (Länder), churches or culture, so it captures the political but not the full social reach of Gleichschaltung. Higher marks require balance of source evidence and own knowledge; a source-by-source recount caps in the middle bands.',
       },
     ],
   },
@@ -143,9 +148,14 @@ export const SOURCE_SETS_2: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A poster produced by the German Labour Front for its leisure organisation “Kraft durch Freude” (Strength through Joy), 1938.',
-        body: 'The poster shows a gleaming white cruise liner cutting through a sparkling blue sea under full sunshine. In the foreground, at the ship’s rail, stands a smiling family — a sunburnt man in an open-collared shirt, his wife with a headscarf, and two children waving — clearly depicted as an ordinary working family rather than wealthy tourists. Seagulls wheel overhead. Across the top of the poster runs the slogan “KRAFT DURCH FREUDE” and beneath the image, in large friendly letters, the words “Jetzt kannst Du mit!” (“Now YOU can come along!”). In the bottom corner is the cog-wheel emblem of the German Labour Front.',
-        note: 'Note: the German Labour Front (DAF) was the compulsory Nazi organisation that replaced the banned trade unions in 1933; Strength through Joy was its subsidised leisure and travel programme.',
+          'Source 1: A photograph taken aboard the “Wilhelm Gustloff”, the flagship cruise liner of the Nazi leisure organisation “Kraft durch Freude” (Strength through Joy), 1938. The photograph was released for publication by the regime’s press office.',
+        image: {
+          src: 'sources/kdf-gustloff.jpg',
+          alt: 'Holidaymakers at the swimming pool aboard the KdF cruise ship Wilhelm Gustloff, 1938',
+          credit: 'Bundesarchiv, Bild 146-1988-107-05 / Anne Winterer / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows the tiled indoor swimming pool of the cruise liner. A group of holidaymakers — men and women of visibly ordinary, middle-aged, working appearance — sit in swimming costumes along the pool’s edge, watching a swimmer climb the ladder from the water. The Wilhelm Gustloff, launched in 1937 and named after an assassinated Nazi functionary, carried subsidised working-class tourists on cruises to Madeira, Norway and the Mediterranean — holidays previously unimaginable for a factory worker.',
+        note: 'Note: the German Labour Front (DAF) was the compulsory Nazi organisation that replaced the banned trade unions in 1933; Strength through Joy (KdF) was its subsidised leisure and travel programme. By 1939 KdF claimed some 25 million participants in its holidays, cruises, concerts and sport.',
       },
       {
         n: 2,
@@ -178,21 +188,21 @@ export const SOURCE_SETS_2: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the DAF’s replacement of the unions, the KdF leisure programme, full employment propaganda, the Volksgemeinschaft ideal by 1938)', marks: '2' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the DAF’s replacement of the banned unions, the KdF leisure and cruise programme, full-employment propaganda, the Volksgemeinschaft ideal by 1938)', marks: '2' },
               { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
             subtotal: 2,
           },
           {
             rows: [
-              { descriptor: 'Explains the message of the source (e.g. that the Nazi state has opened the privileges of the rich — leisure, travel, sunshine — to the ordinary German worker, proof of the people’s community in action) by providing accurate and relevant evidence from the source', marks: '2' },
+              { descriptor: 'Explains the message of the source (e.g. that the Nazi state has opened the privileges of the rich — ocean cruises, swimming pools, leisure — to the ordinary German worker, proof of the people’s community in action) by providing accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Identifies or provides a general comment about the message of the source', marks: '1' },
             ],
             subtotal: 2,
           },
         ],
         notes:
-          'The context element requires placement in the later 1930s: the DAF and KdF, the destruction of the unions behind them, and the regime’s claim to have conquered unemployment and class division. The message element should be stated as a claim and supported from the poster’s details: the working family at the rail of a cruise liner, the direct address “Now YOU can come along!”, the DAF emblem. Generic statements (“to advertise holidays”) are not sufficient for full marks.',
+          'The context element requires placement in the later 1930s: the DAF and KdF, the destruction of the unions behind them, and the regime’s claim to have conquered unemployment and class division. The message element should be stated as a claim and supported from the photograph’s details: visibly ordinary workers enjoying a liner’s swimming pool, the ship built for subsidised workers’ cruises, and the fact that the image was released by the regime’s own press office. Generic statements (“to show a holiday”) are not sufficient for full marks.',
       },
       {
         letter: 'b',
@@ -259,8 +269,13 @@ export const SOURCE_SETS_2: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A Hitler Youth recruitment poster, 1935, issued by the Reich Youth Leadership.',
-        body: 'The poster shows a boy of about fourteen in the uniform of the Hitler Youth — brown shirt, black neckerchief, swastika armband — photographed from below so that he towers against a bright sky. His chin is lifted, his gaze fixed on the horizon, his expression solemn and resolute. Behind him, slightly out of focus, an immense column of identical uniformed boys marches with drums and banners into the distance. The dominant text, in bold red capitals, reads “JUGEND DIENT DEM FÜHRER” (“Youth serves the Führer”), and beneath it in smaller letters: “Alle Zehnjährigen in die Hitler-Jugend” (“All ten-year-olds into the Hitler Youth”).',
+          'Source 1: A colour-tinted photograph of a mass rally of the Hitler Youth in the Lustgarten, Berlin, mid-1930s, published for popular circulation.',
+        image: {
+          src: 'sources/hj-lustgarten.jpg',
+          alt: 'Massed ranks of uniformed Hitler Youth boys giving the Nazi salute beneath a forest of swastika flags, Lustgarten Berlin',
+          credit: 'Bundesarchiv, Bild 147-0510 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows massed ranks of uniformed Hitler Youth boys filling the square, every right arm raised in the Nazi salute. Behind the saluting ranks stands a forest of swastika banners and unit flags stretching to the colonnade of the Altes Museum. The boys are drawn up in precise military formation; no individual face stands out from the mass. Images of this kind were tinted, printed and sold as collectable pictures for albums in their millions.',
         note: 'Note: membership of the Hitler Youth and its affiliates became compulsory for young Germans by law in 1936, extended and enforced in 1939. By 1939 the organisation counted over eight million members.',
       },
       {
@@ -290,7 +305,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the purpose of the source with accurate and specific details (e.g. to recruit all German boys into the Hitler Youth as newly expected of every ten-year-old, to glorify service to Hitler as youth’s duty, and to normalise the total organisation of the young), supported by details from the source', marks: '3' },
+              { descriptor: 'Outlines the purpose of the source with accurate and specific details (e.g. to display the total organisation of German youth behind the Führer, to glorify uniformed service as the natural state of boyhood, and — as a mass-circulated collectable image — to normalise that spectacle in every household), supported by details from the source', marks: '3' },
               { descriptor: 'Outlines the purpose with some accurate details or support from the source', marks: '2' },
               { descriptor: 'Identifies a purpose in general terms', marks: '1' },
             ],
@@ -298,7 +313,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           },
         ],
         notes:
-          'Purpose asks WHY the source was created. Generic answers (“to inform”, “to advertise”) are not sufficient for full marks — the purpose must be specific to this source: recruitment of the young into the HJ, presented as service to the Führer, aimed at boys and their parents. Supporting details might include the heroic low-angle portrait, the marching mass, and the imperative slogans.',
+          'Purpose asks WHY the source was created. Generic answers (“to inform”, “to advertise”) are not sufficient for full marks — the purpose must be specific to this source: the public display of a totally organised, saluting youth as proof of the regime’s hold on the next generation, circulated to households as a collectable image. Supporting details might include the military formations, the dissolving of individuals into the mass, and the forest of flags before the museum.',
       },
       {
         letter: 'b',
