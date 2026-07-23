@@ -258,6 +258,11 @@ export class CloudStore implements Store {
     };
   }
 
+  async deleteStudents(uids: string[]): Promise<void> {
+    await this.initialAuth;
+    await Promise.all(uids.map((uid) => deleteDoc(doc(this.db, 'students', uid))));
+  }
+
   async listAllAttempts(): Promise<Attempt[]> {
     await this.initialAuth;
     const snap = await getDocs(collection(this.db, 'attempts'));

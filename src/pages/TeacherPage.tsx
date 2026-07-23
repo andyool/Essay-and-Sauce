@@ -106,6 +106,88 @@ function AttemptsTable({
   );
 }
 
+/** Taking a student off the roster is permanent, and what should happen to
+ *  their papers depends on why they are going: a mistyped name leaves junk
+ *  worth clearing out, a student who has left the class may have work worth
+ *  keeping. So the dialog asks rather than assuming. */
+function RemoveStudentDialog({
+  student,
+  attempts,
+  sessions,
+  onCancel,
+  onRemove,
+}: {
+  student: StudentProfile;
+  attempts: Attempt[];
+  sessions: number;
+  onCancel: () => void;
+  onRemove: (alsoDeleteWork: boolean) => Promise<void>;
+}) {
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState('');
+  const submitted = attempts.filter((a) => a.status === 'submitted').length;
+
+  async function go(alsoDeleteWork: boolean) {
+    setBusy(true);
+    setErr('');
+    try {
+      await onRemove(alsoDeleteWork);
+    } catch (e) {
+      setErr(e instanceof Error ? e.message : 'Could not remove this student.');
+      setBusy(false);
+    }
+  }
+
+  return (
+    <div className="modal-scrim" onClick={busy ? undefined : onCancel}>
+      <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <h3>
+          Remove {student.name} from class {student.classCode}?
+        </h3>
+        <p style={{ color: 'var(--ink-soft)', fontSize: 14.5 }}>
+          They come off the class list straight away
+          {sessions > 1 ? ', along with all ' + sessions + ' of their sign-ins' : ''}. If they still
+          have the site open they will be sent back to the sign-in screen. Nothing stops them
+          joining again with the class code — change the code if you need to keep them out.
+        </p>
+        {attempts.length > 0 ? (
+          <>
+            <p style={{ fontSize: 14.5 }}>
+              They have <strong>{attempts.length}</strong> paper{attempts.length === 1 ? '' : 's'} on
+              record ({submitted} submitted). Choose what happens to them:
+            </p>
+            {err && <div className="form-error">{err}</div>}
+            <div className="actions">
+              <button onClick={onCancel} disabled={busy}>
+                Cancel
+              </button>
+              <button onClick={() => void go(false)} disabled={busy}>
+                Remove, keep their papers
+              </button>
+              <button className="danger-ghost" onClick={() => void go(true)} disabled={busy}>
+                {busy ? 'Removing…' : 'Remove and delete their papers'}
+              </button>
+            </div>
+          </>
+        ) : (
+          <>
+            <p style={{ fontSize: 14.5 }}>They have not sat a paper, so nothing else is lost.</p>
+            {err && <div className="form-error">{err}</div>}
+            <div className="actions">
+              <button onClick={onCancel} disabled={busy}>
+                Cancel
+              </button>
+              <button className="danger-ghost" onClick={() => void go(false)} disabled={busy}>
+                {busy ? 'Removing…' : 'Remove student'}
+              </button>
+            </div>
+          </>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /** One student's history, opened from the roster: everything they have sat,
  *  newest first, without going near the all-attempts list. */
 function StudentDetail({
@@ -114,12 +196,14 @@ function StudentDetail({
   attempts,
   onBack,
   onDelete,
+  onRemoveStudent,
 }: {
   student: StudentProfile;
   classTitle?: string;
   attempts: Attempt[];
   onBack: () => void;
   onDelete: (a: Attempt) => void;
+  onRemoveStudent: () => void;
 }) {
   const submitted = attempts.filter((a) => a.status === 'submitted').length;
   const inProgress = attempts.length - submitted;
@@ -135,9 +219,14 @@ function StudentDetail({
 
   return (
     <div className="student-detail">
-      <button className="back-link" onClick={onBack}>
-        ← All students
-      </button>
+      <div className="detail-bar">
+        <button className="back-link" onClick={onBack}>
+          ← All students
+        </button>
+        <button className="danger-ghost back-link" onClick={onRemoveStudent}>
+          Remove student
+        </button>
+      </div>
       <div className="student-head">
         <div>
           <h2>{student.name}</h2>
@@ -197,6 +286,8 @@ export function TeacherPage() {
   const [newClassName, setNewClassName] = useState('');
   /** Identity of the student whose history is open on the Students tab. */
   const [openStudent, setOpenStudent] = useState<string | null>(null);
+  /** Identity of the student the remove dialog is asking about. */
+  const [removingStudent, setRemovingStudent] = useState<string | null>(null);
   const [, setTick] = useState(0);
 
   function chooseTab(t: Tab) {
@@ -293,6 +384,24 @@ export function TeacherPage() {
     setActive((cur) => cur.filter((x) => x.id !== a.id));
   }
 
+  /** Delete every profile row behind one name, and optionally the papers
+   *  written under it. The roster subscription confirms this a moment later;
+   *  the local state goes first so the row disappears on the click. */
+  async function removeStudent(identity: string, alsoDeleteWork: boolean) {
+    const profiles = students.filter((s) => identityOf(s) === identity);
+    const work = alsoDeleteWork ? (attemptsByStudent.get(identity) ?? []) : [];
+    for (const a of work) await store.deleteAttempt(a.id);
+    await store.deleteStudents(profiles.map((s) => s.uid));
+    const gone = new Set(work.map((a) => a.id));
+    setStudents((cur) => cur.filter((s) => identityOf(s) !== identity));
+    if (gone.size > 0) {
+      setAttempts((cur) => cur.filter((a) => !gone.has(a.id)));
+      setActive((cur) => cur.filter((a) => !gone.has(a.id)));
+    }
+    setRemovingStudent(null);
+    if (openStudent === identity) setOpenStudent(null);
+  }
+
   async function createClass(e: React.FormEvent) {
     e.preventDefault();
     if (!newClassName.trim()) return;
@@ -356,6 +465,13 @@ export function TeacherPage() {
   const openProfile = openStudent
     ? (rosterStudents.find((s) => identityOf(s) === openStudent) ?? null)
     : null;
+
+  const removingProfile = removingStudent
+    ? (rosterStudents.find((s) => identityOf(s) === removingStudent) ?? null)
+    : null;
+  const removingSessions = removingStudent
+    ? students.filter((s) => identityOf(s) === removingStudent).length
+    : 0;
 
   const classSelect = (
     <select
@@ -506,6 +622,7 @@ export function TeacherPage() {
           attempts={attemptsByStudent.get(identityOf(openProfile)) ?? []}
           onBack={() => setOpenStudent(null)}
           onDelete={deleteAttempt}
+          onRemoveStudent={() => setRemovingStudent(identityOf(openProfile))}
         />
       )}
 
@@ -532,6 +649,7 @@ export function TeacherPage() {
                   <th>Attempts</th>
                   <th>Submitted</th>
                   <th>Last activity</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody>
@@ -556,6 +674,19 @@ export function TeacherPage() {
                       <td>{list.length}</td>
                       <td>{submitted}</td>
                       <td>{timeAgo(last)}</td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
+                        <a
+                          href="#remove"
+                          className="danger-link"
+                          onClick={(e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            setRemovingStudent(identityOf(s));
+                          }}
+                        >
+                          Remove
+                        </a>
+                      </td>
                     </tr>
                   );
                 })}
@@ -642,6 +773,18 @@ export function TeacherPage() {
             automatically.
           </p>
         </>
+      )}
+
+      {removingProfile && (
+        <RemoveStudentDialog
+          student={removingProfile}
+          attempts={attemptsByStudent.get(identityOf(removingProfile)) ?? []}
+          sessions={removingSessions}
+          onCancel={() => setRemovingStudent(null)}
+          onRemove={(alsoDeleteWork) =>
+            removeStudent(identityOf(removingProfile), alsoDeleteWork)
+          }
+        />
       )}
     </div>
   );

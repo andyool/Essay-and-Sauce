@@ -139,6 +139,11 @@ export class LocalStore implements Store {
     return () => window.clearInterval(timer);
   }
 
+  async deleteStudents(uids: string[]): Promise<void> {
+    const s = read<StudentProfile | null>(KEY_STUDENT, null);
+    if (s && uids.includes(s.uid)) localStorage.removeItem(KEY_STUDENT);
+  }
+
   async listAllAttempts(): Promise<Attempt[]> {
     return Object.values(readAttempts()).sort((a, b) => b.createdAt - a.createdAt);
   }

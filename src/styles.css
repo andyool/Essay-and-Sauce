@@ -579,11 +579,13 @@ table.roster tr.clickable:hover td { background: var(--blue-soft); }
 .roster-note { font-size: 13.5px; color: var(--ink-faint); }
 
 /* ---------- one student's history ---------- */
-.student-detail .back-link {
-  padding: 4px 10px;
-  font-size: 13.5px;
+.detail-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
   margin-bottom: 14px;
 }
+.student-detail .back-link { padding: 4px 10px; font-size: 13.5px; }
 .student-head {
   display: flex;
   justify-content: space-between;

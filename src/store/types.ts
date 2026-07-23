@@ -32,6 +32,9 @@ export interface Store {
   /** Live class roster: fires straight away, then again whenever a student
    *  joins a class or rejoins on another device. */
   subscribeStudents(cb: (students: StudentProfile[]) => void): Unsubscribe;
+  /** Take a student off the roster. One student can hold several profile
+   *  rows — one per sign-in — so this takes every uid behind that name. */
+  deleteStudents(uids: string[]): Promise<void>;
   listAllAttempts(): Promise<Attempt[]>;
   /** Live view: all in-progress attempts, updating in near-realtime. */
   subscribeActiveAttempts(cb: (attempts: Attempt[]) => void): Unsubscribe;
