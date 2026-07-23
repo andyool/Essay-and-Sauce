@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { getSourceSet } from '../data/bank';
 import { ALL_POINT_IDS, ELECTIVE_TITLE, INDIVIDUALS, INDIVIDUAL_IDS, SYLLABUS } from '../data/syllabus';
 import type { Attempt, StudentProfile, SyllabusPointId } from '../data/types';
-import { fmtDate, newId, wordCount } from '../lib/format';
+import { feedbackComplete, feedbackTotal, fmtDate, newId, wordCount } from '../lib/format';
 import { GenerationError, generateExam } from '../lib/generator';
 import { getStore } from '../store';
 
@@ -185,9 +185,17 @@ export function StudentDashboard() {
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
-                  <span className={'badge ' + (a.status === 'submitted' ? 'submitted' : 'progress')}>
-                    {a.status === 'submitted' ? 'Submitted' : 'In progress'}
-                  </span>
+                  {a.status === 'submitted' && a.feedback?.returnedAt ? (
+                    <span className="badge marked">
+                      {feedbackComplete(a.feedback)
+                        ? 'Marked · ' + feedbackTotal(a.feedback) + '/50'
+                        : 'Feedback'}
+                    </span>
+                  ) : (
+                    <span className={'badge ' + (a.status === 'submitted' ? 'submitted' : 'progress')}>
+                      {a.status === 'submitted' ? 'Submitted' : 'In progress'}
+                    </span>
+                  )}
                   {a.status === 'in-progress' ? (
                     <Link to={'/exam/' + a.id}>
                       <button className="primary">Resume</button>

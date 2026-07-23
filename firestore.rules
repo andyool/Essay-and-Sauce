@@ -44,11 +44,17 @@ service cloud.firestore {
       allow create: if isSignedIn()
         && request.resource.data.studentUid == request.auth.uid
         && request.resource.data.studentKey == callerKey();
-      allow update: if isSignedIn()
-        && (resource.data.studentUid == request.auth.uid
-            || resource.data.studentKey == callerKey())
-        && request.resource.data.studentUid == resource.data.studentUid
-        && request.resource.data.studentKey == resource.data.studentKey;
+      // The teacher may update only the feedback (marks/comments); students
+      // may update their own work but never the feedback field.
+      allow update: if (isTeacher()
+            && request.resource.data.diff(resource.data).affectedKeys()
+                 .hasOnly(['feedback', 'updatedAt']))
+        || (isSignedIn()
+            && (resource.data.studentUid == request.auth.uid
+                || resource.data.studentKey == callerKey())
+            && request.resource.data.studentUid == resource.data.studentUid
+            && request.resource.data.studentKey == resource.data.studentKey
+            && !request.resource.data.diff(resource.data).affectedKeys().hasAny(['feedback']));
       allow delete: if isTeacher()
         || (isSignedIn()
             && (resource.data.studentUid == request.auth.uid

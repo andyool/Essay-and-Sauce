@@ -41,6 +41,8 @@ Firebase is Google's app platform. The free "Spark" tier is more than enough for
    Click **Publish**.
    - These rules make the data safe even though the site code is public: students can
      only read/write their own attempts, and only your email can read everything.
+   - **Whenever `firestore.rules` changes in this repository** (e.g. a new feature like
+     teacher marking), repeat this paste-and-publish step so the database accepts it.
 
 ## 4. Get the config and put it in the site
 

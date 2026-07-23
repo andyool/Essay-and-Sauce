@@ -1,3 +1,5 @@
+import type { TeacherFeedback } from '../data/types';
+
 export function fmtDate(ts: number): string {
   return new Date(ts).toLocaleString(undefined, {
     day: 'numeric',
@@ -30,6 +32,18 @@ export function wordCount(text: string): number {
 export function makeStudentKey(classId: string, name: string): string {
   const norm = name.trim().toLowerCase().replace(/\s+/g, ' ');
   return classId + '|' + norm;
+}
+
+/** Sum of the marks entered so far (unmarked parts count as 0). */
+export function feedbackTotal(f: TeacherFeedback): number {
+  return (f.marks.a ?? 0) + (f.marks.b ?? 0) + (f.marks.c ?? 0) + (f.marks.essay ?? 0);
+}
+
+/** True once every part (a, b, c and the essay) has a mark. */
+export function feedbackComplete(f: TeacherFeedback): boolean {
+  return (
+    f.marks.a !== null && f.marks.b !== null && f.marks.c !== null && f.marks.essay !== null
+  );
 }
 
 export function newId(): string {

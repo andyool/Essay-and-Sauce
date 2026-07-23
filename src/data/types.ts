@@ -91,6 +91,19 @@ export interface Answers {
 
 export type AttemptStatus = 'in-progress' | 'submitted';
 
+/** Keys into the four markable parts of an attempt. */
+export type FeedbackPart = 'a' | 'b' | 'c' | 'essay';
+
+/** Teacher marking for a submitted attempt. Hidden from the student until
+ *  returnedAt is set. */
+export interface TeacherFeedback {
+  marks: Record<FeedbackPart, number | null>;
+  comments: Record<FeedbackPart, string>;
+  overall: string;
+  returnedAt: number | null;
+  updatedAt: number;
+}
+
 export interface Attempt {
   id: string;
   studentUid: string;
@@ -110,6 +123,8 @@ export interface Attempt {
   essayChoice: number | null; // index into essayIds
   essayText: string;
   page: 1 | 2;
+  /** Present once the teacher has started marking this attempt. */
+  feedback?: TeacherFeedback;
 }
 
 export interface StudentProfile {

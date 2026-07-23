@@ -72,3 +72,4 @@ for (const checked of subsets) {
 
 console.log(`Sets: ${SOURCE_SETS.length}, Essays: ${ESSAYS.length}, generations tested: ${gens}`);
 console.log(errors.length ? 'ERRORS:\n' + [...new Set(errors)].join('\n') : 'ALL CHECKS PASSED');
+if (errors.length) process.exit(1);

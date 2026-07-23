@@ -64,7 +64,7 @@ button.danger-ghost {
 button.danger-ghost:hover { background: var(--accent-soft); border-color: var(--accent); }
 a.danger-link { color: var(--accent); }
 
-input[type='text'], input[type='email'], input[type='password'] {
+input[type='text'], input[type='email'], input[type='password'], input[type='number'] {
   font: inherit;
   padding: 10px 12px;
   border: 1px solid var(--line);
@@ -190,6 +190,7 @@ textarea {
 .badge.progress { background: var(--amber-soft); color: var(--amber); }
 .badge.submitted { background: var(--green-soft); color: var(--green); }
 .badge.live { background: var(--accent-soft); color: var(--accent); animation: pulse 1.6s infinite; }
+.badge.marked { background: var(--blue-soft); color: var(--blue); }
 @keyframes pulse { 50% { opacity: 0.55; } }
 
 .empty {
@@ -568,6 +569,63 @@ table.roster tr:hover td { background: #fafbfe; }
   margin-bottom: 16px;
   font-size: 14.5px;
 }
+
+/* ---------- teacher marking & feedback ---------- */
+.feedback-edit {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--amber);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 10px;
+}
+.feedback-edit .label {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--amber);
+  margin-bottom: 6px;
+}
+.feedback-edit textarea { width: 100%; }
+.mark-row { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; font-size: 14.5px; flex-wrap: wrap; }
+.mark-row input[type='number'] { width: 76px; padding: 7px 10px; }
+
+.teacher-feedback {
+  background: var(--amber-soft);
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-top: 10px;
+  font-size: 14.5px;
+  white-space: pre-wrap;
+}
+.teacher-feedback .label {
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--amber);
+  margin-bottom: 4px;
+}
+
+.feedback-banner {
+  background: var(--green-soft);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  font-size: 14.5px;
+}
+.feedback-banner .total { font-weight: 700; font-size: 16.5px; color: var(--green); margin-bottom: 2px; }
+
+.marking-panel {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-top: 26px;
+}
+.marking-panel .actions { display: flex; gap: 10px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
 
 @media (max-width: 640px) {
   .paper-head, .paper-body { padding-left: 16px; padding-right: 16px; }

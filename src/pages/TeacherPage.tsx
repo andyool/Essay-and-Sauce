@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { getSourceSet } from '../data/bank';
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
-import { fmtDate, timeAgo, wordCount } from '../lib/format';
+import { feedbackComplete, feedbackTotal, fmtDate, timeAgo, wordCount } from '../lib/format';
 import { getStore } from '../store';
 import { TEACHER_EMAILS } from '../store/firebaseConfig';
 
@@ -359,6 +359,7 @@ export function TeacherPage() {
                   <th>Status</th>
                   <th>Started</th>
                   <th>Words</th>
+                  <th>Mark</th>
                   <th></th>
                 </tr>
               </thead>
@@ -383,6 +384,17 @@ export function TeacherPage() {
                       </td>
                       <td>{fmtDate(a.createdAt)}</td>
                       <td>{words}</td>
+                      <td style={{ whiteSpace: 'nowrap' }}>
+                        {a.feedback?.returnedAt
+                          ? (feedbackComplete(a.feedback)
+                              ? feedbackTotal(a.feedback) + '/50'
+                              : feedbackTotal(a.feedback) + ' (partial)')
+                          : a.feedback
+                            ? 'Draft'
+                            : a.status === 'submitted'
+                              ? 'To mark'
+                              : '—'}
+                      </td>
                       <td style={{ whiteSpace: 'nowrap' }}>
                         <Link to={'/attempt/' + a.id}>Open</Link>
                         {' · '}
