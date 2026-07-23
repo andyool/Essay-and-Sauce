@@ -1,6 +1,13 @@
 import type { KeySection, SAQuestion, SourceDoc } from '../data/types';
 import { ESSAY_RUBRIC, ESSAY_TOTAL } from '../data/rubric';
-import { isChecklist, rowMarks, sectionMax, sectionScore, sectionStarts } from '../lib/marking';
+import {
+  ESSAY_SECTIONS,
+  isChecklist,
+  rowMarks,
+  sectionMax,
+  sectionScore,
+  sectionStarts,
+} from '../lib/marking';
 
 export function SourceCard({ source }: { source: SourceDoc }) {
   return (
@@ -41,12 +48,31 @@ export function SAQuestionText({ q }: { q: SAQuestion }) {
   );
 }
 
-export function KeySections({ sections }: { sections: KeySection[] }) {
+/** The marks awarded on a row, when the student is looking at a key their
+ *  teacher has marked against. */
+function AwardedChip({ marks }: { marks: number }) {
+  return <span className="awarded-chip">✔ {marks}</span>;
+}
+
+export function KeySections({
+  sections,
+  picks,
+}: {
+  sections: KeySection[];
+  /** The teacher's awards, numbered straight through the sections. Rows that
+   *  earned marks are highlighted. */
+  picks?: (number | null)[];
+}) {
+  const starts = sectionStarts(sections);
   return (
     <>
       {sections.map((sec, i) => (
         <div key={i}>
-          {sec.heading && <div className="key-heading">{sec.heading}</div>}
+          {/* Unheaded sections are labelled when marks are shown, so the
+              student can match each table to their breakdown above. */}
+          {(sec.heading || (picks && sections.length > 1)) && (
+            <div className="key-heading">{sec.heading ?? 'Part ' + (i + 1)}</div>
+          )}
           <table className="key-table">
             <thead>
               <tr>
@@ -55,16 +81,25 @@ export function KeySections({ sections }: { sections: KeySection[] }) {
               </tr>
             </thead>
             <tbody>
-              {sec.rows.map((row, j) => (
-                <tr key={j}>
-                  <td>{row.descriptor}</td>
-                  <td className="marks">{row.marks}</td>
-                </tr>
-              ))}
+              {sec.rows.map((row, j) => {
+                const awarded = picks?.[starts[i] + j] ?? null;
+                return (
+                  <tr key={j} className={awarded !== null ? 'awarded' : ''}>
+                    <td>{row.descriptor}</td>
+                    <td className="marks">
+                      {row.marks}
+                      {awarded !== null && <AwardedChip marks={awarded} />}
+                    </td>
+                  </tr>
+                );
+              })}
               {sec.subtotal !== undefined && (
                 <tr>
-                  <td style={{ textAlign: 'right', fontWeight: 700 }}>Subtotal</td>
+                  <td style={{ textAlign: 'right', fontWeight: 700 }}>
+                    {picks ? 'You were given' : 'Subtotal'}
+                  </td>
                   <td className="marks" style={{ fontWeight: 700 }}>
+                    {picks ? sectionScore(sections, picks, i).got + ' / ' : ''}
                     {sec.subtotal}
                   </td>
                 </tr>
@@ -77,18 +112,58 @@ export function KeySections({ sections }: { sections: KeySection[] }) {
   );
 }
 
-export function MarkingKey({ q }: { q: SAQuestion }) {
+export function MarkingKey({ q, picks }: { q: SAQuestion; picks?: (number | null)[] }) {
   return (
     <details className="key">
-      <summary>Marking key &amp; markers’ notes — question ({q.letter})</summary>
+      <summary>
+        {picks
+          ? 'Marking key — where your marks came from, question (' + q.letter + ')'
+          : 'Marking key & markers’ notes — question (' + q.letter + ')'}
+      </summary>
       <div className="key-inner">
-        <KeySections sections={q.key} />
+        <KeySections sections={q.key} picks={picks} />
         <div className="markers-notes">
           <div className="label">Markers’ notes</div>
           {q.notes}
         </div>
       </div>
     </details>
+  );
+}
+
+/** What the teacher awarded, section by section: the student's breakdown of a
+ *  question's mark, in the words of the marking key. */
+export function AwardedBreakdown({
+  sections,
+  picks,
+}: {
+  sections: KeySection[];
+  picks: (number | null)[];
+}) {
+  const starts = sectionStarts(sections);
+  return (
+    <ul className="awarded-list">
+      {sections.map((sec, i) => {
+        const { got, picked } = sectionScore(sections, picks, i);
+        const label = sec.heading ?? (sections.length > 1 ? 'Part ' + (i + 1) : 'Marking key');
+        const rows = sec.rows.filter((_r, j) => (picks[starts[i] + j] ?? null) !== null);
+        return (
+          <li key={i}>
+            <div className="head">
+              <span className="part">{label}</span>
+              <span className={'got' + (picked ? '' : ' none')}>
+                {got} / {sectionMax(sec)}
+              </span>
+            </div>
+            {picked ? (
+              rows.map((r, j) => <div className="why" key={j}>{r.descriptor}</div>)
+            ) : (
+              <div className="why none">No marks awarded for this part.</div>
+            )}
+          </li>
+        );
+      })}
+    </ul>
   );
 }
 
@@ -187,24 +262,41 @@ export function MarkingKeyPicker({
   );
 }
 
-export function EssayRubric() {
+export function EssayRubric({ picks }: { picks?: (number | null)[] }) {
+  const starts = sectionStarts(ESSAY_SECTIONS);
   return (
     <details className="key">
-      <summary>The fixed 30-mark essay marking rubric</summary>
+      <summary>
+        {picks
+          ? 'Essay rubric — where your marks came from'
+          : 'The fixed 30-mark essay marking rubric'}
+      </summary>
       <div className="key-inner">
-        {ESSAY_RUBRIC.map((c) => (
+        {ESSAY_RUBRIC.map((c, ci) => (
           <div key={c.name}>
             <div className="key-heading">
               {c.name} ({c.max} marks)
+              {picks && (
+                <span className="you-got">
+                  {' '}
+                  — you were given {sectionScore(ESSAY_SECTIONS, picks, ci).got} of {c.max}
+                </span>
+              )}
             </div>
             <table className="key-table">
               <tbody>
-                {c.levels.map((l, i) => (
-                  <tr key={i}>
-                    <td>{l.descriptor}</td>
-                    <td className="marks">{l.marks}</td>
-                  </tr>
-                ))}
+                {c.levels.map((l, i) => {
+                  const awarded = picks?.[starts[ci] + i] ?? null;
+                  return (
+                    <tr key={i} className={awarded !== null ? 'awarded' : ''}>
+                      <td>{l.descriptor}</td>
+                      <td className="marks">
+                        {l.marks}
+                        {awarded !== null && <AwardedChip marks={awarded} />}
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import {
+  AwardedBreakdown,
   EssayNotes,
   EssayRubric,
   MarkersNotesKey,
@@ -10,9 +11,10 @@ import {
   SourceCard,
 } from '../components/ExamParts';
 import { getEssay, getSourceSet } from '../data/bank';
-import type { Attempt, FeedbackPart, TeacherFeedback } from '../data/types';
+import type { Attempt, FeedbackPart, KeySection, TeacherFeedback } from '../data/types';
 import { feedbackComplete, feedbackTotal, fmtDate, timeAgo, wordCount } from '../lib/format';
 import {
+  ESSAY_SECTIONS,
   isChecklist,
   picksTotal,
   rowCount,
@@ -48,17 +50,31 @@ function AnswerBlock({ text }: { text: string }) {
   );
 }
 
-/** Read-only feedback box shown to the student once feedback is returned. */
-function FeedbackBox({ fb, part, max }: { fb: TeacherFeedback; part: FeedbackPart; max: number }) {
+/** Read-only feedback box shown to the student once feedback is returned:
+ *  the mark, how it was made up section by section, and the comment. */
+function FeedbackBox({
+  fb,
+  part,
+  max,
+  sections,
+}: {
+  fb: TeacherFeedback;
+  part: FeedbackPart;
+  max: number;
+  sections: KeySection[];
+}) {
   const mark = fb.marks[part];
   const comment = fb.comments[part].trim();
+  const picks = fb.picks?.[part] ?? [];
+  const marked = picks.some((p) => p !== null && p !== undefined);
   if (mark === null && !comment) return null;
   return (
     <div className="teacher-feedback">
       <div className="label">
         Teacher’s feedback{mark !== null ? ` — ${mark} / ${max} marks` : ''}
       </div>
-      {comment && <div>{comment}</div>}
+      {marked && <AwardedBreakdown sections={sections} picks={picks} />}
+      {comment && <div className="comment">{comment}</div>}
     </div>
   );
 }
@@ -404,7 +420,9 @@ export function AttemptViewPage() {
               {attempt.studentName}’s answer · {wordCount(attempt.answers[q.letter])} words
             </div>
             <AnswerBlock text={attempt.answers[q.letter]} />
-            {returned && <FeedbackBox fb={returned} part={q.letter} max={q.marks} />}
+            {returned && (
+              <FeedbackBox fb={returned} part={q.letter} max={q.marks} sections={q.key} />
+            )}
             {markEditor(q.letter)}
             {marking ? (
               <MarkersNotesKey
@@ -412,7 +430,7 @@ export function AttemptViewPage() {
                 notes={q.notes}
               />
             ) : (
-              <MarkingKey q={q} />
+              <MarkingKey q={q} picks={returned?.picks?.[q.letter]} />
             )}
           </div>
         ))}
@@ -442,10 +460,12 @@ export function AttemptViewPage() {
             {attempt.studentName}’s essay · {wordCount(attempt.essayText)} words
           </div>
           <AnswerBlock text={attempt.essayText} />
-          {returned && <FeedbackBox fb={returned} part="essay" max={30} />}
+          {returned && (
+            <FeedbackBox fb={returned} part="essay" max={30} sections={ESSAY_SECTIONS} />
+          )}
           {markEditor('essay')}
         </div>
-        {!marking && <EssayRubric />}
+        {!marking && <EssayRubric picks={returned?.picks?.essay} />}
         {chosenEssay && (
           <details className="key">
             <summary>Markers’ notes for the chosen question</summary>

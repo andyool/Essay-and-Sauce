@@ -681,6 +681,48 @@ table.key-table.pickable tr.picked td:first-child { font-weight: 600; }
   color: var(--amber);
   margin-bottom: 4px;
 }
+.teacher-feedback .comment { margin-top: 10px; }
+
+/* Where the student's mark came from, part by part. */
+.awarded-list {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  white-space: normal;
+}
+.awarded-list li { padding: 7px 0; border-top: 1px solid rgba(138, 90, 18, 0.22); }
+.awarded-list li:first-child { border-top: none; padding-top: 2px; }
+.awarded-list .head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+}
+.awarded-list .part { font-weight: 700; font-size: 13px; }
+.awarded-list .got {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.awarded-list .got.none { color: var(--ink-faint); font-weight: 600; }
+.awarded-list .why { font-size: 13.5px; color: var(--ink-soft); margin-top: 2px; }
+.awarded-list .why.none { font-style: italic; color: var(--ink-faint); }
+
+/* Rows of the key the student's marks were awarded on. */
+table.key-table tr.awarded td { background: var(--amber-soft); }
+table.key-table tr.awarded td:first-child { font-weight: 600; }
+.awarded-chip {
+  display: inline-block;
+  margin-left: 6px;
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.key-heading .you-got { font-weight: 600; color: var(--amber); }
 
 .feedback-banner {
   background: var(--green-soft);
