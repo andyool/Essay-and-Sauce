@@ -26,7 +26,7 @@ export const SOURCE_SETS_4: SourceSet[] = [
           alt: 'Armed putschists in steel helmets with swastika armbands on a lorry above a crowd, Marienplatz Munich, 9 November 1923',
           credit: 'Bundesarchiv, Bild 119-1486 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows a dense crowd of civilians in hats filling the Marienplatz before Munich’s Gothic town hall. At the right, a lorry carries a squad of putschists in steel helmets, several wearing swastika armbands, one holding a flag; they look down over the crowd. A tram is halted in the square and a single man has climbed a lamp post to see over the heads. The crowd appears curious rather than mobilised — watching, not marching.',
+        body: 'The photograph shows a dense crowd of civilians in hats filling the Marienplatz before Munich’s Gothic town hall. At the right, a lorry carries a squad of putschists in steel helmets, several wearing swastika armbands, one holding a flag; they look down over the crowd. A tram is halted in the square and a single man has climbed a lamp post to see over the heads.',
         note: 'Note: within hours of this scene, the putschists’ march through the city was stopped by a Bavarian police cordon at the Feldherrnhalle; sixteen marchers and four policemen were killed, and Hitler was arrested two days later.',
         footnotes: [
           'Putsch — an attempt to seize power by force.',
@@ -420,7 +420,7 @@ export const SOURCE_SETS_4: SourceSet[] = [
           alt: 'Hitler in conversation with Göring and Röhm at Tempelhof airfield, early 1930s',
           credit: 'Bundesarchiv, Bild 102-14081 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows the three men standing close together in easy conversation, dressed in civilian overcoats and hats, at the edge of the Berlin airfield. Hitler, in a belted trench coat, leans in to speak; the others listen attentively. Nothing in the photograph distinguishes the man in the centre of the group from his companions in rank or importance.',
+        body: 'The photograph shows the three men standing close together in easy conversation, dressed in civilian overcoats and hats, at the edge of the Berlin airfield. Hitler, in a belted trench coat, leans in to speak; the others listen attentively.',
         note: 'Note: within two years of such scenes, on 30 June – 2 July 1934, Röhm and much of the SA leadership were arrested and shot on Hitler’s orders, in an operation organised in part by Göring and the SS. Röhm, offered a pistol in his cell, refused to shoot himself and was killed by SS officers.',
         footnotes: [
           'SA (Sturmabteilung) — the Nazi Party’s brownshirted paramilitary organisation, numbering several million by 1934.',

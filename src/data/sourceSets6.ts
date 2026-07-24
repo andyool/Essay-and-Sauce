@@ -285,7 +285,7 @@ export const SOURCE_SETS_6: SourceSet[] = [
           alt: 'Reichsautobahn construction site near Berlin with field railway, earthworks and workers\' barracks among the pines',
           credit: 'Bundesarchiv, B 145 Bild-P020683 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows a broad cutting driven through pine forest for the new motorway. A narrow-gauge field railway with tipper wagons and small locomotives runs along the sandy roadbed, and surveying equipment stands in the foreground where a lone workman drives a post. Along the treeline stretches a row of long wooden barracks — quarters for the construction workers, who lived on site. The scale of the cleared corridor dwarfs the men and machines within it.',
+        body: 'The photograph shows a broad cutting driven through pine forest for the new motorway. A narrow-gauge field railway with tipper wagons and small locomotives runs along the sandy roadbed, and surveying equipment stands in the foreground where a lone workman drives a post. Along the treeline stretches a row of long wooden barracks — quarters for the construction workers, who lived on site.',
         note: 'Note: motorway construction began in September 1933 with Hitler ceremonially turning the first sod before the cameras. The Autobahn became the regime’s favourite emblem of the “battle for work”, though it never employed more than about 125,000 men at its peak — a fraction of the six million registered unemployed of early 1933.',
         footnotes: [
           'Field railway — a temporary narrow-gauge railway used on construction sites.',
@@ -410,8 +410,8 @@ export const SOURCE_SETS_6: SourceSet[] = [
           alt: 'The wrecked conference room at Hitler\'s headquarters after the bomb of 20 July 1944 — collapsed ceiling, shattered furniture and debris',
           credit: 'Bundesarchiv, Bild 146-1972-025-12 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows the interior of the conference barrack blasted into wreckage: the ceiling hangs in splinters, the map table at which Hitler had been standing lies smashed among broken beams and shredded panelling, and debris covers the floor to the depth of a man’s knee. The bomb, in a briefcase placed beneath the table by Colonel Claus Schenk Graf von Stauffenberg, detonated less than two metres from Hitler; the heavy table leg and the barrack’s open windows dissipated the blast. Four men died of their wounds; Hitler suffered burst eardrums, burns and a shredded uniform, and received Mussolini at his headquarters the same afternoon.',
-        note: 'Note: photographs of the wrecked room were taken for the regime’s investigation and released to document the Führer’s “providential” survival.',
+        body: 'The photograph shows the interior of the conference barrack blasted into wreckage: the ceiling hangs in splinters, the map table at which Hitler had been standing lies smashed among broken beams and shredded panelling, and debris covers the floor to the depth of a man’s knee.',
+        note: 'Note: the bomb, in a briefcase placed beneath the table by Colonel Claus Schenk Graf von Stauffenberg, detonated less than two metres from Hitler; the heavy table leg and the barrack’s open windows dissipated the blast. Four men died of their wounds; Hitler survived with burst eardrums and burns. Photographs of the wrecked room were taken for the regime’s investigation.',
         footnotes: [
           'Barrack — the wooden conference hut in which the midday briefing was held.',
         ],

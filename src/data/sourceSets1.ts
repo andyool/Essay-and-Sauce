@@ -27,8 +27,8 @@ export const SOURCE_SETS_1: SourceSet[] = [
           alt: 'A man pastes banknotes onto a wall as wallpaper, Germany 1923',
           credit: 'Bundesarchiv, Bild 102-00104 / Georg Pahl / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows a young man in a suit and bow tie pasting banknotes directly onto the wall of his room, using a pot of paste on a stool beside him. Dozens of one-mark notes are already smoothed onto the wall in neat overlapping rows, with 1,000-mark notes pasted above them. At the height of the inflation, banknotes of small denominations were worth less than the wallpaper they could replace.',
-        note: 'Note: the larger notes at the top of the wall are 1,000-mark notes; the smaller notes are one-mark notes. Photographs like this one were staged for the press to illustrate the collapse of the currency.',
+        body: 'The photograph shows a young man in a suit and bow tie pasting banknotes directly onto the wall of his room, using a pot of paste on a stool beside him. Dozens of one-mark notes are already smoothed onto the wall in neat overlapping rows, with 1,000-mark notes pasted above them.',
+        note: 'Note: the larger notes at the top of the wall are 1,000-mark notes; the smaller notes are one-mark notes.',
         footnotes: [
           'Denomination — the face value printed on a banknote.',
         ],
@@ -409,8 +409,8 @@ export const SOURCE_SETS_1: SourceSet[] = [
           alt: 'A uniformed Nazi official hands Volksempfänger radio sets across a table to a crowd of civilians, Berlin, late 1930s',
           credit: 'Bundesarchiv, Bild 183-H14243 / Nau / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows a Party official in uniform, a swastika armband on his sleeve, handing a boxed Volksempfänger radio across a table to a queue of waiting Berliners — most of them elderly men and women in worn coats and hats. Each holds a paper voucher. The recipients press forward, watched from behind by uniformed SS men; one man clutches his new radio set to his chest. The scene is arranged to face the camera.',
-        note: 'Note: the Volksempfänger was a deliberately cheap, mass-produced radio receiver introduced in 1933 at Goebbels’ initiative. By 1939 over 70 per cent of German households owned a radio — the highest proportion in the world. The sets received German stations clearly; listening to foreign broadcasts became a criminal offence in wartime.',
+        body: 'The photograph shows a Party official in uniform, a swastika armband on his sleeve, handing a boxed Volksempfänger radio across a table to a queue of waiting Berliners — most of them elderly men and women in worn coats and hats. Each holds a paper voucher. The recipients press forward, watched from behind by uniformed SS men; one man clutches his new radio set to his chest.',
+        note: 'Note: the Volksempfänger was a cheap, mass-produced radio receiver introduced in 1933 at Goebbels’ initiative. By 1939 over 70 per cent of German households owned a radio — the highest proportion in the world. The sets received German stations clearly; listening to foreign broadcasts became a criminal offence in wartime.',
         footnotes: [
           'Voucher — a paper entitlement exchanged for goods.',
         ],

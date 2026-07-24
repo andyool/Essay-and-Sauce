@@ -281,7 +281,7 @@ export const SOURCE_SETS_3: SourceSet[] = [
           alt: 'Stresemann, Chamberlain and Briand seated together at a small table during the Locarno conference, 1925',
           credit: 'Bundesarchiv, Bild 183-R03618 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows the three foreign ministers seated close together around a small round table in a hotel room, posed for the camera. Stresemann sits at ease with his legs crossed; Chamberlain, monocle in eye, sits between the German and French ministers; Briand rests his hand on the table beside a tray of cigarettes. Six years after Versailles, the image of a German minister seated as an equal beside the victors of the war was itself the news.',
+        body: 'The photograph shows the three foreign ministers seated close together around a small round table in a hotel room, posed for the camera. Stresemann sits at ease with his legs crossed; Chamberlain, monocle in eye, sits between the German and French ministers; Briand rests his hand on the table beside a tray of cigarettes.',
         note: 'Note: at Locarno Germany freely accepted its western borders with France and Belgium, easing relations with both powers. Germany was admitted to the League of Nations in September 1926, and Stresemann, Briand and Chamberlain each received the Nobel Peace Prize for the settlement.',
         footnotes: [
           'Monocle — a single eyeglass.',
@@ -411,7 +411,7 @@ export const SOURCE_SETS_3: SourceSet[] = [
           alt: 'Antisemitic 1919 postcard showing a German soldier in a trench being stabbed from behind by a caricatured figure — the "stab-in-the-back" legend',
           credit: 'Postcard, c. 1919. Public domain, via Wikimedia Commons',
         },
-        body: 'The drawing shows a German soldier in a steel helmet lying forward on the parapet of a trench, rifle in hand, facing the enemy beneath a black storm cloud. Behind him, rising out of the landscape at his back, looms a grinning figure who drives a dagger down between the soldier’s shoulders. The attacker is drawn as a crude antisemitic caricature and is marked with a Star of David: the postcard blames “the Jew” for the army’s defeat. The soldier does not see the blow coming.',
+        body: 'The drawing shows a German soldier in a steel helmet lying forward on the parapet of a trench, rifle in hand, facing the enemy beneath a black storm cloud. Behind him, rising out of the landscape at his back, looms a grinning figure who drives a dagger down between the soldier’s shoulders. The attacker is drawn as a crude antisemitic caricature and is marked with a Star of David.',
         note: 'Note: this postcard shows how the “stab-in-the-back” legend was antisemitic from its beginning — blame for the defeat was directed at Jews, socialists and republican politicians, the supposed “enemies within”. The legend was false: the army’s own Supreme Command had told the Kaiser in late September 1918 that the war was lost and demanded that an armistice be sought. The caricature is reproduced here as historical evidence of the propaganda Germans encountered after 1918.',
         footnotes: [
           'Armistice — the agreement of 11 November 1918 that ended the fighting.',

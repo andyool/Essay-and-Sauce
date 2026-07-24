@@ -1,3 +1,6 @@
+import { existsSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
 import { SOURCE_SETS, ESSAYS } from '../src/data/bank';
 import { generateExam } from '../src/lib/generator';
 import type { SyllabusPointId } from '../src/data/types';
@@ -7,6 +10,39 @@ let errors: string[] = [];
 
 const themeKeys = new Set(SOURCE_SETS.map((s) => s.themeKey));
 const validTags = new Set<string>(ALL_POINT_IDS);
+const publicDir = join(dirname(fileURLToPath(import.meta.url)), '..', 'public');
+
+// ids and theme keys must be unique
+{
+  const seen = new Set<string>();
+  for (const s of SOURCE_SETS) {
+    if (seen.has(s.id)) errors.push(`duplicate set id ${s.id}`);
+    seen.add(s.id);
+  }
+  const themes = new Set<string>();
+  for (const s of SOURCE_SETS) {
+    if (themes.has(s.themeKey)) errors.push(`duplicate themeKey ${s.themeKey}`);
+    themes.add(s.themeKey);
+  }
+  const eids = new Set<string>();
+  for (const e of ESSAYS) {
+    if (eids.has(e.id)) errors.push(`duplicate essay id ${e.id}`);
+    eids.add(e.id);
+  }
+}
+
+for (const s of SOURCE_SETS) {
+  // every set carries 1–2 real images, and the files exist on disk
+  const images = s.sources.filter((src) => src.image);
+  if (images.length < 1 || images.length > 2) errors.push(`${s.id}: ${images.length} images (want 1–2)`);
+  for (const src of s.sources) {
+    if (src.kind === 'visual' && !src.image) errors.push(`${s.id}: visual source ${src.n} has no image`);
+    if (src.image) {
+      if (!existsSync(join(publicDir, src.image.src))) errors.push(`${s.id}: missing file ${src.image.src}`);
+      if (!src.image.alt || !src.image.credit) errors.push(`${s.id}: image ${src.image.src} lacks alt/credit`);
+    }
+  }
+}
 
 for (const s of SOURCE_SETS) {
   const [a, b, c] = s.questions;
@@ -37,6 +73,8 @@ for (const e of ESSAYS) {
 // generator invariants
 const subsets: SyllabusPointId[][] = [
   [...ALL_POINT_IDS],
+  // every main dot point must generate exams on its own
+  ['p1'], ['p2'], ['p3'], ['p4'], ['p5'], ['p6'],
   ['p1','p2'],
   ['p1','p2','p3','i-hitler'],
   ['p2','p3','p4','i-stresemann','i-hindenburg'],

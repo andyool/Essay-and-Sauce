@@ -175,8 +175,22 @@ export interface StudentProfile {
   /** Stable identity: class + normalised name. Lets a student reconnect to
    *  their work after signing out or switching devices. */
   studentKey: string;
+  /** Hash of the student's 4-digit PIN (chosen at first sign-in), salted with
+   *  the studentKey. Profiles created before PINs existed lack this. */
+  pinHash?: string;
   createdAt: number;
   lastActiveAt: number;
+}
+
+/** The claim on a name within a class: created the first time the name is
+ *  used, it locks the name to the PIN chosen then. Lives in its own
+ *  collection (doc id = studentKey) so later sign-ins can be checked. */
+export interface Identity {
+  studentKey: string;
+  name: string;
+  classCode: string;
+  pinHash: string;
+  createdAt: number;
 }
 
 export interface ClassInfo {

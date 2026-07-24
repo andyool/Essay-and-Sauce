@@ -27,7 +27,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           credit: 'Bundesarchiv, Bild 102-14597 / Georg Pahl / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
         body: 'The photograph shows a great pyre of books burning in the darkness of the Opernplatz. Around it stands a dense crowd — uniformed SA men, students in civilian clothes, and young women in party formations — most with their right arms raised in the Nazi salute. Scattered books and papers litter the cobblestones in the foreground; smoke rises into the night sky. The works burned that night included those of Heinrich Heine, Thomas Mann, Erich Kästner, Sigmund Freud and Karl Marx — books condemned as “un-German”.',
-        note: 'Note: the burnings of 10 May 1933 were staged simultaneously in 34 university towns, with Goebbels addressing the Berlin crowd in person. A century earlier the poet Heine had written: “Where they burn books, they will in the end also burn people.”',
+        note: 'Note: the burnings of 10 May 1933 were held simultaneously in 34 university towns, with Goebbels addressing the Berlin crowd in person.',
         footnotes: [
           'Pyre — a heap of material for burning.',
         ],
@@ -154,7 +154,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           alt: 'Holidaymakers at the swimming pool aboard the KdF cruise ship Wilhelm Gustloff, 1938',
           credit: 'Bundesarchiv, Bild 146-1988-107-05 / Anne Winterer / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows the tiled indoor swimming pool of the cruise liner. A group of holidaymakers — men and women of visibly ordinary, middle-aged, working appearance — sit in swimming costumes along the pool’s edge, watching a swimmer climb the ladder from the water. The Wilhelm Gustloff, launched in 1937 and named after an assassinated Nazi functionary, carried subsidised working-class tourists on cruises to Madeira, Norway and the Mediterranean — holidays previously unimaginable for a factory worker.',
+        body: 'The photograph shows the tiled indoor swimming pool of the cruise liner. A group of holidaymakers — men and women of visibly ordinary, middle-aged, working appearance — sit in swimming costumes along the pool’s edge, watching a swimmer climb the ladder from the water. The Wilhelm Gustloff, launched in 1937 and named after an assassinated Nazi functionary, carried subsidised working-class tourists on cruises to Madeira, Norway and the Mediterranean.',
         note: 'Note: the German Labour Front (DAF) was the compulsory Nazi organisation that replaced the banned trade unions in 1933; Strength through Joy (KdF) was its subsidised leisure and travel programme. By 1939 KdF claimed some 25 million participants in its holidays, cruises, concerts and sport.',
       },
       {
@@ -275,7 +275,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           alt: 'Massed ranks of uniformed Hitler Youth boys giving the Nazi salute beneath a forest of swastika flags, Lustgarten Berlin',
           credit: 'Bundesarchiv, Bild 147-0510 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
         },
-        body: 'The photograph shows massed ranks of uniformed Hitler Youth boys filling the square, every right arm raised in the Nazi salute. Behind the saluting ranks stands a forest of swastika banners and unit flags stretching to the colonnade of the Altes Museum. The boys are drawn up in precise military formation; no individual face stands out from the mass. Images of this kind were tinted, printed and sold as collectable pictures for albums in their millions.',
+        body: 'The photograph shows massed ranks of uniformed Hitler Youth boys filling the square, every right arm raised in the Nazi salute. Behind the saluting ranks stands a forest of swastika banners and unit flags stretching to the colonnade of the Altes Museum. The boys are drawn up in precise military formation. Images of this kind were tinted, printed and sold as collectable pictures for albums in their millions.',
         note: 'Note: membership of the Hitler Youth and its affiliates became compulsory for young Germans by law in 1936, extended and enforced in 1939. By 1939 the organisation counted over eight million members.',
       },
       {
@@ -392,9 +392,17 @@ export const SOURCE_SETS_2: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A cartoon published in a German-language newspaper produced by exiled opponents of the Nazi regime, Prague, 1936. The paper was smuggled into Germany in small quantities.',
-        body: 'The cartoon shows a colossal monument in the form of a swastika carved from a single block of granite, floodlit and ringed by guard towers. At its base, almost too small to see, three tiny figures work with hammers and chisels: one wears a worker’s cap, one a clergyman’s collar, one carries books under one arm. A thin crack, barely visible, runs up from where they strike. In the foreground a uniformed guard laughs at them, hands on hips. The caption beneath reads: “Der stete Tropfen höhlt den Stein” (“The steady drop hollows the stone”).',
-        note: 'Note: the three small figures are labelled in tiny letters “Arbeiter” (worker), “Pfarrer” (pastor) and “Student”.',
+          'Source 1: An official photograph of Dr Carl Goerdeler, former mayor of Leipzig and a leader of the conservative resistance, standing trial for treason before the People’s Court (Volksgerichtshof), Berlin, 1944. The photograph was taken for the regime.',
+        image: {
+          src: 'sources/volksgerichtshof-goerdeler.jpg',
+          alt: 'Carl Goerdeler stands before the judges of the People\'s Court in 1944, ringed by officers, officials and spectators in a crowded courtroom',
+          credit: 'Bundesarchiv, Bild 151-58-16 / CC-BY-SA 3.0 DE, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a crowded courtroom. Goerdeler, in a plain dark suit, stands alone at a rail facing the judges’ bench, from which a red-robed judge (foreground, left) looks across at him. Around and behind the prisoner sit rows of spectators — uniformed officers, officials and civilians — with a policeman in dress helmet seated directly behind him. Bright light falls from the tall windows onto the accused.',
+        note: 'Note: the People’s Court under Roland Freisler tried the members of the resistance after the failed bomb plot of 20 July 1944. Sessions were photographed and filmed for the regime; Goerdeler, who had been chosen by the plotters as Chancellor of a post-Hitler government, was condemned to death and executed in February 1945.',
+        footnotes: [
+          'People’s Court (Volksgerichtshof) — the Nazi political tribunal for treason cases, outside the ordinary court system.',
+        ],
       },
       {
         n: 2,
@@ -425,13 +433,13 @@ export const SOURCE_SETS_2: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the origin of Source 1 (a cartoon from a German-exile opposition newspaper, Prague, 1936, smuggled into Germany)', marks: '1' },
+              { descriptor: 'Correctly identifies the origin of Source 1 (an official photograph, taken for the regime, of Goerdeler’s treason trial before the People’s Court, Berlin, 1944)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains the purpose of the source with detailed reasons specific to it (e.g. to encourage opponents inside Germany that small acts of resistance matter and will eventually crack the seemingly invincible regime, and to keep opposition morale alive under dictatorship), supported by details from the source', marks: '3' },
+              { descriptor: 'Explains the purpose of the source with detailed reasons specific to it (e.g. taken to document and publicise the regime’s judicial vengeance on the resistance — the show trial staged and recorded to display the traitor isolated, condemned and powerless, as a warning to any who might follow him), supported by details from the source', marks: '3' },
               { descriptor: 'Explains the purpose with some accurate and relevant support from the source', marks: '2' },
               { descriptor: 'Identifies a purpose in general terms', marks: '1' },
             ],
@@ -439,7 +447,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           },
         ],
         notes:
-          'Origin refers to provenance — candidates should identify at least two details about who created the source, when, and where/what type it is. For purpose, generic answers (“to criticise the Nazis”) are not sufficient for full marks: the purpose should be tied to the source’s audience and situation — an exile publication smuggled to sympathisers inside Germany, using the proverb and the crack in the granite to argue that persistence, however small, is not futile.',
+          'Origin refers to provenance — candidates should identify at least two details about who created the source, when, and where/what type it is. For purpose, generic answers (“to show a trial”) are not sufficient for full marks: the purpose should be tied to the photograph’s maker and staging — an official camera inside a political show trial, recording the lone civilian ringed by the regime’s uniforms and spectators; such images and films were made to intimidate and to display the resistance as a small criminal clique receiving justice.',
       },
       {
         letter: 'b',
@@ -497,7 +505,7 @@ export const SOURCE_SETS_2: SourceSet[] = [
           },
         ],
         notes:
-          'Theme first: the set represents resistance as small, fragmented, morally driven and politically weak — the cartoon’s tiny figures against the granite state, the White Rose’s appeal to conscience, the historian’s structural verdict. Strong responses test this against the record: the destroyed organisational bases (1933–34), Communist and Social Democratic underground networks, church opposition (Niemöller and the Confessing Church, Galen’s 1941 sermons against “euthanasia”), youth nonconformity, workplace dissent, and the 20 July 1944 conspiracy — together with the price paid (People’s Court, executions) and the reality of broad consent that isolated resisters. Omissions earn marks only when tied to evaluation — e.g. the set contains no military or elite conspiracy except by the historian’s mention, so it may understate the one form of resistance that came closest to success; equally it shows no Jewish resistance or everyday refusal. For higher marks: balance of source and own knowledge, an explicit verdict on “extent”, theme-led structure. Reward any legitimate, evidenced reading.',
+          'Theme first: the set represents resistance as small, fragmented, morally driven and politically weak — the lone defendant before the regime’s court, the White Rose’s appeal to conscience, the historian’s structural verdict. Strong responses test this against the record: the destroyed organisational bases (1933–34), Communist and Social Democratic underground networks, church opposition (Niemöller and the Confessing Church, Galen’s 1941 sermons against “euthanasia”), youth nonconformity, workplace dissent, and the 20 July 1944 conspiracy — together with the price paid (People’s Court, executions) and the reality of broad consent that isolated resisters. Omissions earn marks only when tied to evaluation — e.g. the set contains no military or elite conspiracy except by the historian’s mention, so it may understate the one form of resistance that came closest to success; equally it shows no Jewish resistance or everyday refusal. For higher marks: balance of source and own knowledge, an explicit verdict on “extent”, theme-led structure. Reward any legitimate, evidenced reading.',
       },
     ],
   },
