@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { isValidPin } from '../lib/format';
 import { getStore } from '../store';
 
 export function Landing() {
@@ -7,6 +8,7 @@ export function Landing() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [code, setCode] = useState('');
+  const [pin, setPin] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
 
@@ -28,9 +30,13 @@ export function Landing() {
       setError('Enter your class code.');
       return;
     }
+    if (!isValidPin(pin)) {
+      setError('Enter a 4-digit PIN (numbers only).');
+      return;
+    }
     setBusy(true);
     try {
-      await store.joinClass(name, code);
+      await store.joinClass(name, code, pin);
       navigate('/dashboard');
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not join. Try again.');
@@ -65,7 +71,24 @@ export function Landing() {
           placeholder={store.mode === 'local' ? 'any code works in local mode' : 'from your teacher, e.g. K7Q2M'}
           autoCapitalize="characters"
         />
-        {error && <div className="form-error">{error}</div>}
+        <label htmlFor="pin">Your 4-digit PIN</label>
+        <input
+          id="pin"
+          type="password"
+          inputMode="numeric"
+          pattern="\d{4}"
+          maxLength={4}
+          value={pin}
+          onChange={(e) => setPin(e.target.value.replace(/\D/g, ''))}
+          placeholder="••••"
+          autoComplete="off"
+          aria-describedby="pin-help"
+        />
+        <div id="pin-help" className="field-help">
+          First time here? Choose any 4 digits — that PIN protects your work from then on.
+          Coming back? Enter the PIN you chose. Forgotten it? Your teacher can reset it.
+        </div>
+        {error && <div className="form-error" role="alert">{error}</div>}
         <div className="actions">
           <button className="primary big" type="submit" disabled={busy}>
             {busy ? 'Joining…' : 'Enter'}

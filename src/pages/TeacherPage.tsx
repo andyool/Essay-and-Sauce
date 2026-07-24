@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { ConfirmDialog } from '../components/Feedback';
 import { getSourceSet } from '../data/bank';
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
 import { feedbackComplete, feedbackTotal, fmtDate, timeAgo, wordCount } from '../lib/format';
-import { modeLabel, remaining, timingBrief } from '../lib/timing';
+import { elapsed, modeLabel, remaining, timingBrief } from '../lib/timing';
 import { getStore } from '../store';
 import { TEACHER_EMAILS } from '../store/firebaseConfig';
 
@@ -42,6 +43,52 @@ function markLabel(a: Attempt): string {
   }
   if (a.feedback) return 'Draft';
   return a.status === 'submitted' ? 'To mark' : '—';
+}
+
+/** The visible attempts as a spreadsheet: one row per paper, for records
+ *  and reporting. */
+function attemptsCsv(rows: Attempt[]): string {
+  const esc = (v: string | number) => {
+    const s = String(v);
+    return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  };
+  const lines = [
+    [
+      'Student', 'Class', 'Paper', 'Status', 'Started', 'Submitted',
+      'Words (a)', 'Words (b)', 'Words (c)', 'Words (essay)', 'Words total',
+      'Minutes worked', 'Mark',
+    ].join(','),
+  ];
+  for (const a of rows) {
+    const wa = wordCount(a.answers.a);
+    const wb = wordCount(a.answers.b);
+    const wc = wordCount(a.answers.c);
+    const we = wordCount(a.essayText);
+    lines.push(
+      [
+        esc(a.studentName),
+        esc(a.classCode),
+        esc(getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId),
+        a.status,
+        esc(fmtDate(a.createdAt)),
+        esc(a.submittedAt ? fmtDate(a.submittedAt) : ''),
+        wa, wb, wc, we, wa + wb + wc + we,
+        a.timing ? Math.round(elapsed(a.timing) / 60000) : '',
+        esc(markLabel(a)),
+      ].join(','),
+    );
+  }
+  return lines.join('\n');
+}
+
+function downloadCsv(rows: Attempt[], name: string) {
+  const blob = new Blob(['﻿' + attemptsCsv(rows)], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = name;
+  link.click();
+  URL.revokeObjectURL(url);
 }
 
 /** The attempts table, used both for "All attempts" and for one student's
@@ -197,6 +244,7 @@ function StudentDetail({
   onBack,
   onDelete,
   onRemoveStudent,
+  onResetPin,
 }: {
   student: StudentProfile;
   classTitle?: string;
@@ -204,6 +252,7 @@ function StudentDetail({
   onBack: () => void;
   onDelete: (a: Attempt) => void;
   onRemoveStudent: () => void;
+  onResetPin: () => void;
 }) {
   const submitted = attempts.filter((a) => a.status === 'submitted').length;
   const inProgress = attempts.length - submitted;
@@ -223,9 +272,14 @@ function StudentDetail({
         <button className="back-link" onClick={onBack}>
           ← All students
         </button>
-        <button className="danger-ghost back-link" onClick={onRemoveStudent}>
-          Remove student
-        </button>
+        <span style={{ display: 'flex', gap: 10 }}>
+          <button className="back-link" onClick={onResetPin} title="Let this student choose a new PIN at their next sign-in">
+            Reset PIN
+          </button>
+          <button className="danger-ghost back-link" onClick={onRemoveStudent}>
+            Remove student
+          </button>
+        </span>
       </div>
       <div className="student-head">
         <div>
@@ -288,6 +342,14 @@ export function TeacherPage() {
   const [openStudent, setOpenStudent] = useState<string | null>(null);
   /** Identity of the student the remove dialog is asking about. */
   const [removingStudent, setRemovingStudent] = useState<string | null>(null);
+  /** The attempt the delete dialog is asking about. */
+  const [deletingAttempt, setDeletingAttempt] = useState<Attempt | null>(null);
+  /** The student whose PIN the reset dialog is asking about. */
+  const [resettingPin, setResettingPin] = useState<StudentProfile | null>(null);
+  /** Extra teacher emails (beyond the built-in list) and the add box. */
+  const [extraTeachers, setExtraTeachers] = useState<string[]>([]);
+  const [newTeacher, setNewTeacher] = useState('');
+  const [teacherMsg, setTeacherMsg] = useState('');
   const [, setTick] = useState(0);
 
   function chooseTab(t: Tab) {
@@ -313,9 +375,14 @@ export function TeacherPage() {
   const refresh = useCallback(async () => {
     if (!signedIn) return;
     try {
-      const [att, cls] = await Promise.all([store.listAllAttempts(), store.listClasses()]);
+      const [att, cls, extras] = await Promise.all([
+        store.listAllAttempts(),
+        store.listClasses(),
+        store.listExtraTeachers().catch(() => [] as string[]),
+      ]);
       setAttempts(att);
       setClasses(cls);
+      setExtraTeachers(extras);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Could not load data.');
     }
@@ -366,22 +433,47 @@ export function TeacherPage() {
   }
 
   async function deleteAttempt(a: Attempt) {
-    if (
-      !window.confirm(
-        'Delete ' +
-          a.studentName +
-          '’s ' +
-          (a.status === 'submitted' ? 'submitted' : 'in-progress') +
-          ' exam (' +
-          (getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId) +
-          ')? This permanently removes it, including all their answers. This cannot be undone.',
-      )
-    ) {
-      return;
-    }
     await store.deleteAttempt(a.id);
     setAttempts((cur) => cur.filter((x) => x.id !== a.id));
     setActive((cur) => cur.filter((x) => x.id !== a.id));
+    setDeletingAttempt(null);
+  }
+
+  async function resetPin(s: StudentProfile) {
+    await store.resetStudentPin(s.studentKey);
+    setResettingPin(null);
+  }
+
+  async function addTeacher(e: React.FormEvent) {
+    e.preventDefault();
+    const email = newTeacher.trim().toLowerCase();
+    if (!email || !email.includes('@')) return;
+    if (TEACHER_EMAILS.includes(email) || extraTeachers.includes(email)) {
+      setTeacherMsg('That address already has teacher access.');
+      return;
+    }
+    const next = [...extraTeachers, email];
+    try {
+      await store.setExtraTeachers(next);
+      setExtraTeachers(next);
+      setNewTeacher('');
+      setTeacherMsg(
+        'Added. Remember: they also need a Firebase account with this email (SETUP.md step 2) before they can sign in.',
+      );
+    } catch (err) {
+      setTeacherMsg('Could not save: ' + (err instanceof Error ? err.message : 'unknown error'));
+    }
+  }
+
+  async function removeTeacher(email: string) {
+    const next = extraTeachers.filter((t) => t !== email);
+    try {
+      await store.setExtraTeachers(next);
+      setExtraTeachers(next);
+      setTeacherMsg('Removed ' + email + '.');
+    } catch (err) {
+      setTeacherMsg('Could not save: ' + (err instanceof Error ? err.message : 'unknown error'));
+    }
   }
 
   /** Delete every profile row behind one name, and optionally the papers
@@ -391,7 +483,10 @@ export function TeacherPage() {
     const profiles = students.filter((s) => identityOf(s) === identity);
     const work = alsoDeleteWork ? (attemptsByStudent.get(identity) ?? []) : [];
     for (const a of work) await store.deleteAttempt(a.id);
-    await store.deleteStudents(profiles.map((s) => s.uid));
+    await store.deleteStudents(
+      profiles.map((s) => s.uid),
+      [...new Set(profiles.map((s) => s.studentKey).filter(Boolean))],
+    );
     const gone = new Set(work.map((a) => a.id));
     setStudents((cur) => cur.filter((s) => identityOf(s) !== identity));
     if (gone.size > 0) {
@@ -621,8 +716,9 @@ export function TeacherPage() {
           classTitle={classes.find((c) => c.code === openProfile.classCode)?.name}
           attempts={attemptsByStudent.get(identityOf(openProfile)) ?? []}
           onBack={() => setOpenStudent(null)}
-          onDelete={deleteAttempt}
+          onDelete={setDeletingAttempt}
           onRemoveStudent={() => setRemovingStudent(identityOf(openProfile))}
+          onResetPin={() => setResettingPin(openProfile)}
         />
       )}
 
@@ -707,11 +803,27 @@ export function TeacherPage() {
               onChange={(e) => setSearch(e.target.value)}
               style={{ maxWidth: 260 }}
             />
+            <button
+              onClick={() =>
+                downloadCsv(
+                  filteredAttempts,
+                  'essay-and-sauce-attempts' + (classFilter !== 'all' ? '-' + classFilter : '') + '.csv',
+                )
+              }
+              disabled={filteredAttempts.length === 0}
+              title="Download the attempts below as a spreadsheet (opens in Excel)"
+            >
+              ⬇ Download CSV
+            </button>
           </div>
           {filteredAttempts.length === 0 ? (
-            <div className="empty">No attempts match.</div>
+            <div className="empty">
+              {allAttempts.length === 0
+                ? 'No papers yet. Once students start their first practice exams, every paper — in progress or submitted — is listed here.'
+                : 'No attempts match this filter.'}
+            </div>
           ) : (
-            <AttemptsTable attempts={filteredAttempts} showStudent onDelete={deleteAttempt} />
+            <AttemptsTable attempts={filteredAttempts} showStudent onDelete={setDeletingAttempt} />
           )}
         </>
       )}
@@ -769,10 +881,93 @@ export function TeacherPage() {
             </table>
           )}
           <p style={{ marginTop: 14, color: 'var(--ink-soft)', fontSize: 14 }}>
-            Students go to the site, enter their name and the join code, and appear here
-            automatically.
+            Students go to the site, enter their name, the join code and a 4-digit PIN of their
+            choice, and appear here automatically. The PIN protects their work; you can reset a
+            forgotten PIN from the student’s page.
           </p>
+
+          <div className="teachers-panel">
+            <h3>Teachers</h3>
+            <p style={{ color: 'var(--ink-soft)', fontSize: 14.5, marginTop: 0 }}>
+              These accounts can use this dashboard, watch students live and mark papers.
+            </p>
+            <ul className="teacher-list">
+              {TEACHER_EMAILS.map((t) => (
+                <li key={t}>
+                  {t} <span className="badge submitted">built in</span>
+                </li>
+              ))}
+              {extraTeachers.map((t) => (
+                <li key={t}>
+                  {t}{' '}
+                  <a
+                    href="#remove-teacher"
+                    className="danger-link"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      void removeTeacher(t);
+                    }}
+                  >
+                    Remove
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <form onSubmit={addTeacher} style={{ display: 'flex', gap: 10, maxWidth: 460 }}>
+              <input
+                type="email"
+                placeholder="colleague@example.com"
+                value={newTeacher}
+                onChange={(e) => setNewTeacher(e.target.value)}
+              />
+              <button className="primary" type="submit">
+                Add teacher
+              </button>
+            </form>
+            {teacherMsg && (
+              <p style={{ color: 'var(--ink-soft)', fontSize: 14 }} role="status">
+                {teacherMsg}
+              </p>
+            )}
+            <p style={{ color: 'var(--ink-soft)', fontSize: 13.5 }}>
+              Two steps happen outside this page: the colleague needs a Firebase sign-in with this
+              email (Firebase console → Authentication → Add user), and the database rules must be
+              the current ones from the repository (see SETUP.md). Adding them here does the rest.
+            </p>
+          </div>
         </>
+      )}
+
+      {deletingAttempt && (
+        <ConfirmDialog
+          title={'Delete ' + deletingAttempt.studentName + '’s exam?'}
+          body={
+            'Their ' +
+            (deletingAttempt.status === 'submitted' ? 'submitted' : 'in-progress') +
+            ' paper “' +
+            (getSourceSet(deletingAttempt.sourceSetId)?.title ?? deletingAttempt.sourceSetId) +
+            '” will be permanently removed, including all their answers. This cannot be undone.'
+          }
+          actionLabel="Delete exam"
+          danger
+          onCancel={() => setDeletingAttempt(null)}
+          onConfirm={() => deleteAttempt(deletingAttempt)}
+        />
+      )}
+      {resettingPin && (
+        <ConfirmDialog
+          title={'Reset ' + resettingPin.name + '’s PIN?'}
+          body={
+            'Their current PIN stops working, and the next person to sign in as “' +
+            resettingPin.name +
+            '” in class ' +
+            resettingPin.classCode +
+            ' chooses a new one. Do this when a student has forgotten their PIN.'
+          }
+          actionLabel="Reset PIN"
+          onCancel={() => setResettingPin(null)}
+          onConfirm={() => resetPin(resettingPin)}
+        />
       )}
 
       {removingProfile && (

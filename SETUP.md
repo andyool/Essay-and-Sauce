@@ -77,6 +77,30 @@ Firebase is Google's app platform. The free "Spark" tier is more than enough for
    from then on you'll see them in **Students**, their papers in **All attempts**, and —
    while they're working — their typing live under **Live now**.
 
+## Student PINs
+
+Each student chooses a **4-digit PIN** the first time they sign in. From then on, that
+name in that class can only be opened with the same PIN — so a classmate typing the same
+name can no longer open or edit someone else's work. If a student forgets their PIN,
+open their page on the **Students** tab and press **Reset PIN**; they choose a new one
+at their next sign-in.
+
+This protection needs the current `firestore.rules` published (step 3). Until you
+re-paste the rules after this feature arrived, PINs are still checked by the site but
+not enforced by the database itself.
+
+## Adding a second teacher
+
+A colleague can get full dashboard access without any code edits:
+
+1. In the Firebase console: **Authentication → Users → Add user** with their email and
+   a password (as in step 2).
+2. Make sure the **Rules** tab has the current contents of `firestore.rules` (step 3).
+3. In the site's teacher dashboard: **Classes** tab → **Teachers** → enter their email
+   and press **Add teacher**.
+
+They then sign in on the Teacher dashboard with that email and password.
+
 ## Costs and limits
 
 The free tier allows 20,000 database writes and 50,000 reads per day. The site saves a

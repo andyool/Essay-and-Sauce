@@ -22,8 +22,8 @@ import {
   where,
   type Firestore,
 } from 'firebase/firestore';
-import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
-import { makeStudentKey } from '../lib/format';
+import type { Attempt, ClassInfo, Identity, StudentProfile } from '../data/types';
+import { hashPin, makeStudentKey } from '../lib/format';
 import { TEACHER_EMAILS } from './firebaseConfig';
 import type { Store, Unsubscribe } from './types';
 
@@ -47,15 +47,23 @@ export class CloudStore implements Store {
   private auth;
   /** Resolves once Firebase has restored (or established) the initial auth state. */
   private initialAuth: Promise<void>;
+  /** Additional teacher emails from config/teachers, loaded after sign-in. */
+  private extraTeachers: string[] = [];
 
   constructor(config: Record<string, string>) {
     const app = initializeApp(config);
     this.db = getFirestore(app);
     this.auth = getAuth(app);
     this.initialAuth = new Promise((resolve) => {
-      const un = onAuthStateChanged(this.auth, () => {
+      const un = onAuthStateChanged(this.auth, (user) => {
         un();
-        resolve();
+        // A restored teacher session may belong to a dashboard-added teacher;
+        // fetch the list before anyone asks isTeacherSignedIn().
+        if (user && !user.isAnonymous) {
+          void this.loadExtraTeachers().finally(resolve);
+        } else {
+          resolve();
+        }
       });
     });
   }
@@ -79,7 +87,7 @@ export class CloudStore implements Store {
 
   // ---- student session ----
 
-  async joinClass(name: string, classCode: string): Promise<StudentProfile> {
+  async joinClass(name: string, classCode: string, pin: string): Promise<StudentProfile> {
     const code = classCode.trim().toUpperCase();
     let user = await this.ensureAnonAuth();
     const q = query(collection(this.db, 'classes'), where('code', '==', code));
@@ -89,6 +97,29 @@ export class CloudStore implements Store {
     }
     const clsDoc = snap.docs[0];
     const studentKey = makeStudentKey(clsDoc.id, name);
+    const pinHash = await hashPin(pin, studentKey);
+
+    // The first sign-in under a name claims it with this PIN; afterwards the
+    // claim guards the name, so a classmate typing the same name without the
+    // PIN cannot open this student's work.
+    const identityRef = doc(this.db, 'identities', studentKey);
+    const claim = await getDoc(identityRef);
+    if (claim.exists()) {
+      if ((claim.data() as Identity).pinHash !== pinHash) {
+        throw new Error(
+          'Wrong PIN for this name. Enter the 4-digit PIN chosen the first time this name signed in, or ask your teacher to reset it.',
+        );
+      }
+    } else {
+      const identity: Identity = {
+        studentKey,
+        name: name.trim(),
+        classCode: code,
+        pinHash,
+        createdAt: Date.now(),
+      };
+      await setDoc(identityRef, identity);
+    }
 
     // If this browser's session belongs to a DIFFERENT student (another name),
     // rotate to a fresh anonymous session so identities stay separate on
@@ -110,6 +141,7 @@ export class CloudStore implements Store {
       classId: clsDoc.id,
       classCode: code,
       studentKey,
+      pinHash,
       createdAt: fresh.exists() ? (fresh.data() as StudentProfile).createdAt : Date.now(),
       lastActiveAt: Date.now(),
     };
@@ -126,9 +158,15 @@ export class CloudStore implements Store {
     if (!snap.exists()) return null;
     const profile = snap.data() as StudentProfile;
     // Backfill the stable identity on profiles created before it existed.
+    // (The write may be refused under PIN-era rules; the local copy is
+    // enough until the student next signs in properly.)
     if (!profile.studentKey) {
       profile.studentKey = makeStudentKey(profile.classId, profile.name);
-      await setDoc(doc(this.db, 'students', user.uid), profile);
+      try {
+        await setDoc(doc(this.db, 'students', user.uid), profile);
+      } catch {
+        /* rules require a PIN claim; joinClass will set one */
+      }
     }
     return profile;
   }
@@ -211,15 +249,43 @@ export class CloudStore implements Store {
   async teacherSignIn(email: string, password: string): Promise<void> {
     await this.initialAuth;
     await signInWithEmailAndPassword(this.auth, email, password);
+    await this.loadExtraTeachers();
   }
 
   async teacherSignOut(): Promise<void> {
     await signOut(this.auth);
   }
 
+  /** Teachers beyond the built-in list live in config/teachers, editable
+   *  from the dashboard so a colleague can be added without code changes. */
+  private async loadExtraTeachers(): Promise<void> {
+    try {
+      const snap = await getDoc(doc(this.db, 'config', 'teachers'));
+      this.extraTeachers = snap.exists() ? ((snap.data().emails as string[]) ?? []) : [];
+    } catch {
+      this.extraTeachers = [];
+    }
+  }
+
   isTeacherSignedIn(): boolean {
     const user = this.auth.currentUser;
-    return !!user && !user.isAnonymous && !!user.email && TEACHER_EMAILS.includes(user.email);
+    return (
+      !!user &&
+      !user.isAnonymous &&
+      !!user.email &&
+      (TEACHER_EMAILS.includes(user.email) || this.extraTeachers.includes(user.email))
+    );
+  }
+
+  async listExtraTeachers(): Promise<string[]> {
+    await this.loadExtraTeachers();
+    return this.extraTeachers;
+  }
+
+  async setExtraTeachers(emails: string[]): Promise<void> {
+    await this.initialAuth;
+    await setDoc(doc(this.db, 'config', 'teachers'), { emails });
+    this.extraTeachers = emails;
   }
 
   async listClasses(): Promise<ClassInfo[]> {
@@ -258,9 +324,22 @@ export class CloudStore implements Store {
     };
   }
 
-  async deleteStudents(uids: string[]): Promise<void> {
+  async deleteStudents(uids: string[], studentKeys?: string[]): Promise<void> {
     await this.initialAuth;
     await Promise.all(uids.map((uid) => deleteDoc(doc(this.db, 'students', uid))));
+    // Release the name-PIN claims too (tolerate failure until rules updated).
+    for (const key of studentKeys ?? []) {
+      try {
+        await deleteDoc(doc(this.db, 'identities', key));
+      } catch {
+        /* rules not updated yet */
+      }
+    }
+  }
+
+  async resetStudentPin(studentKey: string): Promise<void> {
+    await this.initialAuth;
+    await deleteDoc(doc(this.db, 'identities', studentKey));
   }
 
   async listAllAttempts(): Promise<Attempt[]> {

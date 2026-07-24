@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { getSourceSet } from '../data/bank';
+import { ConfirmDialog, Loading } from '../components/Feedback';
+import { getEssay, getSourceSet } from '../data/bank';
 import { ALL_POINT_IDS, ELECTIVE_TITLE, INDIVIDUALS, INDIVIDUAL_IDS, SYLLABUS } from '../data/syllabus';
 import type { Attempt, StudentProfile, SyllabusPointId, TimerMode } from '../data/types';
 import { feedbackComplete, feedbackTotal, fmtDate, newId, wordCount } from '../lib/format';
@@ -92,6 +93,7 @@ export function StudentDashboard() {
   const [genError, setGenError] = useState('');
   const [busy, setBusy] = useState(false);
   const [timer, setTimer] = useState<TimerSettings>(loadTimerSettings);
+  const [deleting, setDeleting] = useState<Attempt | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -116,6 +118,30 @@ export function StudentDashboard() {
   }, []);
 
   const inProgress = useMemo(() => attempts.filter((a) => a.status === 'in-progress'), [attempts]);
+
+  // Progress: which syllabus topics each paper actually tested (its source
+  // set, plus the essay the student chose), and how much they wrote each time.
+  const progress = useMemo(() => {
+    const chrono = attempts.slice().sort((a, b) => a.createdAt - b.createdAt);
+    const counts = new Map<SyllabusPointId, number>();
+    for (const a of chrono) {
+      const covered = new Set<SyllabusPointId>();
+      for (const t of getSourceSet(a.sourceSetId)?.tags ?? []) covered.add(t);
+      if (a.essayChoice !== null) {
+        for (const t of getEssay(a.essayIds[a.essayChoice])?.tags ?? []) covered.add(t);
+      }
+      for (const t of covered) counts.set(t, (counts.get(t) ?? 0) + 1);
+    }
+    const trend = chrono.map((a) => ({
+      id: a.id,
+      date: a.createdAt,
+      submitted: a.status === 'submitted',
+      words:
+        wordCount(a.answers.a) + wordCount(a.answers.b) + wordCount(a.answers.c) + wordCount(a.essayText),
+    }));
+    const individualsCount = INDIVIDUAL_IDS.reduce((n, id) => n + (counts.get(id) ?? 0), 0);
+    return { counts, trend, individualsCount };
+  }, [attempts]);
 
   function toggle(id: SyllabusPointId) {
     setSelection((cur) => (cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id]));
@@ -170,19 +196,13 @@ export function StudentDashboard() {
   }
 
   async function deleteAttempt(a: Attempt) {
-    const set = getSourceSet(a.sourceSetId);
-    const what =
-      (a.status === 'submitted' ? 'your submitted exam' : 'your in-progress exam') +
-      (set ? ' “' + set.title + '”' : '');
-    if (!window.confirm('Delete ' + what + '? This permanently removes it, including everything you wrote. This cannot be undone.')) {
-      return;
-    }
     await store.deleteAttempt(a.id);
     setAttempts((cur) => cur.filter((x) => x.id !== a.id));
+    setDeleting(null);
   }
 
   if (loading || !student) {
-    return <div className="page narrow">Loading…</div>;
+    return <Loading text="Loading your exams…" />;
   }
 
   return (
@@ -215,9 +235,16 @@ export function StudentDashboard() {
       )}
 
       {attempts.length === 0 ? (
-        <div className="empty">
-          No attempts yet. Start your first practice exam — it takes your covered syllabus topics
-          into account and builds a unique paper for you.
+        <div className="empty first-run">
+          <p><strong>Welcome! Here’s how it works:</strong></p>
+          <ol>
+            <li>Press <strong>Start a new practice exam</strong> above.</li>
+            <li>Tick the syllabus topics your class has covered — your paper only draws on those.</li>
+            <li>Write your answers right on the page. Everything saves automatically, so you can
+              leave and come back any time.</li>
+            <li>After you submit, you can review your answers next to the real marking keys — and
+              your teacher can mark the paper and return feedback.</li>
+          </ol>
         </div>
       ) : (
         <div className="attempt-list">
@@ -259,7 +286,7 @@ export function StudentDashboard() {
                       <button>Review</button>
                     </Link>
                   )}
-                  <button className="danger-ghost" title="Delete this exam" onClick={() => void deleteAttempt(a)}>
+                  <button className="danger-ghost" title="Delete this exam" onClick={() => setDeleting(a)}>
                     Delete
                   </button>
                 </div>
@@ -267,6 +294,78 @@ export function StudentDashboard() {
             );
           })}
         </div>
+      )}
+
+      {attempts.length > 0 && (
+        <div className="progress-panel">
+          <h3>Your progress</h3>
+          <div className="progress-grid">
+            <div>
+              <div className="label">Topics you’ve practised</div>
+              <div className="topic-chips">
+                {SYLLABUS.map((p) => {
+                  const n = progress.counts.get(p.id) ?? 0;
+                  return (
+                    <span
+                      key={p.id}
+                      className={'topic-chip' + (n > 0 ? ' done' : '')}
+                      title={p.full + ' — practised in ' + n + ' paper' + (n === 1 ? '' : 's')}
+                    >
+                      {p.short}
+                      <b>{n}</b>
+                    </span>
+                  );
+                })}
+                <span
+                  className={'topic-chip' + (progress.individualsCount > 0 ? ' done' : '')}
+                  title={'Questions on significant individuals — practised in ' + progress.individualsCount + ' paper' + (progress.individualsCount === 1 ? '' : 's')}
+                >
+                  Significant individuals
+                  <b>{progress.individualsCount}</b>
+                </span>
+              </div>
+              <div className="progress-note">
+                A topic counts when a paper’s sources or your chosen essay tested it. Grey topics
+                are waiting for their first paper — worth a revisit before the real exam.
+              </div>
+            </div>
+            <div>
+              <div className="label">Words written per paper</div>
+              <div className="trend" role="img" aria-label={'Words written across ' + progress.trend.length + ' papers'}>
+                {progress.trend.map((t) => {
+                  const max = Math.max(...progress.trend.map((x) => x.words), 1);
+                  return (
+                    <div className="trend-col" key={t.id} title={t.words + ' words · ' + fmtDate(t.date)}>
+                      <span className="count">{t.words}</span>
+                      <div
+                        className={'bar' + (t.submitted ? '' : ' open')}
+                        style={{ height: Math.max(6, Math.round((t.words / max) * 72)) + 'px' }}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+              <div className="progress-note">
+                Each bar is one paper, oldest first. Paler bars are still in progress. Watching this
+                grow across a term is the point — little and often beats one big cram.
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {deleting && (
+        <ConfirmDialog
+          title={'Delete ' + (deleting.status === 'submitted' ? 'this submitted exam' : 'this in-progress exam') + '?'}
+          body={
+            (getSourceSet(deleting.sourceSetId)?.title ?? 'This paper') +
+            ' will be permanently removed, including everything you wrote. This cannot be undone.'
+          }
+          actionLabel="Delete exam"
+          danger
+          onCancel={() => setDeleting(null)}
+          onConfirm={() => deleteAttempt(deleting)}
+        />
       )}
 
       {showModal && (

@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { EssayRubric, SAQuestionText, SourceCard } from '../components/ExamParts';
+import { ConfirmDialog, Loading } from '../components/Feedback';
 import { getEssay, getSourceSet } from '../data/bank';
 import type { Answers, Attempt, ExamTiming } from '../data/types';
-import { wordCount } from '../lib/format';
+import { wordCount, wordTarget, wordZone } from '../lib/format';
 import {
   HEARTBEAT_MS,
   clock,
@@ -132,8 +133,11 @@ export function ExamPage() {
   const [attempt, setAttempt] = useState<Attempt | null>(null);
   const [missing, setMissing] = useState(false);
   const [saveState, setSaveState] = useState<SaveState>('saved');
+  const [saveIssue, setSaveIssue] = useState(false);
   const [now, setNow] = useState(() => Date.now());
   const [announcement, setAnnouncement] = useState<string | null>(null);
+  const [confirmSubmit, setConfirmSubmit] = useState<string | null>(null);
+  const [confirmLeave, setConfirmLeave] = useState(false);
   const pendingRef = useRef<Partial<Attempt>>({});
   const timerRef = useRef<number | null>(null);
   const lastSaveRef = useRef(Date.now());
@@ -155,9 +159,11 @@ export function ExamPage() {
       await store.updateAttempt(id, patch);
       lastSaveRef.current = Date.now();
       setSaveState(Object.keys(pendingRef.current).length > 0 ? 'pending' : 'saved');
+      setSaveIssue(false);
     } catch {
       pendingRef.current = { ...patch, ...pendingRef.current };
       setSaveState('pending');
+      setSaveIssue(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
@@ -322,7 +328,7 @@ export function ExamPage() {
       </div>
     );
   }
-  if (!attempt) return <div className="page narrow">Loading your exam…</div>;
+  if (!attempt) return <Loading text="Loading your exam…" />;
 
   const sourceSet = getSourceSet(attempt.sourceSetId);
   const essays = attempt.essayIds.map((eid) => getEssay(eid));
@@ -365,18 +371,19 @@ export function ExamPage() {
 
   async function saveAndExit() {
     if (timed && !overtime && timing!.mode === 'strict' && timing!.runningSince !== null) {
-      const ok = window.confirm(
-        'You are sitting this paper under exam conditions. Leaving stops the clock, and your ' +
-          'teacher can see that the exam was left and how long it really took. Leave anyway?',
-      );
-      if (!ok) return;
+      setConfirmLeave(true);
+      return;
     }
+    await leaveNow();
+  }
+
+  async function leaveNow() {
     stopClock();
     await flush();
     navigate('/dashboard');
   }
 
-  async function submit() {
+  function submit() {
     const essayWords = wordCount(attempt!.essayText);
     const saWords =
       wordCount(attempt!.answers.a) + wordCount(attempt!.answers.b) + wordCount(attempt!.answers.c);
@@ -384,11 +391,14 @@ export function ExamPage() {
     if (attempt!.essayChoice === null) warnings.push('you have not chosen an essay question');
     if (saWords === 0) warnings.push('your source analysis answers are empty');
     if (essayWords === 0) warnings.push('your essay is empty');
-    const msg =
+    setConfirmSubmit(
       warnings.length > 0
-        ? 'Submit this exam? Note: ' + warnings.join('; ') + '. You cannot edit after submitting.'
-        : 'Submit this exam? You cannot edit after submitting.';
-    if (!window.confirm(msg)) return;
+        ? 'Heads up: ' + warnings.join('; ') + '. You cannot edit after submitting.'
+        : 'Your work will be handed in for marking. You cannot edit after submitting.',
+    );
+  }
+
+  async function submitNow() {
     const cur = attemptRef.current?.timing;
     queue({
       status: 'submitted',
@@ -405,7 +415,13 @@ export function ExamPage() {
     return <ClockGate timing={timing!} onStart={startClock} onExit={() => void saveAndExit()} />;
   }
 
-  const saveLabel = saveState === 'saved' ? 'Saved ✓' : saveState === 'saving' ? 'Saving…' : 'Typing…';
+  const saveLabel = saveIssue
+    ? 'Saving is retrying…'
+    : saveState === 'saved'
+      ? 'Saved ✓'
+      : saveState === 'saving'
+        ? 'Saving…'
+        : 'Typing…';
   const sectionOneMs = timed ? timing!.sectionOneMinutes * 60_000 : 0;
   const pastSectionOne = timed && used > sectionOneMs;
   const sectionTwoMinutes = timed ? timing!.totalMinutes - timing!.sectionOneMinutes : 0;
@@ -431,7 +447,13 @@ export function ExamPage() {
               Pause
             </button>
           )}
-          <span className={'save-state' + (saveState !== 'saved' ? ' saving' : '')}>{saveLabel}</span>
+          <span
+            className={'save-state' + (saveIssue ? ' issue' : saveState !== 'saved' ? ' saving' : '')}
+            role="status"
+            title={saveIssue ? 'Your work is kept on this device and will be saved as soon as the connection returns.' : 'Everything you type is saved automatically.'}
+          >
+            {saveLabel}
+          </span>
           <button onClick={saveAndExit}>Save &amp; exit</button>
         </div>
       </div>
@@ -495,9 +517,14 @@ export function ExamPage() {
                 />
                 <div className="answer-meta">
                   <span>
-                    {q.marks} mark{q.marks === 1 ? '' : 's'}
+                    {q.marks} mark{q.marks === 1 ? '' : 's'} · aim for ~
+                    {wordTarget(q.letter, q.marks)[0]}–{wordTarget(q.letter, q.marks)[1]} words
                   </span>
-                  <span>{wordCount(attempt.answers[q.letter])} words</span>
+                  <span
+                    className={'wc wc-' + wordZone(wordCount(attempt.answers[q.letter]), wordTarget(q.letter, q.marks))}
+                  >
+                    {wordCount(attempt.answers[q.letter])} words
+                  </span>
                 </div>
               </div>
             ))}
@@ -553,8 +580,13 @@ export function ExamPage() {
                 placeholder="Plan briefly, then write your essay here…"
               />
               <div className="answer-meta">
-                <span>Aim for a sustained, structured argument</span>
-                <span>{wordCount(attempt.essayText)} words</span>
+                <span>
+                  A sustained, structured argument — aim for ~{wordTarget('essay', 30)[0]}–
+                  {wordTarget('essay', 30)[1]} words
+                </span>
+                <span className={'wc wc-' + wordZone(wordCount(attempt.essayText), wordTarget('essay', 30))}>
+                  {wordCount(attempt.essayText)} words
+                </span>
               </div>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
@@ -566,6 +598,26 @@ export function ExamPage() {
           </div>
         )}
       </div>
+
+      {confirmSubmit !== null && (
+        <ConfirmDialog
+          title="Submit this exam?"
+          body={confirmSubmit}
+          actionLabel="Submit for marking"
+          onCancel={() => setConfirmSubmit(null)}
+          onConfirm={submitNow}
+        />
+      )}
+      {confirmLeave && (
+        <ConfirmDialog
+          title="Leave the exam room?"
+          body="You are sitting this paper under exam conditions. Leaving stops the clock, and your teacher can see that the exam was left and how long it really took."
+          actionLabel="Leave anyway"
+          danger
+          onCancel={() => setConfirmLeave(false)}
+          onConfirm={leaveNow}
+        />
+      )}
     </div>
   );
 }

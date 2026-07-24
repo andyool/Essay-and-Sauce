@@ -5,7 +5,8 @@ Live at **https://andyool.github.io/Essay-and-Sauce/**
 
 ## What it does
 
-**Students** sign in with their name and a class join code, tick off the syllabus
+**Students** sign in with their name, a class join code and a 4-digit PIN of their
+choice (which protects their work from then on), tick off the syllabus
 points they've covered, and the site generates a unique practice exam:
 
 - **Section One — Source Analysis (20 marks):** three constructed sources (a visual,
@@ -28,8 +29,9 @@ with all answers and marking materials.
 The question bank was authored following the two construction manuals (source analysis
 and essay) and lives in `src/data/`:
 
-- `sourceSets1–3.ts` — 12 complete source-analysis sets with marking keys
-- `essays1–2.ts` — 33 essay questions (frames E1–E10) with markers' notes
+- `sourceSets1–18.ts` — 72 complete source-analysis sets with marking keys, each with
+  1–2 real historical images (Wikimedia Commons, credited)
+- `essays1–4.ts` — 85 essay questions (frames E1–E10) with markers' notes
 - `syllabus.ts` — the Elective 6 syllabus points used for filtering
 
 `src/lib/generator.ts` assembles an exam per student: only topics they've ticked, a

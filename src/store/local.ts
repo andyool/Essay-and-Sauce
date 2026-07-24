@@ -1,5 +1,5 @@
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
-import { makeStudentKey } from '../lib/format';
+import { hashPin, makeStudentKey } from '../lib/format';
 import type { Store, Unsubscribe } from './types';
 
 // LocalStore: single-browser fallback used until Firebase is configured.
@@ -9,6 +9,7 @@ import type { Store, Unsubscribe } from './types';
 const KEY_STUDENT = 'eas.student';
 const KEY_ATTEMPTS = 'eas.attempts';
 const KEY_CLASSES = 'eas.classes';
+const KEY_PINS = 'eas.pins';
 
 function read<T>(key: string, fallback: T): T {
   try {
@@ -35,7 +36,7 @@ export class LocalStore implements Store {
     // Nothing to restore in local mode.
   }
 
-  async joinClass(name: string, classCode: string): Promise<StudentProfile> {
+  async joinClass(name: string, classCode: string, pin: string): Promise<StudentProfile> {
     const code = classCode.trim().toUpperCase();
     const classes = read<ClassInfo[]>(KEY_CLASSES, []);
     let cls = classes.find((c) => c.code === code);
@@ -44,13 +45,27 @@ export class LocalStore implements Store {
       classes.push(cls);
       write(KEY_CLASSES, classes);
     }
+    const studentKey = makeStudentKey(cls.id, name);
+    const pinHash = await hashPin(pin, studentKey);
+    const pins = read<Record<string, string>>(KEY_PINS, {});
+    const claimed = pins[studentKey];
+    if (claimed && claimed !== pinHash) {
+      throw new Error(
+        'Wrong PIN for this name. Enter the 4-digit PIN chosen the first time this name signed in, or ask your teacher to reset it.',
+      );
+    }
+    if (!claimed) {
+      pins[studentKey] = pinHash;
+      write(KEY_PINS, pins);
+    }
     const existing = read<StudentProfile | null>(KEY_STUDENT, null);
     const profile: StudentProfile = {
       uid: existing?.uid ?? 'local-' + Math.random().toString(36).slice(2, 10),
       name: name.trim(),
       classId: cls.id,
       classCode: code,
-      studentKey: makeStudentKey(cls.id, name),
+      studentKey,
+      pinHash,
       createdAt: existing?.createdAt ?? Date.now(),
       lastActiveAt: Date.now(),
     };
@@ -139,9 +154,28 @@ export class LocalStore implements Store {
     return () => window.clearInterval(timer);
   }
 
-  async deleteStudents(uids: string[]): Promise<void> {
+  async deleteStudents(uids: string[], studentKeys?: string[]): Promise<void> {
     const s = read<StudentProfile | null>(KEY_STUDENT, null);
     if (s && uids.includes(s.uid)) localStorage.removeItem(KEY_STUDENT);
+    if (studentKeys?.length) {
+      const pins = read<Record<string, string>>(KEY_PINS, {});
+      for (const k of studentKeys) delete pins[k];
+      write(KEY_PINS, pins);
+    }
+  }
+
+  async resetStudentPin(studentKey: string): Promise<void> {
+    const pins = read<Record<string, string>>(KEY_PINS, {});
+    delete pins[studentKey];
+    write(KEY_PINS, pins);
+  }
+
+  async listExtraTeachers(): Promise<string[]> {
+    return read<string[]>('eas.extraTeachers', []);
+  }
+
+  async setExtraTeachers(emails: string[]): Promise<void> {
+    write('eas.extraTeachers', emails);
   }
 
   async listAllAttempts(): Promise<Attempt[]> {

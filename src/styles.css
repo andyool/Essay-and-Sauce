@@ -992,3 +992,193 @@ table.key-table tr.awarded td:first-child { font-weight: 600; }
   .clock-gate .split { flex-direction: column; }
   .announce-bar { position: static; }
 }
+
+/* ============================================================
+   Additions: PIN sign-in, feedback states, progress, printing,
+   word-count guidance, teachers panel, accessibility polish.
+   ============================================================ */
+
+/* --- form help + PIN --- */
+.field-help {
+  font-size: 13px;
+  color: var(--ink-faint);
+  margin: 6px 0 2px;
+  line-height: 1.45;
+}
+
+/* --- loading state --- */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--ink-soft);
+  font-size: 15px;
+  padding: 30px 0;
+}
+.spinner {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 2.5px solid var(--line);
+  border-top-color: var(--accent);
+  animation: eas-spin 0.8s linear infinite;
+  flex: none;
+}
+@keyframes eas-spin { to { transform: rotate(360deg); } }
+
+/* --- autosave chip --- */
+.save-state { transition: color 0.2s; }
+.save-state.issue { color: var(--accent); font-weight: 600; }
+
+/* --- in-app confirm dialog --- */
+.modal.confirm { max-width: 460px; }
+
+/* --- word-count guidance --- */
+.wc { font-variant-numeric: tabular-nums; font-weight: 600; }
+.wc-low { color: var(--ink-faint); }
+.wc-good { color: var(--green); }
+.wc-high { color: var(--amber); }
+
+/* --- student progress panel --- */
+.progress-panel {
+  margin-top: 26px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+}
+.progress-panel h3 { margin: 0 0 12px; }
+.progress-panel .label {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+}
+.progress-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 26px;
+}
+@media (max-width: 760px) { .progress-grid { grid-template-columns: 1fr; } }
+.topic-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.topic-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13.5px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  color: var(--ink-faint);
+  background: var(--bg);
+}
+.topic-chip b {
+  background: var(--line);
+  color: var(--ink-soft);
+  border-radius: 999px;
+  min-width: 20px;
+  height: 20px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+}
+.topic-chip.done {
+  border-color: var(--green);
+  background: var(--green-soft);
+  color: var(--green);
+}
+.topic-chip.done b { background: var(--green); color: #fff; }
+.progress-note { font-size: 13px; color: var(--ink-faint); margin-top: 10px; line-height: 1.45; }
+.trend {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  min-height: 96px;
+  padding: 4px 2px 0;
+}
+.trend-col { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.trend-col .count { font-size: 11.5px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+.trend-col .bar {
+  width: 26px;
+  border-radius: 4px 4px 0 0;
+  background: var(--blue);
+  min-height: 6px;
+}
+.trend-col .bar.open { background: var(--blue-soft); border: 1px solid var(--blue); }
+
+/* --- first-run guidance --- */
+.empty.first-run { text-align: left; }
+.empty.first-run ol { margin: 10px 0 4px; padding-left: 22px; }
+.empty.first-run li { margin: 6px 0; line-height: 1.5; }
+
+/* --- teachers panel --- */
+.teachers-panel {
+  margin-top: 30px;
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 18px 20px;
+  max-width: 640px;
+}
+.teachers-panel h3 { margin: 0 0 6px; }
+.teacher-list { list-style: none; margin: 0 0 14px; padding: 0; }
+.teacher-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 14.5px;
+}
+.teacher-list li:last-child { border-bottom: none; }
+
+/* --- keyboard & touch accessibility --- */
+button, .name-link { min-height: 38px; }
+.mark-pill { min-width: 34px; min-height: 30px; }
+button:focus-visible,
+a:focus-visible,
+summary:focus-visible,
+[role='button']:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.syllabus-item input[type='checkbox'],
+.individual-item input[type='checkbox'],
+.timer-choice input[type='radio'],
+.essay-choice input[type='radio'] {
+  width: 18px;
+  height: 18px;
+}
+details.key > summary {
+  cursor: pointer;
+  padding: 6px 2px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .spinner { animation-duration: 2s; }
+}
+
+/* --- print / save-as-PDF view --- */
+@media print {
+  body { background: #fff; }
+  .masthead .who button,
+  .masthead .who a,
+  .watch-banner,
+  .marking-panel,
+  .feedback-edit,
+  details.key,
+  .local-banner {
+    display: none !important;
+  }
+  .page { max-width: none; padding: 0; }
+  .paper-body, .paper-head, .source-card, .timing-summary, .teacher-feedback {
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
+  .source-card img { max-height: 320px; width: auto; }
+  .student-answer { border: 1px solid #bbb; }
+  a { text-decoration: none; color: inherit; }
+}

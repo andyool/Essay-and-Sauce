@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Loading } from '../components/Feedback';
 import {
   AwardedBreakdown,
   EssayNotes,
@@ -194,7 +195,7 @@ export function AttemptViewPage() {
       </div>
     );
   }
-  if (!attempt) return <div className="page narrow">Loading…</div>;
+  if (!attempt) return <Loading text="Loading this attempt…" />;
 
   const sourceSet = getSourceSet(attempt.sourceSetId);
   const essays = attempt.essayIds.map((eid) => getEssay(eid));
@@ -374,6 +375,14 @@ export function AttemptViewPage() {
           </div>
         </div>
         <div className="who">
+          {!live && (
+            <button
+              onClick={() => window.print()}
+              title="Print this attempt, or choose “Save as PDF” in the print dialog"
+            >
+              🖨 Print / PDF
+            </button>
+          )}
           <Link to={backTo}>← Back</Link>
         </div>
       </div>
