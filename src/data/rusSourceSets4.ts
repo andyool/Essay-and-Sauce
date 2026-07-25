@@ -178,21 +178,26 @@ export const RUS_SOURCE_SETS_4: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the collective leadership after Lenin’s death in 1924, the triumvirate of Zinoviev, Kamenev and Stalin against Trotsky, Rykov as head of government, the public presentation of unity while the succession struggle proceeded)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the collective leadership after Lenin’s death in 1924, the triumvirate of Zinoviev, Kamenev and Stalin against Trotsky, Rykov as head of government, the public presentation of unity while the succession struggle proceeded)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. an official press photograph displaying the collective leadership as united heirs of Lenin — reassurance composed for the public)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: 1925 — Lenin dead a year, Trotsky already stripped of the War Commissariat, the “collective leadership” photographed for the illustrated press as the triumvirate began to split (Zinoviev and Kamenev moving into opposition that very year). Specific details from the photograph — the four walking as equals, Stalin’s soldierly dress among civilians — should be connected to those circumstances; the note’s afterlife (three of the four shot) may be used to frame the image’s later meaning. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: 1925 — Lenin dead a year, Trotsky already stripped of the War Commissariat, the “collective leadership” photographed for the illustrated press as the triumvirate began to split (Zinoviev and Kamenev moving into opposition that very year). Specific details from the photograph — the four walking as equals, Stalin’s soldierly dress among civilians — should be connected to those circumstances; the note’s afterlife (three of the four shot) may be used to frame the image’s later meaning. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -423,21 +428,26 @@ export const RUS_SOURCE_SETS_4: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the second Five-Year Plan’s productivity drive, Stakhanov’s record shift of August 1935 and its staged character, the movement proclaimed with rewards and celebrity, the press photography that made the hero-worker a national figure)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the second Five-Year Plan’s productivity drive, Stakhanov’s record shift of August 1935 and its staged character, the movement proclaimed with rewards and celebrity, the press photography that made the hero-worker a national figure)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. staged press photography spreading the Stakhanovite method and its hero — the record converted into a teachable, reproducible image)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the mid-1930s turn from building plants to working them — the productivity campaign, the manufactured record in the Donbass, and the media apparatus (Langman was a leading Soviet photographer) that converted a miner into an icon within weeks. Specific details from the photograph — the pneumatic pick as modern emblem, the instructional pose, the composed lighting — should be connected to those circumstances, including the image’s own propaganda function. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the mid-1930s turn from building plants to working them — the productivity campaign, the manufactured record in the Donbass, and the media apparatus (Langman was a leading Soviet photographer) that converted a miner into an icon within weeks. Specific details from the photograph — the pneumatic pick as modern emblem, the instructional pose, the composed lighting — should be connected to those circumstances, including the image’s own propaganda function. Not all points are required for full marks.',
       },
       {
         letter: 'b',

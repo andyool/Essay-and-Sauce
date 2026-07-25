@@ -181,21 +181,26 @@ export const RUS_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Russia’s war against Germany and Austria-Hungary from 1914, the great retreat of 1915 with its enormous losses of territory, men and equipment, chronic shortages of rifles and shells, western interest in Russia’s war reflected in the American publication)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Russia’s war against Germany and Austria-Hungary from 1914, the great retreat of 1915 with its enormous losses of territory, men and equipment, chronic shortages of rifles and shells, western interest in Russia’s war reflected in the American publication)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. to show an American readership the reality of Russia’s war — reportage on an ally whose endurance the West anxiously watched)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the eastern front in 1915–17 — the retreat from Poland, an army of peasant conscripts holding improvised earthworks, the equipment famine at its worst in 1915, and the western allies’ anxious attention to whether Russia could stay in the war. Specific details from the photograph — the crowded, primitive trench, the mixture of ages, the absence of the elaborate fortification familiar from the western front — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the eastern front in 1915–17 — the retreat from Poland, an army of peasant conscripts holding improvised earthworks, the equipment famine at its worst in 1915, and the western allies’ anxious attention to whether Russia could stay in the war. Specific details from the photograph — the crowded, primitive trench, the mixture of ages, the absence of the elaborate fortification familiar from the western front — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -301,21 +306,26 @@ export const RUS_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Soviet–Polish war of 1920 and the mobilisation it demanded, Lenin as the republic’s orator-in-chief, Trotsky as war commissar at the height of his authority, the photograph’s later notoriety through the erasure of Trotsky and Kamenev)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Soviet–Polish war of 1920 and the mobilisation it demanded, Lenin as the republic’s orator-in-chief, Trotsky as war commissar at the height of his authority, the photograph’s later notoriety through the erasure of Trotsky and Kamenev)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. official photography recording the revolution’s leaders in action — an image the regime would later doctor, which is why it became famous)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: May 1920 — the Civil War won in its essentials but the Polish war beginning, mass rallies dispatching troops, Lenin and Trotsky at the height of their partnership; and the image’s second life, in which the retouched version (noted beneath the source) became a textbook case of Stalinist falsification after Trotsky’s fall in the later 1920s. Both layers may earn credit. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: May 1920 — the Civil War won in its essentials but the Polish war beginning, mass rallies dispatching troops, Lenin and Trotsky at the height of their partnership; and the image’s second life, in which the retouched version (noted beneath the source) became a textbook case of Stalinist falsification after Trotsky’s fall in the later 1920s. Both layers may earn credit. Not all points are required for full marks.',
       },
       {
         letter: 'b',

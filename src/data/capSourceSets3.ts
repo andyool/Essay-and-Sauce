@@ -302,21 +302,26 @@ export const CAP_SOURCE_SETS_3: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Hollywood’s rise to a major national industry in the 1920s, the star system and celebrity of Fairbanks and Pickford, picture palaces and the premiere as manufactured spectacle, film’s place in the decade’s consumer culture)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Hollywood’s rise to a major national industry in the 1920s, the star system and celebrity of Fairbanks and Pickford, picture palaces and the premiere as manufactured spectacle, film’s place in the decade’s consumer culture)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. to report and magnify the spectacle of the premiere — publicity from which the studios, the theatre and the press all profited)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Hollywood at mid-decade — the studio system consolidated, stars as national property, exotic picture palaces built as consumption temples, and the premiere staged for newsreel and fan press as much as for the audience present. Specific details from the photograph — the Egyptian architecture, the floodlights and cameras, the roped crowd, the “Doug and Mary” sign — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: Hollywood at mid-decade — the studio system consolidated, stars as national property, exotic picture palaces built as consumption temples, and the premiere staged for newsreel and fan press as much as for the audience present. Specific details from the photograph — the Egyptian architecture, the floodlights and cameras, the roped crowd, the “Doug and Mary” sign — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -544,21 +549,26 @@ export const CAP_SOURCE_SETS_3: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the CCC founded in 1933 as the New Deal’s youth relief and conservation programme, army-run camps with training and education, its scale — some three million enrollees, and its segregated companies including the African American companies shown)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the CCC founded in 1933 as the New Deal’s youth relief and conservation programme, army-run camps with training and education, its scale — some three million enrollees, and its segregated companies including the African American companies shown)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. a government photograph documenting and promoting the CCC’s work — showing the public that relief money produced disciplined, useful training)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the CCC at work in the later 1930s — camps under army administration, conservation labour paired with education and training (the first-aid class shown), and the programme’s racial structure: segregated companies, quotas won only after protest, camps for Black enrollees frequently pushed to remote sites. Specific details from the photograph — the paired training on the grass, the uniformed rows, the segregated company — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the CCC at work in the later 1930s — camps under army administration, conservation labour paired with education and training (the first-aid class shown), and the programme’s racial structure: segregated companies, quotas won only after protest, camps for Black enrollees frequently pushed to remote sites. Specific details from the photograph — the paired training on the grass, the uniformed rows, the segregated company — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',

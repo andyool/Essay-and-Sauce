@@ -64,11 +64,27 @@ for (const unit of UNITS) {
     const ct = c.text.toLowerCase();
     if (!/(analyse|assess|evaluate)/.test(ct)) errors.push(`${s.id}: (c) verb? "${c.text}"`);
     if (!/sources 1, 2 and 3|all three sources/.test(ct)) errors.push(`${s.id}: (c) source ref? "${c.text}"`);
+    // Manual §3.5/§8.1: a 4-mark (a) must be compound (per-element subtotals);
+    // a single-skill lower-order (a) is worth 3.
+    if (a.marks === 4 && a.key.length < 2) errors.push(`${s.id}: 4-mark (a) must be compound (per-element key)`);
+    // Manual §5.4: (c) must build in the own-knowledge requirement (C1/C2 forms)
+    // or use a template that carries it structurally (C3 "collectively represent",
+    // C5 "capture the full ...").
+    if (
+      !/own knowledge|knowledge of the period/.test(ct) &&
+      !/collectively represent|capture the full/.test(ct)
+    ) {
+      errors.push(`${s.id}: (c) lacks own-knowledge requirement "${c.text}"`);
+    }
     for (const t of s.tags) if (!validTags.has(t)) errors.push(`${s.id}: bad tag ${t}`);
   }
 
   for (const e of essays) {
     for (const t of e.tags) if (!validTags.has(t)) errors.push(`${e.id}: bad tag ${t}`);
+    // Essay manual §8: debate questions carry the mandatory both-sides rule.
+    if (e.frame === 'E2' && !/must address evidence that both supports and refutes/.test(e.notes)) {
+      errors.push(`${e.id}: E2 notes lack the mandatory both-sides marking rule`);
+    }
     for (const th of e.themes) if (!themeKeys.has(th)) errors.push(`${e.id}: unknown theme "${th}"`);
     if (
       !/\d{4}|period of study|period of Nazi rule|Weimar years|decade|century|Cold War/.test(e.text) &&

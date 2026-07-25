@@ -178,21 +178,26 @@ export const EUR_SOURCE_SETS_4: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Berlin Wall built in August 1961, four-power rights of access to the whole city, East German checks on allied personnel provoking the October confrontation, the sixteen-hour tank standoff at the Friedrichstrasse crossing)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Berlin Wall built in August 1961, four-power rights of access to the whole city, East German checks on allied personnel provoking the October confrontation, the sixteen-hour tank standoff at the Friedrichstrasse crossing)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. army photography documenting the confrontation — and each side’s display of tanks was itself a message meant to be seen and reported)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Berlin in the Wall’s first autumn — the sector boundary concreted, allied rights of movement the one element of the old regime the West still enforced, and the escalation from a document check to facing armour at the crossing kept open for the occupying powers. Specific details from the photograph — the checkpoint hut, the multilingual boundary sign, the massed Soviet armour beyond, the watching civilians — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: Berlin in the Wall’s first autumn — the sector boundary concreted, allied rights of movement the one element of the old regime the West still enforced, and the escalation from a document check to facing armour at the crossing kept open for the occupying powers. Specific details from the photograph — the checkpoint hut, the multilingual boundary sign, the massed Soviet armour beyond, the watching civilians — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -423,21 +428,26 @@ export const EUR_SOURCE_SETS_4: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Yugoslavia’s expulsion from the Soviet bloc in 1948 and its independent position between the camps, the Brioni meeting of Tito, Nehru and Nasser in July 1956, the emergence of non-alignment as a movement of states refusing both blocs)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Yugoslavia’s expulsion from the Soviet bloc in 1948 and its independent position between the camps, the Brioni meeting of Tito, Nehru and Nasser in July 1956, the emergence of non-alignment as a movement of states refusing both blocs)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. to display the three leaders’ unity and ease — a composed image announcing non-alignment as a confident third force)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the mid-1950s emergence of a third position in a two-bloc world — Tito secure after the split and Stalin’s death, hosting the leaders of newly independent India and Egypt in the year of Suez and Hungary, with the Belgrade summit of 1961 to follow. Specific details from the photograph — the demonstrative intimacy of the three leaders, the relaxed island setting staged for the cameras — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the mid-1950s emergence of a third position in a two-bloc world — Tito secure after the split and Stalin’s death, hosting the leaders of newly independent India and Egypt in the year of Suez and Hungary, with the Belgrade summit of 1961 to follow. Specific details from the photograph — the demonstrative intimacy of the three leaders, the relaxed island setting staged for the cameras — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',

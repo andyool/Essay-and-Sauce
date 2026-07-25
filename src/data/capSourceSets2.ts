@@ -180,21 +180,26 @@ export const CAP_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Ford’s development of the moving assembly line at Highland Park in 1913, the drive to mass-produce the Model T at falling cost, scientific management and the subdivision of labour, the five-dollar day announced in January 1914)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Ford’s development of the moving assembly line at Highland Park in 1913, the drive to mass-produce the Model T at falling cost, scientific management and the subdivision of labour, the five-dollar day announced in January 1914)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. to record and celebrate the company’s revolutionary production system — Ford publicised the moving line as proof of its industrial leadership)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Highland Park in 1913 — the experimental moving line applied first to the flywheel magneto, Taylorist time-study and the subdivision of tasks, the Model T’s soaring demand, catastrophic labour turnover, and the five-dollar day that followed within months. Specific details from the photograph — the men fixed at one station each, the identical parts in bins, the power shafts driving the line — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: Highland Park in 1913 — the experimental moving line applied first to the flywheel magneto, Taylorist time-study and the subdivision of tasks, the Model T’s soaring demand, catastrophic labour turnover, and the five-dollar day that followed within months. Specific details from the photograph — the men fixed at one station each, the identical parts in bins, the power shafts driving the line — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -425,21 +430,26 @@ export const CAP_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the radio boom after 1920 and the rise of network broadcasting, entertainment as a mass industry selling stars and audiences, the “new woman” of the 1920s — bobbed hair, new fashions and freedoms — and the publicity photograph as part of that industry)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the radio boom after 1920 and the rise of network broadcasting, entertainment as a mass industry selling stars and audiences, the “new woman” of the 1920s — bobbed hair, new fashions and freedoms — and the publicity photograph as part of that industry)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. a publicity photograph staged by a press agency to promote the sisters and the exciting new radio — celebrity and technology sold together)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the mid-1920s entertainment boom — radio ownership spreading through the middle class, the networks and their advertisers, vaudeville and Broadway acts like the Brox Sisters carried to national audiences, and the decade’s fashions (the bob, the drop-waist) as both symbol and product of the new consumer culture. Specific details from the photograph — the valve set and horn speaker as expensive new technology, the sisters’ styling, the staged domestic scene — should be connected to those circumstances, including its nature as a publicity image. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the mid-1920s entertainment boom — radio ownership spreading through the middle class, the networks and their advertisers, vaudeville and Broadway acts like the Brox Sisters carried to national audiences, and the decade’s fashions (the bob, the drop-waist) as both symbol and product of the new consumer culture. Specific details from the photograph — the valve set and horn speaker as expensive new technology, the sisters’ styling, the staged domestic scene — should be connected to those circumstances, including its nature as a publicity image. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -793,21 +803,26 @@ export const CAP_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Depression at its depth in 1932, the Bonus Expeditionary Force of some 20,000 veterans camped in Washington demanding early payment of the war bonus, the Senate’s rejection of the bonus bill, the army’s clearance of the camps under MacArthur on 28 July and the burning of the Anacostia settlement)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Depression at its depth in 1932, the Bonus Expeditionary Force of some 20,000 veterans camped in Washington demanding early payment of the war bonus, the Senate’s rejection of the bonus bill, the army’s clearance of the camps under MacArthur on 28 July and the burning of the Anacostia settlement)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. news photography recording the eviction for the national press — its composition, the burning camp beneath the Capitol dome, framing the event as an indictment of the government)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the summer of 1932 — unemployment near a quarter of the workforce, the veterans’ march and encampment, the death of the bonus bill in the Senate, the eviction ordered for the occupied downtown buildings, and the army operation that swept on across the river to Anacostia. Specific details from the photograph — the burning shacks, the Capitol dome composed above them — should be connected to those circumstances, including why that composition made the image politically devastating. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the summer of 1932 — unemployment near a quarter of the workforce, the veterans’ march and encampment, the death of the bonus bill in the Senate, the eviction ordered for the occupied downtown buildings, and the army operation that swept on across the river to Anacostia. Specific details from the photograph — the burning shacks, the Capitol dome composed above them — should be connected to those circumstances, including why that composition made the image politically devastating. Not all points are required for full marks.',
       },
       {
         letter: 'b',

@@ -56,21 +56,26 @@ export const RUS_SOURCE_SETS_3: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. revolutionary Petrograd in 1917, the Red Guards as armed workers’ militias expanded during the Kornilov crisis, the collapse of the Provisional Government’s authority, the Bolshevik seizure of the city’s key points in October)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. revolutionary Petrograd in 1917, the Red Guards as armed workers’ militias expanded during the Kornilov crisis, the collapse of the Provisional Government’s authority, the Bolshevik seizure of the city’s key points in October)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. to document the armed revolution in the streets — images of the Red Guards that served the new regime’s story of workers’ power)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Petrograd between February and October — workers armed as Red Guards, the government’s monopoly of force dissolved, patrols like this one holding street corners during the October days. Specific details from the photograph — the civilian clothes and rifles, the quiet street, the icon-shop signs above the revolutionaries (old Russia over the new) — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: Petrograd between February and October — workers armed as Red Guards, the government’s monopoly of force dissolved, patrols like this one holding street corners during the October days. Specific details from the photograph — the civilian clothes and rifles, the quiet street, the icon-shop signs above the revolutionaries (old Russia over the new) — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -426,21 +431,26 @@ export const RUS_SOURCE_SETS_3: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Magnitogorsk as the flagship city of the Five-Year Plans, the wartime role of the Urals industrial base beyond German reach, continued construction in 1943, Komsomol labour mobilisation and the press photograph’s morale purpose)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Magnitogorsk as the flagship city of the Five-Year Plans, the wartime role of the Urals industrial base beyond German reach, continued construction in 1943, Komsomol labour mobilisation and the press photograph’s morale purpose)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. propaganda photography celebrating the shock construction of Magnitogorsk — the heroic Komsomol builder as the plan’s public face)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the Urals arsenal at mid-war — Magnitogorsk’s furnaces feeding the tank plants, new capacity still rising in 1943, youth brigades filling the workforce, and photography presenting the rear’s labour as the front’s partner. Specific details from the photograph — the young workers, the furnace steelwork, the staged optimism — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the Urals arsenal at mid-war — Magnitogorsk’s furnaces feeding the tank plants, new capacity still rising in 1943, youth brigades filling the workforce, and photography presenting the rear’s labour as the front’s partner. Specific details from the photograph — the young workers, the furnace steelwork, the staged optimism — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',

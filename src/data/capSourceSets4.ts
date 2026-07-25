@@ -179,21 +179,26 @@ export const CAP_SOURCE_SETS_4: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Tennessee’s Butler Act banning the teaching of evolution, the Scopes test case of July 1925, Bryan for the prosecution and Darrow for the defence, the national press and radio spectacle, the trial moved outdoors for the crowds)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Tennessee’s Butler Act banning the teaching of evolution, the Scopes test case of July 1925, Bryan for the prosecution and Darrow for the defence, the national press and radio spectacle, the trial moved outdoors for the crowds)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. press photography feeding a national audience hungry for the trial’s drama — the session moved outdoors partly for the crowds and the cameras)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the culture war of the 1920s brought to court — fundamentalist legislation against evolution, the ACLU’s test case, the celebrity duel of Bryan and Darrow, and a small town turned national theatre by two hundred reporters and live radio. Specific details from the photograph — the outdoor platform, the packed yard, the spectator’s shoulder through which the nation watched — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the culture war of the 1920s brought to court — fundamentalist legislation against evolution, the ACLU’s test case, the celebrity duel of Bryan and Darrow, and a small town turned national theatre by two hundred reporters and live radio. Specific details from the photograph — the outdoor platform, the packed yard, the spectator’s shoulder through which the nation watched — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -424,21 +429,26 @@ export const CAP_SOURCE_SETS_4: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Depression’s destruction of savings and old-age security, the second New Deal of 1935, pressure from the Townsend and Long movements, Perkins’s Committee on Economic Security drafting the Act, its signature in August 1935)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Depression’s destruction of savings and old-age security, the second New Deal of 1935, pressure from the Townsend and Long movements, Perkins’s Committee on Economic Security drafting the Act, its signature in August 1935)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. an official record publicising the signing as a historic achievement — the President and the bill’s sponsors arranged for the cameras)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: 1935 — the Depression having exposed the absence of any national provision for old age or unemployment, the popular pressure of Townsend clubs and Long’s Share Our Wealth, and the administration’s answer drafted under Perkins and signed at the second New Deal’s height. Specific details from the photograph — the assembled legislators, Perkins’s singular presence — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: 1935 — the Depression having exposed the absence of any national provision for old age or unemployment, the popular pressure of Townsend clubs and Long’s Share Our Wealth, and the administration’s answer drafted under Perkins and signed at the second New Deal’s height. Specific details from the photograph — the assembled legislators, Perkins’s singular presence — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',

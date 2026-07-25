@@ -55,21 +55,26 @@ export const EUR_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Soviet blockade of West Berlin from June 1948 following the western currency reform, the Anglo-American airlift supplying the city through Tempelhof and other airfields, the city still in ruins from the war, the blockade as the first great confrontation of the Cold War)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Soviet blockade of West Berlin from June 1948 following the western currency reform, the Anglo-American airlift supplying the city through Tempelhof and other airfields, the city still in ruins from the war, the blockade as the first great confrontation of the Cold War)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. news photography humanising the airlift for western readers — the children and the aircraft composing the blockade as a story of rescue)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Berlin in 1948 — the western sectors cut off by road, rail and canal, the airlift begun as an improvisation and growing into a continuous bridge, and a bombed city whose children watched their former enemies feed them from the sky. Specific details from the photograph — the rubble hill, the patched clothes, the C-54 on approach — should be connected to those circumstances, including the image’s symbolic force (the photograph became one of the Cold War’s most famous). Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: Berlin in 1948 — the western sectors cut off by road, rail and canal, the airlift begun as an improvisation and growing into a continuous bridge, and a bombed city whose children watched their former enemies feed them from the sky. Specific details from the photograph — the rubble hill, the patched clothes, the C-54 on approach — should be connected to those circumstances, including the image’s symbolic force (the photograph became one of the Cold War’s most famous). Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -419,21 +424,26 @@ export const EUR_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the collapse of détente and the “new Cold War” after 1979, Soviet SS-20 deployment and NATO’s 1979 double-track decision, the deployment of Pershing II and cruise missiles from 1983, the mass peace movements of western Europe and the Dutch campaign in particular)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the collapse of détente and the “new Cold War” after 1979, Soviet SS-20 deployment and NATO’s 1979 double-track decision, the deployment of Pershing II and cruise missiles from 1983, the mass peace movements of western Europe and the Dutch campaign in particular)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. press coverage of the demonstration — and for the movement itself the mass march was an image designed to be photographed)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the early-to-mid 1980s missile crisis — Afghanistan, the end of SALT II, Reagan’s build-up and rhetoric, the SS-20/Pershing confrontation, and the popular mobilisation against deployment that filled the streets of Bonn, London, Amsterdam and The Hague. Specific details from the photograph — the Dutch banner’s demand, the skull-and-crossbones flag and presidential mask expressing anti-American anger, the crowd’s breadth of age — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: the early-to-mid 1980s missile crisis — Afghanistan, the end of SALT II, Reagan’s build-up and rhetoric, the SS-20/Pershing confrontation, and the popular mobilisation against deployment that filled the streets of Bonn, London, Amsterdam and The Hague. Specific details from the photograph — the Dutch banner’s demand, the skull-and-crossbones flag and presidential mask expressing anti-American anger, the crowd’s breadth of age — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -664,21 +674,26 @@ export const EUR_SOURCE_SETS_2: SourceSet[] = [
     questions: [
       {
         letter: 'a',
-        text: 'Outline the historical context in which Source 1 was produced.',
+        text: 'Outline the context of Source 1 and account for its purpose. Include the relevant events, people, and ideas represented in and/or surrounding the source.',
         marks: 4,
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the fall of the Wall on 9 November 1989 and the collapse of SED rule, mass emigration and demonstrations, the opening of new crossings including the Brandenburg Gate in December 1989 attended by Kohl and Modrow, the accelerating movement towards unity)', marks: '4' },
-              { descriptor: 'Outlines the context of the source by including mostly accurate details represented in and/or surrounding the source', marks: '3' },
-              { descriptor: 'Outlines the context of the source with some accurate details', marks: '2' },
-              { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the fall of the Wall on 9 November 1989 and the collapse of SED rule, mass emigration and demonstrations, the opening of new crossings including the Brandenburg Gate in December 1989 attended by Kohl and Modrow, the accelerating movement towards unity)', marks: '2' },
+              { descriptor: 'Identifies the context of the source by including some details represented in and/or surrounding the source', marks: '1' },
             ],
-            subtotal: 4,
+            subtotal: 2,
+          },
+          {
+            rows: [
+              { descriptor: 'Provides detailed reason/s for the purpose of the source (e.g. official East German photography recording the opening of the crossing — the regime presenting as orderly generosity what popular pressure had forced)', marks: '2' },
+              { descriptor: 'Provides simple reason/s for the purpose of the source', marks: '1' },
+            ],
+            subtotal: 2,
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: December 1989 — the Wall breached but the state still standing, the SED’s monopoly abandoned, round tables convening, and the physical border being unmade crossing by crossing at the city’s symbolic centre. Specific details from the photograph — the crane extracting the slab, the floodlit Gate, the border troops now dismantling what they had defended — should be connected to those circumstances; the reversal of the 1961 construction images may earn credit. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. “Account for” requires candidates to state the reasons for — here, the possible reasons the source was created. Generic purposes (“to inform”) are not enough for full marks: the purpose must be specific to this source. Context: December 1989 — the Wall breached but the state still standing, the SED’s monopoly abandoned, round tables convening, and the physical border being unmade crossing by crossing at the city’s symbolic centre. Specific details from the photograph — the crane extracting the slab, the floodlit Gate, the border troops now dismantling what they had defended — should be connected to those circumstances; the reversal of the 1961 construction images may earn credit. Not all points are required for full marks.',
       },
       {
         letter: 'b',
