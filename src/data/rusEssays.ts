@@ -103,7 +103,7 @@ export const RUS_ESSAYS: EssayQuestion[] = [
     strand: 'event',
     era: 'early',
     demand: 2,
-    themes: ['rus-civilwar'],
+    themes: ['rus-civilwar', 'rus-brest'],
     tags: ['rus-p3'],
     text: 'Analyse the significance of the Treaty of Brest-Litovsk of March 1918 to the survival and development of the Bolshevik regime.',
     notes:
@@ -129,7 +129,7 @@ export const RUS_ESSAYS: EssayQuestion[] = [
     strand: 'group',
     era: 'late',
     demand: 2,
-    themes: ['rus-greatturn'],
+    themes: ['rus-greatturn', 'rus-dekulak'],
     tags: ['rus-p5'],
     text: 'Examine the impact of collectivisation and industrialisation on Soviet peasants and factory workers in the years 1928 to 1941.',
     notes:

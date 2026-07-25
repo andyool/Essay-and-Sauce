@@ -21,7 +21,7 @@ export const RUS_ESSAYS_2: EssayQuestion[] = [
     strand: 'structure',
     era: 'late',
     demand: 3,
-    themes: ['rus-greatturn', 'rus-stalingrad', 'rus-gpw'],
+    themes: ['rus-greatturn', 'rus-stalingrad', 'rus-gpw', 'rus-warindustry'],
     tags: ['rus-p5', 'rus-p8'],
     text: 'Evaluate the proposition that Stalin’s economic transformation of the 1930s made Soviet victory in the Great Patriotic War possible.',
     notes:
@@ -129,7 +129,7 @@ export const RUS_ESSAYS_2: EssayQuestion[] = [
     strand: 'event',
     era: 'late',
     demand: 2,
-    themes: ['rus-greatturn'],
+    themes: ['rus-greatturn', 'rus-dekulak'],
     tags: ['rus-p5'],
     text: 'Evaluate the consequences of collectivisation for the Soviet Union in the years 1928 to 1941.',
     notes:
