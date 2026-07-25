@@ -1,0 +1,211 @@
+import type { EssayQuestion } from './types';
+
+// Essay questions cap-e18… for Elective 7: Capitalism — the American
+// experience (1901–1941).
+
+export const CAP_ESSAYS_2: EssayQuestion[] = [
+  {
+    id: 'cap-e18',
+    frame: 'E1',
+    strand: 'event',
+    era: 'late',
+    demand: 3,
+    themes: ['cap-crash', 'cap-depression'],
+    tags: ['cap-p4'],
+    text: 'Evaluate the proposition that the Wall Street Crash of October 1929 caused the Great Depression.',
+    notes:
+      'Candidates must separate trigger from cause. The case for: the Crash destroyed confidence — the psychological engine of instalment buying and business investment; it wiped out the speculative structures (margin accounts, investment trusts) that had funnelled credit into the boom; consumption of durables fell immediately; and the chronology is seductive — prosperity before, catastrophe after. The counter-case: fewer than three per cent of Americans owned shares and output barely moved in the Crash’s first weeks; the economy’s real weaknesses predate October 1929 (farm depression, sick industries, maldistribution of income, over-capacity); and what converted recession into the Great Depression came afterwards — the banking panics of 1930–33, the Federal Reserve’s contraction, Smoot–Hawley, and the international collapse. Historiography: Galbraith on speculation, Friedman and Schwartz’s monetary account, Temin and Bernanke on demand and credit. The strongest answers argue a precise verdict — e.g. the Crash was the necessary detonator of an already-charged structure, but not sufficient for depression without the policy and banking failures that followed — rather than a yes/no.',
+  },
+  {
+    id: 'cap-e19',
+    frame: 'E1',
+    strand: 'idea',
+    era: 'mid',
+    demand: 2,
+    themes: ['cap-values'],
+    tags: ['cap-p3'],
+    text: 'Evaluate the proposition that Prohibition did more harm than good to American society in the years 1920 to 1933.',
+    notes:
+      'Candidates should resist treating the answer as self-evident and weigh both ledgers. The case for harm: the criminal economy Prohibition capitalised — bootlegging, the speakeasy, Capone’s Chicago and the gang wars; the corruption of police, courts and politics; selective enforcement that punished the working-class saloon while the wealthy kept their cellars; poisonous industrial alcohol; and the erosion of respect for law among otherwise law-abiding citizens. The case for good, usually forgotten: alcohol consumption fell sharply (perhaps by a third to a half) and did not recover its pre-1920 level for decades; cirrhosis deaths and alcohol-related hospitalisations declined; and the saloon — the era’s great engine of domestic poverty and violence, the target of a half-century of women’s campaigning — was genuinely destroyed. Strong answers also treat Prohibition as cultural politics (the dry crusade as Protestant, rural assertion) and note the class and ethnic asymmetries of enforcement. A defended verdict on “more harm than good” is required; the best answers define whose harm and whose good.',
+  },
+  {
+    id: 'cap-e20',
+    frame: 'E2',
+    strand: 'group',
+    era: 'mid',
+    demand: 3,
+    themes: ['cap-klan', 'cap-values'],
+    tags: ['cap-p3'],
+    text: 'Debate the proposition that the Ku Klux Klan of the 1920s represented mainstream American values rather than an extremist fringe.',
+    notes:
+      'As this is a debate question, for candidates to gain the higher marks they must address evidence that both supports and refutes the claim. Supporting: the second Klan’s scale (perhaps four million members at peak) and geography (strongest in Indiana, Ohio, Oregon — not the Deep South); its membership of shopkeepers, professionals and clergy; its open parades through Washington in 1925–26; its electoral power (governors, senators, the 1924 Democratic convention’s refusal to condemn it); and the enactment of its core demand in the quota acts of 1921 and 1924 — nativism written into national law by Congress, not by a fringe. Refuting: the Klan never captured a national party or the presidency; it was fought throughout by the Black press, Catholic and Jewish organisations, many newspapers and some churches; its vigilante violence placed it outside the law it claimed to defend; and its collapse after the Stephenson scandal (1925) suggests its “respectability” was shallow — members fled when the moral pose broke. Strong answers define “mainstream” carefully (majority values? respectable participation?) and may conclude the uncomfortable middle: an extremist organisation trading successfully on widely shared prejudices. Both sides must be argued with specific evidence.',
+  },
+  {
+    id: 'cap-e21',
+    frame: 'E3',
+    strand: 'event',
+    era: 'early',
+    demand: 2,
+    themes: ['cap-wwi'],
+    tags: ['cap-p2'],
+    text: 'Assess the extent to which the First World War transformed the American economy and American society in the years 1914 to 1920.',
+    notes:
+      'An extent question: candidates should weigh transformation against continuity, domain by domain. Economic transformation: from debtor to the world’s creditor; the export boom doubling manufacturing output; New York displacing London in world finance; the federal government’s first experiment in managing capitalism (War Industries Board, railroad nationalisation, Liberty Loans creating a mass investing public). Social transformation: the Great Migration of Black southerners into northern industry; women’s war work and the momentum it gave suffrage (ratified 1920); the repression apparatus (Espionage and Sedition Acts) and the Red Scare. Continuity and reversal: controls scrapped overnight in 1919; the strike wave crushed and labour’s gains rolled back; the migration met riots in 1919; women largely returned to pre-war occupations; “normalcy” elected in 1920. The strongest answers argue a discriminating judgement — structural and financial changes proved permanent, while social and institutional changes were substantially reversed within two years — and support it across both economy and society.',
+  },
+  {
+    id: 'cap-e22',
+    frame: 'E3',
+    strand: 'group',
+    era: 'mid',
+    demand: 3,
+    themes: ['cap-fordism', 'cap-groups'],
+    tags: ['cap-p2', 'cap-p5'],
+    text: 'Assess the extent to which welfare capitalism reconciled American workers to industrial capitalism during the 1920s.',
+    notes:
+      'Candidates should define welfare capitalism — the employers’ programme of high wages, company unions, insurance, stock plans and recreation designed to make independent unions unnecessary — and assess its success against measurable criteria. Evidence for reconciliation: union membership fell from about five million (1920) to under three and a half million (1929); strike rates collapsed after 1922; real wages rose; and the model factories (Ford, Kodak, the “American Plan” employers) genuinely delivered benefits no union had won. Evidence against: welfare capitalism covered a minority of workers (the large-firm elite), rested on the open-shop drive and labour spies as much as generosity, and excluded the unorganised majority — textiles, mining and the South saw bitter strikes (Gastonia 1929) throughout the “quiet” decade. The decisive test came after 1929: the benefits evaporated with profits, and the same workers who had accepted the company union built the CIO within five years — suggesting acquiescence, not reconciliation. Strong answers use that collapse to read the 1920s backwards and reach a proportionate verdict.',
+  },
+  {
+    id: 'cap-e23',
+    frame: 'E4',
+    strand: 'structure',
+    era: 'mid',
+    demand: 3,
+    themes: ['cap-consumerism', 'cap-fordism'],
+    tags: ['cap-p2'],
+    text: 'Assess the relative importance of the factors that produced the economic boom of the 1920s in the United States.',
+    notes:
+      'Ranking is the discipline. Factors to weigh: mass production technique (the moving line, electrification of industry — productivity per worker rose some 40 per cent across the decade); the automobile as leading sector (steel, glass, rubber, oil, roads, suburbs); mass marketing and consumer credit sustaining demand for the new durables; the war’s legacy (creditor status, expanded plant, the investing habit); government policy (Mellon’s tax cuts, high tariffs, the associational state) — its weight much debated; and cheap energy and stable prices. Candidates should also weigh the boom’s exclusions (agriculture, coal, textiles) as evidence of its structure. Historiography: the productivity-led account versus consumption-led accounts; contemporaries’ “New Era” explanations as themselves historical evidence. A defended hierarchy — e.g. technology as foundation, the car as engine, credit and advertising as transmission — distinguishes the top bands from a catalogue.',
+  },
+  {
+    id: 'cap-e24',
+    frame: 'E5',
+    strand: 'idea',
+    era: 'mid',
+    demand: 2,
+    themes: ['cap-values'],
+    tags: ['cap-p3'],
+    text: 'Analyse the significance of Prohibition to American society and politics in the years 1920 to 1933.',
+    notes:
+      'Significance should be analysed across domains rather than narrated. Social: the transformation of drinking (the saloon destroyed, the speakeasy created; consumption down but drinking made glamorous and co-educational); the criminal economy and organised crime’s capitalisation (Capone’s Chicago as the emblem); enforcement’s class and ethnic asymmetries. Political: Prohibition as the constitutional victory of Protestant, rural, native-born America — and the fight over it as the axis of 1920s politics (the 1924 Democratic deadlock, Al Smith’s wet Catholicism in 1928); the doctrine of constitutional experiment and its failure (the only amendment ever repealed); federal enforcement as a new national police function. Cultural: lawbreaking normalised among the respectable; the hypocrisy theme in the decade’s literature. Repeal (1933) as Depression politics — jobs and taxes — completes the arc. The strongest answers argue what Prohibition reveals about the period: the last stand of one America against another, lost not in the courts but in the culture.',
+  },
+  {
+    id: 'cap-e25',
+    frame: 'E5',
+    strand: 'structure',
+    era: 'whole',
+    demand: 2,
+    themes: ['cap-jazzage'],
+    tags: ['cap-p3'],
+    text: 'Analyse the significance of the mass media — film and radio — in shaping American values in the years 1920 to 1941.',
+    notes:
+      'Candidates should analyse mechanisms, not just list media. Film: Hollywood as the arbiter of style and aspiration (the star system; fashion and consumption modelled on screen); the moral panics and the industry’s self-regulation (the Hays Office, the 1934 Production Code) as evidence of the medium’s perceived power; the Depression-era movies selling both escape and the New Deal’s populism. Radio: from novelty (1920) to national networks (NBC 1926, CBS 1927) creating the first simultaneous national audience; advertising as the system’s engine — values shaped by what would sell; Amos ’n’ Andy and the mainstreaming of racial caricature; FDR’s fireside chats converting the medium to politics — intimacy as authority; Father Coughlin as its demagogic shadow. The analytical core: the media nationalised culture (eroding local and ethnic particularity), commercialised values (success, youth, consumption), and created new political possibilities. Strong answers weigh homogenisation against the persistence of local cultures and reach a judgement about how deep the shaping went.',
+  },
+  {
+    id: 'cap-e26',
+    frame: 'E6',
+    strand: 'structure',
+    era: 'early',
+    demand: 2,
+    themes: ['cap-fordism'],
+    tags: ['cap-p2'],
+    text: 'Examine the nature and effects of the revolution in industrial production in the United States in the years 1908 to 1929.',
+    notes:
+      'Nature: the moving assembly line (Highland Park 1913) and the subdivision of labour; interchangeable parts perfected; electrification of factories (by 1929 most industrial power was electric) permitting flexible layout; scientific management — the stopwatch, the time-study, the personnel department; the五-dollar-day model of high wages for disciplined labour. Effects, economic: productivity per worker-hour rising some 40 per cent in the 1920s; prices of durables collapsing (the Model T from $850 to under $300); the car industry as the economy’s centre; chronic over-capacity by decade’s end. Effects, social: the deskilling of craft labour and the rise of the semi-skilled operative; immigrant and migrant workforces disciplined by the line; the eight-hour day spreading as machines, not hours, set output; consumer identity replacing producer identity — the worker as customer. Effects, cultural: “Fordism” as world-famous idea; the engineer as hero; Chaplin’s Modern Times (1936) as the critique. Strong answers connect nature to effects analytically and note the model’s vulnerability — production had outrun distribution by 1929.',
+  },
+  {
+    id: 'cap-e27',
+    frame: 'E6',
+    strand: 'group',
+    era: 'mid',
+    demand: 2,
+    themes: ['cap-klan', 'cap-groups'],
+    tags: ['cap-p3', 'cap-p5'],
+    text: 'Examine the impact of immigration restriction on American society in the 1920s.',
+    notes:
+      'Candidates should examine the laws and their effects on specific groups. The laws: the Emergency Quota Act (1921) and the National Origins Act (1924) — quotas rigged to the 1890 census to throttle southern and eastern European migration; total Asian exclusion; the western hemisphere left open for growers’ labour needs. Effects: immigration cut from a million a year to a fifth of that; the ethnic city transformed — communities aged, Americanised and consolidated without replenishment (the second generation’s rise); the labour market tightened, drawing Black southern migrants and Mexican workers into the industrial economy — the Great Migration’s second wave as restriction’s direct consequence; the border patrol created (1924) and the category of “illegal alien” invented; Japanese exclusion poisoning Pacific relations. Political and cultural: restriction as the Klan-era consensus written into law with elite scientific racism (the eugenicists testifying to Congress); the quota system’s twist — the “races” it ranked became, within a generation, the “white ethnics” of the New Deal coalition. Strong answers organise by group and by mechanism, and note the law’s forty-year life (to 1965).',
+  },
+  {
+    id: 'cap-e28',
+    frame: 'E7',
+    strand: 'event',
+    era: 'late',
+    demand: 2,
+    themes: ['cap-crash', 'cap-depression'],
+    tags: ['cap-p4'],
+    text: 'Evaluate the consequences of the Wall Street Crash for the United States in the years 1929 to 1933.',
+    notes:
+      'Candidates should evaluate — rank and connect — consequences rather than narrate the slide. Financial: the destruction of the speculative structure (margin debt, investment trusts); the credit contraction; the banking system’s exposure and the panics from late 1930 (some 5,000 failures by 1933, destroying deposits and the money supply — the Friedman/Schwartz “Great Contraction”). Economic: investment and durable consumption collapsing; industrial production nearly halved by 1932; unemployment to roughly a quarter of the workforce; prices and farm incomes in deflationary spiral. Social: Hoovervilles, breadlines, the shame culture of unemployment documented by contemporaries; differential impacts (last hired, first fired). Political and ideological: the discrediting of business civilisation and of Hoover; the 1932 realignment; capitalism itself on trial in public argument. International: American lending withdrawn, transmitting the slump to Europe (Creditanstalt 1931) with consequences for German politics. The evaluative thread: which consequences flowed from the Crash itself and which from the policy failures that followed — the strongest answers keep that distinction explicit.',
+  },
+  {
+    id: 'cap-e29',
+    frame: 'E8',
+    strand: 'person',
+    era: 'late',
+    demand: 3,
+    themes: ['cap-depression', 'cap-bonusarmy'],
+    tags: ['cap-p4', 'cap-i-hoover'],
+    text: 'Evaluate the role of Herbert Hoover in the American response to the Great Depression in the years 1929 to 1933.',
+    notes:
+      'The question rewards precision against caricature. The activist case: Hoover did more than any previous president against a slump — White House conferences to hold wages, expanded public works (the dam that bears his name), the Reconstruction Finance Corporation (1932) lending to banks and railroads, the Federal Home Loan Banks, the Glass–Steagall credit expansion of 1932. The case for failure: every instrument was hobbled by his convictions — voluntarism (business promises evaporated), the balanced budget (the 1932 tax increase in a collapsing economy), and the belief that direct federal relief would corrupt character (vetoes and delays while local relief collapsed); the disastrous Smoot–Hawley tariff signed against a thousand economists’ protest; and the political catastrophe of the Bonus Army. Interpretation: Hoover as the last president of the old order or the first of the new — the RFC and the precedents the New Deal built on. Historiography: the caricature (heartless inactivity) against revisionists who stress continuity with early New Deal. A differentiated verdict — active within self-imposed limits that the emergency made fatal — marks the top bands.',
+  },
+  {
+    id: 'cap-e30',
+    frame: 'E8',
+    strand: 'person',
+    era: 'early',
+    demand: 2,
+    themes: ['cap-wwi', 'cap-trusts'],
+    tags: ['cap-p2', 'cap-i-wilson'],
+    text: 'Evaluate the role of Woodrow Wilson in the development of American capitalism in the years 1913 to 1920.',
+    notes:
+      'Candidates should evaluate Wilson’s distinctive contribution across peace and war. The New Freedom programme: the Federal Reserve Act (1913) — the banking system’s architecture to this day; the income tax under the new Sixteenth Amendment shifting federal finance from tariff to taxation; the Clayton Act and Federal Trade Commission (1914) institutionalising antitrust; the Underwood tariff cut. The war presidency: the managed economy of 1917–18 (War Industries Board, Food Administration, railroad nationalisation) — the century’s first demonstration that Washington could run capitalism; Liberty Loans creating the mass investor; labour co-opted then abandoned. The reversals: demobilisation without plan, the 1919 strikes and Red Scare under his administration, the recession of 1920–21, and the repudiation of Wilsonism in the 1920 election. Assessment should weigh intention against outcome and person against structure: how much was Wilson, how much Congress and war? A defended verdict on his lasting institutional legacy (Fed, FTC, income tax) versus his reversed wartime experiment distinguishes strong answers.',
+  },
+  {
+    id: 'cap-e31',
+    frame: 'E8',
+    strand: 'person',
+    era: 'early',
+    demand: 2,
+    themes: ['cap-trusts'],
+    tags: ['cap-p1', 'cap-i-rockefeller', 'cap-i-morgan'],
+    text: 'Evaluate the roles of J. D. Rockefeller and J. P. Morgan in shaping American capitalism at the beginning of the 20th century.',
+    notes:
+      'A two-person role question: candidates should treat each and compare their modes of power. Rockefeller: Standard Oil as the model trust — horizontal consolidation, railroad rebates, the destruction of competitors; the trust form itself as his lawyers’ invention; the 1911 dissolution paradoxically multiplying his fortune; philanthropy (the university, the foundation, medicine) as the second act that laundered and redirected the first. Morgan: finance capitalism — reorganising railroads, assembling U.S. Steel (1901, the first billion-dollar corporation) and General Electric; “Morganisation” as the substitution of banker’s order for competition; the Panic of 1907, where one private banker acted as the nation’s central bank — the demonstration that produced the Federal Reserve. Their shaping: the corporation as the economy’s unit, the separation of ownership from control, and the political reaction (Roosevelt’s suits against Northern Securities and Standard Oil; Pujo Committee’s “money trust” hearings) that built the regulatory state. Strong answers weigh creative against destructive contributions and argue whose model — the industrial monopolist’s or the financier’s — shaped the century more.',
+  },
+  {
+    id: 'cap-e32',
+    frame: 'E8',
+    strand: 'person',
+    era: 'mid',
+    demand: 2,
+    themes: ['cap-jazzage', 'cap-consumerism'],
+    tags: ['cap-p3', 'cap-i-rubinstein', 'cap-i-arden'],
+    text: 'Evaluate the roles of Helena Rubinstein and Elizabeth Arden in the creation of the American beauty industry in the years 1910 to 1941.',
+    notes:
+      'Candidates should treat the pair as founders of an industry and as evidence about the new consumer capitalism. Their creation: the salon empires built from single shops (Rubinstein from 1915 in New York, Arden from 1910); the transformation of cosmetics from disreputable “paint” to respectable science and self-improvement — the white coat, the “skin analysis”, the day of beauty; national brands, department-store counters and mass advertising; price tiers spanning the shopgirl and the socialite. Their significance: two immigrant/outsider women (a Polish Jew, a Canadian farmer’s daughter) building fortunes in the one industry where being a woman was authority — and employing armies of saleswomen; the industry’s growth (from a few million dollars to hundreds of millions by 1930) as the measure of the new discretionary spending; the made-up face’s journey from flapper transgression to Depression-era necessity (“lipstick effect”) to wartime patriotism. Qualifications: the industry sold anxiety as much as liberation, and its whiteness excluded the parallel empire of Madam C. J. Walker’s successors. A defended judgement about their joint role in making consumption respectable femininity marks strong answers.',
+  },
+  {
+    id: 'cap-e33',
+    frame: 'E9',
+    strand: 'idea',
+    era: 'early',
+    demand: 3,
+    themes: [],
+    tags: ['cap-p3', 'cap-p6'],
+    text: 'Assess the significance of social Darwinism as an idea in American life in the period 1901 to 1929.',
+    notes:
+      'Candidates should define the idea — the application of “survival of the fittest” (Spencer’s phrase, not Darwin’s) to economic and social life — and assess its work across domains. As business creed: the sanctification of competition and wealth (Carnegie’s “Gospel of Wealth” as its gentler variant; Sumner’s “What Social Classes Owe to Each Other”); the argument against regulation, unions and relief — interference with natural selection; its embedding in the era’s judicial doctrine (liberty of contract, Lochner). As racial ideology: the “scientific” racism underwriting segregation, imperial expansion and immigration restriction — the eugenics movement’s sterilisation laws (upheld in Buck v. Bell, 1927) and the expert testimony behind the 1924 quotas. As target: progressivism defined itself against social Darwinism (Ward’s and Dewey’s critiques; the social gospel), and the Scopes trial (1925) scrambled the sides — the prosecution attacking Darwinism partly for its social applications. Assessment: the idea legitimised existing power more than it caused anything alone, yet its sterilisation and quota laws show ideas becoming coercion. Strong answers trace decline (the Depression discrediting economic fitness talk) and reach a weighted verdict.',
+  },
+  {
+    id: 'cap-e34',
+    frame: 'E10',
+    strand: 'structure',
+    era: 'late',
+    demand: 2,
+    themes: ['cap-newdeal', 'cap-depression', 'cap-bonusarmy'],
+    tags: ['cap-p4'],
+    text: 'Compare the responses of the Hoover and Roosevelt administrations to the Great Depression in the years 1929 to 1941.',
+    notes:
+      'A compare question requiring similarities as well as the famous differences. Similarities — the continuity case: the RFC created under Hoover became a New Deal workhorse; both presidents believed in balanced budgets (FDR campaigned on one in 1932 and returned to it disastrously in 1937); both experimented with farm support (Hoover’s Federal Farm Board prefiguring the AAA’s problems); neither ended mass unemployment before the war. Differences — scale and philosophy: direct federal relief and employment (FERA, CWA, WPA) against Hoover’s voluntarism and local responsibility; banking (the holiday, deposit insurance and the SEC against exhortation); labour (the Wagner Act against the open shop); social insurance (Social Security) — a permanent welfare state against character-protection; and above all communication and legitimacy — the fireside chats against the Bonus Army. Strong answers organise thematically (finance, relief, industry, agriculture, labour, politics), argue whether the difference was of degree or of kind, and use the historiography (revisionists on Hoover’s activism; Leuchtenburg’s “halfway revolution”) to sharpen a verdict.',
+  },
+];

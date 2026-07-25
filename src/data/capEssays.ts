@@ -37,7 +37,7 @@ export const CAP_ESSAYS: EssayQuestion[] = [
     strand: 'event',
     era: 'late',
     demand: 3,
-    themes: ['cap-depression', 'cap-consumerism'],
+    themes: ['cap-depression', 'cap-consumerism', 'cap-crash'],
     tags: ['cap-p2', 'cap-p4'],
     text: 'Debate the proposition that the Great Depression was caused by the excesses of the 1920s.',
     notes:
@@ -77,7 +77,7 @@ export const CAP_ESSAYS: EssayQuestion[] = [
     strand: 'event',
     era: 'late',
     demand: 3,
-    themes: ['cap-depression'],
+    themes: ['cap-depression', 'cap-crash'],
     tags: ['cap-p4'],
     text: 'Assess the relative importance of the factors that caused the Great Depression in the years 1929 to 1933.',
     notes:
