@@ -1,0 +1,186 @@
+import type { EssayQuestion } from './types';
+
+// Essay questions eur-e17… for Elective 1: The changing European world since 1945.
+
+export const EUR_ESSAYS_2: EssayQuestion[] = [
+  {
+    id: 'eur-e17',
+    frame: 'E1',
+    strand: 'event',
+    era: 'early',
+    demand: 3,
+    themes: ['eur-origins', 'eur-nato'],
+    tags: ['eur-p1'],
+    text: 'Evaluate the proposition that the Marshall Plan of 1947 was an instrument of American power rather than an act of generosity.',
+    notes:
+      'Candidates should refuse the false dilemma while taking both halves seriously. The case for instrument: the Plan served declared American interests — markets for US exports, the revival of a trading partner, the political stabilisation of western Europe against communist parties (aid conditional on excluding communists from government after 1947 in practice); it was containment’s economic arm, twinned with the Truman Doctrine; its administration spread American production methods and its terms bound recipients to dollar trade; and Moscow’s refusal (enforced on Czechoslovakia and Poland) suited Washington by confining the Plan to the West. The case for generosity: 13 billion dollars — roughly five per cent of one year’s US GDP — given, not lent, at real domestic political cost; recipients set their own programmes through the OEEC; and the counterfactual (a 1919-style withdrawal) was the live alternative. Historiography: revisionists (Kolko, Williams) on economic empire; Milward’s scepticism about the Plan’s economic necessity; Hogan and the “empire by invitation” school (Lundestad) — Europeans asked for it. The strongest answers argue that self-interest and generosity were deliberately fused — enlightened self-interest as policy — and judge the proposition’s “rather than” accordingly.',
+  },
+  {
+    id: 'eur-e18',
+    frame: 'E1',
+    strand: 'structure',
+    era: 'mid',
+    demand: 3,
+    themes: ['eur-helsinki'],
+    tags: ['eur-p2'],
+    text: 'Evaluate the proposition that détente in the years 1969 to 1979 was a victory for the Soviet Union.',
+    notes:
+      'Candidates must weigh what each side gained on which timescale. The case for Soviet victory: Helsinki’s recognition of the postwar frontiers and the two Germanies — Moscow’s thirty-year goal; strategic parity codified in SALT while the Soviet build-up continued; western credits and technology propping the Soviet economy; American retreat after Vietnam and the expansion of Soviet influence in Africa (Angola, Ethiopia) under détente’s cover; and communist rule stabilised — 1968’s lesson accepted by the West. The counter-case: the Basket III boomerang — Helsinki’s human-rights language arming the Moscow Helsinki Group, Charter 77 and KOR, with review conferences as a permanent tribunal; Ostpolitik’s “change through rapprochement” corroding the GDR through contacts, credits and television; the German treaties removing the Berlin flashpoint on western terms (access guaranteed); dependence on western grain and technology as vulnerability, not strength; and the judgement of the ending — the system that “won” détente collapsed within a decade of its high point. Historiography: contemporaries (Reagan’s critique) versus post-1989 reassessments (Thomas’s “Helsinki effect”). A verdict distinguishing the 1970s scoreboard from the long game marks the top bands.',
+  },
+  {
+    id: 'eur-e19',
+    frame: 'E2',
+    strand: 'group',
+    era: 'late',
+    demand: 3,
+    themes: ['eur-euromissiles'],
+    tags: ['eur-p2'],
+    text: 'Debate the proposition that the western European peace movements of the 1980s helped to prolong the Cold War rather than to end it.',
+    notes:
+      'As this is a debate question, for candidates to gain the higher marks they must address evidence that both supports and refutes the claim. Supporting: the movements opposed the NATO deployments that, on the double-track logic, forced Moscow to negotiate — had they succeeded, the SS-20s would have stood unanswered and the INF Treaty’s zero option would have had no western chips to trade; Soviet propaganda embraced and funded fractions of the movement precisely because it pressured only western governments (eastern peace activists were jailed); and the deployments’ survival of the protests demonstrated alliance cohesion — the failure that mattered. Refuting: the movements changed the political climate in which Gorbachev’s “new thinking” could be met — legitimising disarmament as policy, seeding the personnel and ideas (common security, the Palme Commission) that shaped the late-1980s settlements; they linked with eastern dissidents (END’s dialogue with Charter 77) in ways that undermined bloc logic; and the INF Treaty enacted, in the end, the movement’s demand — both classes abolished — which cold-war orthodoxy had called utopian. The strongest answers distinguish intention, mechanism and outcome, and note the causal humility Source-based history requires: deployments and protests were simultaneous pressures on the same Soviet decision. A defended verdict is required.',
+  },
+  {
+    id: 'eur-e20',
+    frame: 'E3',
+    strand: 'event',
+    era: 'early',
+    demand: 2,
+    themes: ['eur-airlift', 'eur-berlin'],
+    tags: ['eur-p1'],
+    text: 'Assess the extent to which the Berlin Blockade of 1948–49 determined the shape of the Cold War in Europe.',
+    notes:
+      'An extent question about a single crisis’s formative power. The case for determination: the blockade produced or accelerated the division’s institutions — the Federal Republic and GDR (1949), NATO (April 1949, signed mid-blockade), the permanence of the American commitment; it established the Cold War’s European rules (pressure short of shooting; Berlin as the recurring lever — 1958, 1961); it converted western Germans from occupied enemies to allies and made West Berlin the West’s symbol; and it fixed the pattern of bloc consolidation on both sides (Comecon, the bloc purges). The counter-case: the shape was forming before the first coal flight — containment declared (1947), the Marshall Plan dividing Europe economically, Czechoslovakia seized (February 1948), London conferences setting the West German course — the blockade was consequence as much as cause; and some defining features (the nuclear stand-off, German rearmament, the Wall) came from later crises. Strong answers argue a precise formulation — the blockade crystallised a division already chosen, and supplied its institutions and mythology — and defend the proportion between crystalliser and cause.',
+  },
+  {
+    id: 'eur-e21',
+    frame: 'E3',
+    strand: 'group',
+    era: 'late',
+    demand: 2,
+    themes: ['eur-solidarity', 'eur-collapse'],
+    tags: ['eur-p2'],
+    text: 'Assess the extent to which Solidarity was responsible for the collapse of communism in Poland by 1989.',
+    notes:
+      'Candidates should weigh the movement against the conditions that let it win. The case for Solidarity’s responsibility: it destroyed the regime’s claim to speak for the workers (ten million members in 1981) and its capacity to reform legitimacy back into existence; the underground survived martial law, keeping an alternative elite and public sphere alive; the 1988 strikes forced the regime to the Round Table; and its electoral annihilation of the party in June 1989 (99 of 100 senate seats) made the first non-communist government unavoidable — with Wałęsa and the union as the negotiation’s indispensable partner. The case for other factors: the economy’s terminal failure (debt, inflation, shortage) drove the regime to negotiate — it needed Solidarity’s legitimacy for austerity; Gorbachev’s withdrawal of the Soviet guarantee removed the martial-law option that had worked in 1981 — the decisive permissive change; the Church’s mediation; and Jaruzelski’s faction chose the table over the truncheon. Strong answers argue interaction — Solidarity created the pressure and the alternative; Moscow’s abdication and economic bankruptcy created the opening — and reach a proportionate verdict on “responsible”.',
+  },
+  {
+    id: 'eur-e22',
+    frame: 'E4',
+    strand: 'event',
+    era: 'late',
+    demand: 3,
+    themes: ['eur-unity', 'eur-collapse'],
+    tags: ['eur-p2'],
+    text: 'Assess the relative importance of the factors that brought about the reunification of Germany in the years 1989 to 1990.',
+    notes:
+      'Ranking is the discipline. Factors to weigh: the East German people — the exodus through Hungary, the Leipzig demonstrations, the March 1990 vote for unity now (the factor every other required); Gorbachev’s choices — no force in 1989, consent to NATO membership in July 1990 — without which nothing lawful was possible; Kohl’s statecraft — the ten points, the Deutschmark offer, the Caucasus bargain, speed as strategy; the western frame — Bush’s support, Two-Plus-Four managing British and French misgivings, NATO and EC membership making a large Germany digestible; the GDR’s internal collapse — economy, legitimacy, the party’s abdication; and the deeper currents — Ostpolitik’s twenty-year softening, Helsinki, the bloc’s general dissolution. A defensible hierarchy might run: popular pressure as motor, Soviet consent as permission, Kohl’s speed as the converter of possibility into fact — but any ranking argued with evidence scores. Candidates should engage the counterfactuals that test importance (a Chinese solution in Leipzig; a Soviet refusal on NATO; a hesitant chancellor). A defended hierarchy distinguishes the top bands from narrative.',
+  },
+  {
+    id: 'eur-e23',
+    frame: 'E5',
+    strand: 'structure',
+    era: 'early',
+    demand: 2,
+    themes: ['eur-nato', 'eur-origins'],
+    tags: ['eur-p1'],
+    text: 'Analyse the significance of the formation of NATO in 1949 for the development of the Cold War in Europe.',
+    notes:
+      'Significance in several registers. Strategic: the American guarantee made permanent — the calculation Acheson described (no more 1917s or 1941s) built into treaty; deterrence stabilising the central front for forty years; the framework that made West German rearmament possible (1955) and thereby completed both blocs — the Warsaw Pact as direct answer. Political: the Atlantic community institutionalised — American leadership accepted and constrained; European integration sheltered under the guarantee (the EEC grew inside NATO’s security); the German question managed (Ismay’s triple purpose). For the East: encirclement confirmed in Soviet eyes, feeding the bloc’s militarisation and the GDR’s garrison-state character. Costs and limits: the militarisation of containment beyond Kennan’s intent; the alliance as freezer of the status quo — 1953, 1956, 1968 unanswerable; France’s 1966 withdrawal from the command structure showing the strains. Long view: the institution outlived its enemy — the post-1991 enlargement as the Cold War’s longest echo. Strong answers weigh stabilisation against entrenchment of division and argue which mattered more, when.',
+  },
+  {
+    id: 'eur-e24',
+    frame: 'E5',
+    strand: 'event',
+    era: 'mid',
+    demand: 2,
+    themes: ['eur-helsinki'],
+    tags: ['eur-p2'],
+    text: 'Analyse the significance of the Helsinki Final Act of 1975 to the history of the Cold War in Europe.',
+    notes:
+      'Candidates should analyse the Act’s double significance on its two clocks. Immediate (the 1970s reading): the summit of détente — frontiers declared inviolable, the two Germanies consecrated, the bloc apparently legitimised; Basket II’s economic cooperation serving Soviet needs; western critics denouncing a second Yalta; Basket III dismissed by Moscow as paper. Long-run (the reading after 1989): the human-rights provisions as the bloc’s self-signed standard — the Moscow Helsinki Group (1976), Charter 77, KOR working “within the law” the regimes had accepted; the review conferences (Belgrade, Madrid, Vienna) institutionalising scrutiny; the western governments’ gradual adoption of the human-rights lever (Carter, then the CSCE process feeding into 1989); and the Paris Charter of 1990 formally ending the Cold War inside the Helsinki framework — the process outliving and dissolving the settlement it began by confirming. Mechanism matters for the higher bands: publication in the East, legalism as dissident method, the linkage of security baskets to compliance. Strong answers weigh the frontier clause against the conscience clause and argue why the “losing” clause won.',
+  },
+  {
+    id: 'eur-e25',
+    frame: 'E6',
+    strand: 'structure',
+    era: 'mid',
+    demand: 2,
+    themes: ['eur-helsinki', 'eur-prague'],
+    tags: ['eur-p2'],
+    text: 'Examine the nature and effects of détente in Europe in the years 1969 to 1979.',
+    notes:
+      'Nature: a negotiated management of division, not its abolition — Brandt’s Ostpolitik (Moscow and Warsaw treaties 1970, the Basic Treaty with the GDR 1972, the Berlin Quadripartite Agreement 1971); superpower arms control (SALT I and ABM 1972, SALT II 1979); the CSCE process to Helsinki; trade, credits and technology transfer; the doctrine on each side (peaceful coexistence; “change through rapprochement”). Effects, stabilising: the Berlin question defused after three crises in fifteen years; war risk in Europe visibly reduced; German–German contacts multiplying (travel, telephone, television) — the quiet erosion of the GDR’s isolation; recognition regularising the bloc’s states in the UN. Effects, corrosive: Helsinki’s Basket III arming dissent; hard currency debt binding Poland and Hungary to western lenders — the 1980s crises incubated; the GDR’s legitimacy resting on borrowed money and borrowed recognition. Effects, limiting: détente’s European core survived the superpower chill after Angola and Afghanistan — inter-German détente continued into the euromissile years. Strong answers organise nature→effects causally and note the historiographical divide between détente as stabiliser and as solvent.',
+  },
+  {
+    id: 'eur-e26',
+    frame: 'E6',
+    strand: 'group',
+    era: 'late',
+    demand: 2,
+    themes: ['eur-solidarity'],
+    tags: ['eur-p2'],
+    text: 'Examine the causes and consequences of the rise of Solidarity in Poland in the years 1980 to 1989.',
+    notes:
+      'Causes: the regime’s economic failure (Gierek’s debt-funded boom collapsing into price rises — the immediate trigger in July–August 1980); the Polish crisis tradition (1956, 1970, 1976) and the workers’ learned tactics (occupation strike, inter-factory committees); KOR’s worker–intellectual alliance after 1976; the Church’s national authority and John Paul II’s 1979 pilgrimage; Helsinki’s legal framework — demands grounded in ratified conventions. Consequences, short-run: the Gdańsk Agreement and sixteen months of legal existence — ten million members, rural Solidarity, the party’s inner disintegration; martial law (December 1981) — internment of thousands, the union banned, but no restoration of belief; the West’s sanctions and the movement’s Nobel-crowned prestige. Consequences, long-run: an underground society (publishing, education, unions) that kept an alternative elite in being; the economy’s continued rot discrediting “normalisation”; the 1988 strikes and Round Table; the June 1989 electoral earthquake and Mazowiecki government — the bloc’s first negotiated transfer, template for the autumn; and beyond 1989, Solidarity’s own fragmentation in power. Strong answers connect causes to consequences through the movement’s distinctive character — self-limiting, legalist, national — rather than listing.',
+  },
+  {
+    id: 'eur-e27',
+    frame: 'E7',
+    strand: 'event',
+    era: 'late',
+    demand: 2,
+    themes: ['eur-euromissiles'],
+    tags: ['eur-p2'],
+    text: 'Evaluate the consequences of the “new Cold War” of the years 1979 to 1985 for Europe.',
+    notes:
+      'Candidates should evaluate — rank and connect — consequences rather than narrate the freeze. Strategic: the euromissile deployments and the SS-20 build-up putting warning times at minutes; the war scares of 1983 (Able Archer, KAL 007) — Europe’s most dangerous moment since 1962; arms control wrecked (SALT II unratified, negotiations walked out of in 1983) before the INF reversal. Political, west: the peace movements as a mass political generation (the German Greens founded 1980; Dutch and British campaigns), alliance strain managed but real (the “successor generation” worry); the deployments’ success as a demonstration of NATO cohesion under domestic siege. Political, east: Solidarity crushed under the same years’ discipline — martial law as the eastern face of the freeze; dissident–peace movement contacts (END, Charter 77) sketching a trans-bloc civil society; economic strain as Soviet clients’ subsidies grew dearer. Economic: the arms burden accelerating Soviet decline — the freeze’s hidden consequence, harvested after 1985. And the paradox for the top bands: the confrontation’s severity created both the instruments (deployed missiles as chips) and the exhaustion that made the Gorbachev settlement possible — the new Cold War as the old one’s terminal fever. A ranked verdict is required.',
+  },
+  {
+    id: 'eur-e28',
+    frame: 'E8',
+    strand: 'person',
+    era: 'mid',
+    demand: 2,
+    themes: ['eur-helsinki'],
+    tags: ['eur-p2', 'eur-p5'],
+    text: 'Evaluate the role of Willy Brandt in changing the relationship between West Germany and the Communist Bloc in the years 1969 to 1974.',
+    notes:
+      'Role questions require the person’s distinctive contribution. Brandt’s ledger: Ostpolitik as strategy — “change through rapprochement” (Bahr’s formula, Brandt’s risk); the Moscow and Warsaw treaties (1970) accepting the postwar frontiers including Oder–Neisse; the Kniefall at the Warsaw Ghetto memorial — moral recognition no treaty could enact; the Basic Treaty (1972) trading recognition of the GDR for human contacts and permanent representation; the Berlin Quadripartite Agreement securing the city; the Nobel Prize (1971) and re-election (1972) proving détente domestically viable; resignation (1974) over the Guillaume espionage affair — the policy’s irony made flesh. Assessment: what he changed — the Federal Republic from revisionist power to status-quo partner, the German question from frozen to managed, the GDR from pariah to interlocutor slowly corroded by contact; what he did not — the Wall stood, the bloc endured, and critics (CDU contemporaries; later sceptics) charged that recognition stabilised the dictatorships. The long-run defence: 1989–90 harvested what 1970–72 planted (Kohl reaped through doors Brandt unlocked). Strong answers weigh agency against context (superpower détente enabling Ostpolitik) and reach a defended verdict.',
+  },
+  {
+    id: 'eur-e29',
+    frame: 'E8',
+    strand: 'person',
+    era: 'late',
+    demand: 2,
+    themes: ['eur-unity', 'eur-collapse'],
+    tags: ['eur-p2', 'eur-p5'],
+    text: 'Evaluate the role of Helmut Kohl in the reunification of Germany in the years 1989 to 1990.',
+    notes:
+      'Candidates should isolate what was Kohl’s from what was given him. His contribution: the ten-point programme (November 1989) seizing the agenda when every other government urged caution; the decision to campaign in the GDR’s March election and the promise of currency union at par — winning the “unity now” mandate and binding East German voters to his path; speed as deliberate method (windows close — his reading of Gorbachev’s weakening position was correct); the Caucasus bargain with Gorbachev (July 1990) — NATO membership, troop limits, credits, withdrawal with dignity; management of allies (Bush’s backing cultivated, Mitterrand reassured with deeper European integration — unity’s link to Maastricht, Thatcher simply outpaced) and of Poland’s border anxiety (the November 1990 treaty). The given conditions: the revolution itself, Gorbachev’s renunciation of force, American support, the GDR’s economic collapse. Criticisms worth weighing: the 1:1 currency union’s economic consequences; promises (“flourishing landscapes”) unmet for a decade; the steamrolling of East German civic movements. Verdict: not the author of the opportunity but its indispensable executor — or candidates may argue harder either way with evidence. Historiography: Zelikow/Rice on statecraft; critics on costs.',
+  },
+  {
+    id: 'eur-e30',
+    frame: 'E9',
+    strand: 'idea',
+    era: 'late',
+    demand: 3,
+    themes: ['eur-collapse'],
+    tags: ['eur-p2', 'eur-p4'],
+    text: 'Assess the significance of the ideas of glasnost and perestroika in the ending of the Cold War in the years 1985 to 1991.',
+    notes:
+      'Candidates should treat the ideas as policies with logics, not slogans. Definitions: perestroika — restructuring of the command economy (cooperatives, enterprise autonomy, eventually price debate) to save socialism; glasnost — openness as the instrument to expose the bureaucracy blocking it (censorship lifted by degrees, history’s blank spots filled — the Terror, the Pact’s secret protocols). Their work abroad: “new thinking” as their foreign-policy extension — security as common, force renounced (the UN speech), the Brezhnev Doctrine abandoned — the permission structure of 1989; the arms agreements (INF) funding retrenchment. Their unintended work: glasnost delegitimised the system it was meant to renew (once the Terror and the Pact were speakable, the founding myths died); perestroika dismantled the plan without building a market — shortages radicalising the public; openness plus federal structure ignited the national question (the Baltics’ escape route ran through the ideas). Assessment: indispensable but uncontrollable — ideas adopted to save the system became the solvent of system, bloc and union in that order. Strong answers weigh them against material causes (oil prices, arms burden, stagnation) and argue the interaction; a Kotkin-style structural counter gives the debate its edge.',
+  },
+  {
+    id: 'eur-e31',
+    frame: 'E10',
+    strand: 'event',
+    era: 'early',
+    demand: 2,
+    themes: ['eur-airlift', 'eur-berlin'],
+    tags: ['eur-p1', 'eur-p2'],
+    text: 'Compare the Berlin crises of 1948–49 and 1958–61 and their consequences for the Cold War in Europe.',
+    notes:
+      'A compare question organised by category, not two narratives. Causes — similar: both crises were Soviet attempts to solve the same problem, an indefensible western enclave inside the bloc undermining the GDR (currency reform and West German state-building in 1948; the refugee haemorrhage and Khrushchev’s ultimatum in 1958); different: Stalin sought expulsion by siege, Khrushchev a negotiated status change under deadline pressure — repeatedly postponed. Course — similar: pressure short of war, allied unity holding, Berlin as the theatre of resolve; different: 1948’s single instrument (blockade) met by a single counter (airlift); 1958–61 a slow crisis of summits and ultimata resolved unilaterally by the Wall — the bloc walling itself in rather than the West out. Consequences — similar: each crisis stabilised the status quo it failed to change and hardened the blocs (NATO and the two states after 1949; the Wall freezing the German question after 1961); different: 1949 strengthened the West (alliance, symbol, German loyalty), 1961 saved the GDR at the price of moral defeat, and opened the road to détente precisely because the enclave question was closed. The strongest answers use the comparison to argue a thesis: Berlin crises ended when both sides accepted that changing Berlin meant war — and the Wall was that acceptance in concrete.',
+  },
+];
