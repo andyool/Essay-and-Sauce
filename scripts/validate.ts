@@ -37,14 +37,11 @@ for (const unit of UNITS) {
   const themeKeys = new Set(sets.map((s) => s.themeKey));
 
   for (const s of sets) {
-    // The original Nazism bank ships real images; newer units may describe
-    // their visual sources until image files are added.
+    // Every set carries 1–2 real images, and every visual source has one.
     const images = s.sources.filter((src) => src.image);
-    if (unit.id === 'nazism') {
-      if (images.length < 1 || images.length > 2) errors.push(`${s.id}: ${images.length} images (want 1–2)`);
-      for (const src of s.sources) {
-        if (src.kind === 'visual' && !src.image) errors.push(`${s.id}: visual source ${src.n} has no image`);
-      }
+    if (images.length < 1 || images.length > 2) errors.push(`${s.id}: ${images.length} images (want 1–2)`);
+    for (const src of s.sources) {
+      if (src.kind === 'visual' && !src.image) errors.push(`${s.id}: visual source ${src.n} has no image`);
     }
     for (const src of s.sources) {
       if (src.image) {

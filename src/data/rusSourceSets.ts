@@ -23,9 +23,14 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken in Petrograd during the February Revolution, 1917.',
-        body: 'The photograph shows a wide city street filled with demonstrators moving towards the camera through slush and snow. At their head, women in shawls and factory clothes carry a long banner; soldiers in greatcoats march among the crowd with red ribbons tied to their bayonets. The banner’s painted letters read “Bread” and, beneath, “Down with the autocracy”. On the pavement, onlookers raise their hats; no police are visible anywhere in the frame.',
-        note: 'Note: the demonstrations began on International Women’s Day, 23 February 1917 (old style); within a week the Petrograd garrison had mutinied and Tsar Nicholas II had abdicated.',
+          'Source 1: A photograph of a demonstration of workers from the Putilov works district, Petrograd, in the first days of the February Revolution, 1917.',
+        image: {
+          src: 'sources/putilov-demonstration-1917.jpg',
+          alt: 'Demonstrators with banners fill a Petrograd street during the February Revolution of 1917; women in shawls stand beneath a banner demanding rations for soldiers’ families',
+          credit: 'Museum of Political History of Russia, public domain, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a city street filled from side to side with demonstrators — women in shawls and headscarves at the centre, soldiers, workmen and children among them. Over their heads hang two hand-painted banners; halted trams and shop signs are visible behind the crowd, and no police are anywhere in the frame.',
+        note: 'Note: the banners read “Feed the children of the defenders of the Motherland” and “Increase the ration of the soldiers’ families — the defenders of freedom and of peace for the people”. The demonstrations began on International Women’s Day, 23 February 1917 (old style); within a week the Petrograd garrison had mutinied and Tsar Nicholas II had abdicated.',
       },
       {
         n: 2,
@@ -65,7 +70,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Petrograd in February 1917 — the third winter of a losing war, acute bread shortages, strikes spreading from the Vyborg district, the women’s day demonstrations of 23 February igniting a rising the police could not contain, the garrison’s mutiny, and the abdication that followed within days. Specific details from the photograph — the women at the banner’s head, the soldiers with red ribbons, the absent police, the demands for bread and the end of autocracy — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Petrograd in February 1917 — the third winter of a losing war, acute bread shortages, strikes spreading from the great works like the Putilov plant (locked out days before the rising), the women’s day demonstrations of 23 February igniting a movement the police could not contain, the garrison’s mutiny, and the abdication that followed within days. Specific details from the photograph — the women at the centre of the crowd, the soldiers marching with them, the absent police, the banner demands for bread and for soldiers’ families — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -144,9 +149,14 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A Bolshevik propaganda poster produced during the Civil War, 1919.',
-        body: 'The poster shows a huge red worker in an apron, hammer in hand, standing astride a map of Russia. Around his boots, three small figures in caricature scramble to attack him: a White general with epaulettes and a whip, a fat banker in a top hat clutching a money-bag, and a foreign soldier whose helmet is labelled with the flags of Britain, France and the USA. Bold red letters across the top read: “The last hour of the exploiters has struck!” Beneath: “Everything for the front! Everything for victory!”',
-        note: 'Note: by 1919 the Bolshevik-held core of Russia was fighting White armies under Kolchak, Denikin and Yudenich, with intervention forces from more than a dozen foreign states on Russian soil.',
+          'Source 1: “Capital” — a Bolshevik propaganda poster by Viktor Deni, produced during the Civil War, 1919.',
+        image: {
+          src: 'sources/deni-kapital-1919.jpg',
+          alt: 'Deni’s 1919 Bolshevik poster “Capital”: a grotesque obese capitalist in top hat grins over a mountain of gold coins beneath a web of steel threads',
+          credit: 'Viktor Deni, 1919. Public domain, via Wikimedia Commons',
+        },
+        body: 'The poster shows a grotesquely fat capitalist in black tailcoat and top hat, a gold watch-chain with a golden heart hanging over his belly, grinning as he gathers in a mountain of gold coins that fills the foreground. Behind him rise factory chimneys; above, a web of steel threads is spun across the whole sky. Beneath the title “CAPITAL” runs a long mock-hymn in verse, in which Capital declares: “I am the embodiment of CAPITAL… my hand writes the laws… let all bend the knee, kissing the dust of my footprints.”',
+        note: 'Note: the verses are by the Bolshevik poet Demyan Bedny. By 1919 the Bolshevik-held core of Russia was fighting White armies under Kolchak, Denikin and Yudenich, with intervention forces from more than a dozen foreign states on Russian soil.',
       },
       {
         n: 2,
@@ -178,13 +188,13 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that the united strength of the workers’ state dwarfs its enemies — Whites, capitalists and foreign interventionists — and total mobilisation will finish them)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that Capital is a monstrous parasite that enslaves the world and worships only gold — and that this is the true master the Whites and interventionists serve)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the colossal red worker astride the map dwarfing his caricatured enemies, the general–banker–interventionist trio linking the Whites to landlords and foreign capital, the slogans announcing the exploiters’ “last hour” and demanding everything for the front)', marks: '3' },
+              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the grotesque caricature of obesity, top hat and gold heart making greed physical, the mountain of coins and the web of steel spun over the sky as capital ensnaring the world, the factory chimneys as the source of his wealth, the blasphemous mock-hymn demanding worship)', marks: '3' },
               { descriptor: 'Explains how the source conveys the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Outlines a feature of the source connected to the message', marks: '1' },
             ],
@@ -192,7 +202,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the poster’s devices — scale (the giant proletarian versus tiny enemies), caricature (the White general, the banker, the flag-labelled interventionist binding the counter-revolution to foreign capital), colour and slogan — and connect each device to the message of proletarian invincibility and total mobilisation. Full marks require specific reference to elements of the source.',
+          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the poster’s devices — the dehumanising caricature (obesity, gold, the heart literally made of gold), the cosmic imagery of the steel web over the sky, the hoard of coins, and Bedny’s verse parodying scripture so that capitalism becomes a false religion — and connect each device to the message that the Civil War is a holy war against Capital and its servants. Full marks require specific reference to elements of the source.',
       },
       {
         letter: 'b',
@@ -265,9 +275,14 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken at a market in a Soviet provincial town, 1923.',
-        body: 'The photograph shows a crowded street market. Peasant traders stand behind trestle tables and carts loaded with sacks of grain, cabbages, butter and geese; a well-dressed man in a fur-collared coat counts banknotes beside a stall hung with bolts of cloth and leather boots. Behind the stalls, a state shop’s window displays a portrait of Lenin above a poster listing fixed prices. Shoppers fill the street between.',
-        note: 'Note: under the New Economic Policy, introduced in 1921, peasants paid a tax in kind and sold their surplus on the open market; licensed private traders were nicknamed “NEPmen”.',
+          'Source 1: A photograph of Red Army infantry advancing across the ice of the Gulf of Finland towards the Kronstadt naval fortress, March 1921.',
+        image: {
+          src: 'sources/kronstadt-attack-1921.jpg',
+          alt: 'Red Army soldiers advance dispersed across the frozen Gulf of Finland towards Kronstadt in March 1921, red banners among them',
+          credit: 'Photographer unknown, 1921. Public domain, via Wikimedia Commons',
+        },
+        body: 'The photograph shows lines of Red Army soldiers in winter greatcoats running forward, widely spaced, across a vast plain of ice. Red banners are carried among the leading groups; the shell-torn surface of the ice stretches to a bare horizon where the fortress lies.',
+        note: 'Note: the naval fortress of Kronstadt commands the sea approach to Petrograd. Its garrison rose against the Bolshevik government at the beginning of March 1921 and was stormed across the ice in mid-March, while the Tenth Party Congress — meeting in Moscow at that very moment — adopted the New Economic Policy.',
       },
       {
         n: 2,
@@ -299,7 +314,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the New Economic Policy from 1921, the tax in kind replacing requisitioning, legal private trade and the NEPmen, recovery from the famine of 1921–22, state control of the commanding heights alongside the market)', marks: '3' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the crisis of War Communism by 1921 — requisitioning, peasant risings such as Tambov, urban strikes — the Kronstadt garrison’s revolt and its suppression across the ice, and the Tenth Party Congress adopting the NEP at the same moment)', marks: '3' },
               { descriptor: 'Outlines the context of the source by including some accurate details represented in and/or surrounding the source', marks: '2' },
               { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
             ],
@@ -307,7 +322,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the NEP economy of the early 1920s — requisitioning replaced by the tax in kind after the crises of 1921 (peasant risings, Kronstadt, famine), the revival of markets and licensed private trade, the coexistence of private stalls and state shops with fixed prices. Specific details from the photograph — the laden peasant carts, the prosperous NEPman counting notes, the state shop with Lenin’s portrait — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the terminal crisis of War Communism in early 1921 — requisitioning had provoked peasant war (Tambov), the cities were striking and starving, and in March the sailors and workers of Kronstadt, once the revolution’s vanguard, rose against the party. Specific details from the photograph — the infantry dispersed against the fortress guns, the attack delivered across open ice, the red banners — should be connected to those circumstances, including the suppression’s timing alongside the Tenth Party Congress and the adoption of the NEP. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -364,7 +379,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The theme should lead: the set represents the arc from War Communism’s catastrophe to NEP’s ambiguous recovery — revolt naming the failure (Source 2), the market restored in practice (Source 1), and the historian weighing retreat against monopoly (Source 3). Strong responses test this with own knowledge: grain requisitioning and the collapse of industrial output by 1921 (to roughly a fifth of 1913 levels), the Tambov rising and Kronstadt’s suppression, the famine of 1921–22, the recovery to near-1913 levels by 1926–27, the scissors crisis, and the grain procurement crisis of 1927–28 that gave Stalin his opening. Omissions tied to evaluation might include the absence of War Communism itself from the images, of the famine, and of any voice for the party left who saw NEP as betrayal. A source-by-source recount caps in the middle bands.',
+          'The theme should lead: the set represents the arc from War Communism’s catastrophe to NEP’s ambiguous recovery — the revolt suppressed by force (Source 1), the rebels naming the failure (Source 2), and the historian weighing retreat against monopoly (Source 3). Strong responses test this with own knowledge: grain requisitioning and the collapse of industrial output by 1921 (to roughly a fifth of 1913 levels), the Tambov rising and Kronstadt’s suppression, the famine of 1921–22, the recovery to near-1913 levels by 1926–27, the scissors crisis, and the grain procurement crisis of 1927–28 that gave Stalin his opening. Omissions tied to evaluation might include the absence of the famine of 1921–22, of the NEP market and the NEPmen themselves in any image, and of any voice for the party left who saw NEP as betrayal. A source-by-source recount caps in the middle bands.',
       },
     ],
   },
@@ -386,9 +401,14 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A Soviet propaganda poster for the First Five-Year Plan, 1931.',
-        body: 'The poster shows a young woman worker in a red headscarf and a young man in overalls striding forward together, each carrying a blueprint; behind them rise the blast furnaces of a steel combine, a dam wall, a tractor column crossing a field, and a sky crossed by aircraft. Great numerals “5 в 4” dominate the upper corner. The caption beneath reads: “The Five-Year Plan in four years! There are no fortresses the Bolsheviks cannot storm!”',
-        note: 'Note: “5 в 4” — “five in four” — was the slogan for completing the First Five-Year Plan (1928–32) in four years; the steelworks pictured resembles the new city of Magnitogorsk.',
+          'Source 1: A Soviet poster by Yakov Guminer for the First Five-Year Plan, 1931.',
+        image: {
+          src: 'sources/guminer-2plus2-1931.jpg',
+          alt: 'Guminer’s 1931 constructivist poster: giant figures 2+2 and a 5 filled with photomontage of construction sites, with a welder and red arrows, reading “plus the enthusiasm of the workers”',
+          credit: 'Yakov Guminer, 1931. Public domain, via Wikimedia Commons',
+        },
+        body: 'The poster is built around a giant sum: black figures “2 + 2”, a red panel reading “plus the enthusiasm of the workers”, and an enormous “5” whose body is filled with photographs of blast furnaces, scaffolding and new construction. At the top left a welder bends over his torch; two red arrows beside him are labelled “1929–1930” and “1931–1932”, and the diagonal caption reads “The arithmetic of the industrial-financial counter-plan”.',
+        note: 'Note: the poster’s full slogan reads “The arithmetic of the industrial-financial counter-plan: 2 + 2 plus the enthusiasm of the workers = 5” — the campaign to complete the First Five-Year Plan (1928–32) in four years.',
       },
       {
         n: 2,
@@ -421,13 +441,13 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that the whole Soviet people, led by the party, is heroically building industrial socialism at unheard-of speed, and nothing can stop it)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that the will and enthusiasm of the workers can overcome arithmetic itself — the Five-Year Plan can and will be completed in four years)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the idealised young man and woman as the new Soviet people, the blueprints and the catalogue of achievements — furnaces, dam, tractors, aircraft — the “5 in 4” numerals and the slogan that no fortress can resist the Bolsheviks)', marks: '3' },
+              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the absurd sum made true by “the enthusiasm of the workers” — ideology defeating mathematics, the giant 5 filled with photographs of real construction as proof, the welder as the heroic worker, the red arrows compressing 1929–32 into four years)', marks: '3' },
               { descriptor: 'Explains how the source conveys the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Outlines a feature of the source connected to the message', marks: '1' },
             ],
@@ -435,7 +455,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the poster’s devices — the heroic paired workers (including the woman, signalling mobilised female labour), the icons of the plan’s prestige projects, the arithmetic of acceleration (“five in four”), the military metaphor of storming fortresses — and connect each to the message of unstoppable collective construction. Full marks require specific reference to elements of the source.',
+          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the poster’s devices — the deliberately impossible equation redeemed by enthusiasm (voluntarism made visual), the constructivist photomontage filling the numeral 5 with real furnaces and scaffolding as proof of achievement, the heroic welder, and the arrows compressing the plan’s years — and connect each to the message that Bolshevik will overrides material limits. Full marks require specific reference to elements of the source.',
       },
       {
         letter: 'b',
@@ -508,9 +528,14 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken inside the October Hall, Moscow, during a public trial of former senior Bolsheviks, 1937.',
-        body: 'The photograph shows a courtroom under bright lights. On a raised bench sit three military judges; at a lectern stands the prosecutor in uniform, arm extended towards the dock, where a row of exhausted-looking middle-aged men — several of them once famous party leaders — sit between NKVD guards with fixed bayonets. Rows of selected spectators fill the hall; at the back, foreign correspondents write at a press table beneath a portrait of Stalin.',
-        note: 'Note: at the Moscow show trials of 1936–38, almost all defendants confessed to conspiracy, sabotage and treason; most were shot within days of sentence.',
+          'Source 1: A photograph of Josef Stalin in conversation with Nikolai Yezhov, head of the NKVD, at the celebrations of the twentieth anniversary of the Soviet security police, Moscow, December 1937.',
+        image: {
+          src: 'sources/stalin-yezhov-1937.jpg',
+          alt: 'Stalin leans close in conversation with NKVD chief Nikolai Yezhov, December 1937',
+          credit: 'Photographer unknown, December 1937. Public domain, via Wikimedia Commons',
+        },
+        body: 'The photograph shows the two men seated side by side, heads almost touching. Stalin, in a plain tunic, leans in confidentially; Yezhov — the small, neat chief of the security police, then at the height of his power — listens with his arm along the back of the seat. Both appear relaxed and amused.',
+        note: 'Note: 1937 was the bloodiest year of the Great Terror, carried out under Yezhov’s NKVD. Within two years Yezhov had himself been arrested and shot, and his figure was removed from official photographs.',
       },
       {
         n: 2,
@@ -541,7 +566,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Great Terror of 1936–38, the Moscow show trials of old Bolsheviks following Kirov’s murder, staged proceedings with confessions and foreign press in attendance, the NKVD under Yezhov)', marks: '3' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Great Terror at its height in 1937, the NKVD under Yezhov — the “Yezhovshchina” — mass arrests and executions under quota orders, the Moscow show trials following Kirov’s murder, the celebration of the security police as an arm of the state)', marks: '3' },
               { descriptor: 'Outlines the context of the source by including some accurate details represented in and/or surrounding the source', marks: '2' },
               { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
             ],
@@ -549,7 +574,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the Moscow show trials at the height of the Terror — the staging of justice (bright lights, selected audience, foreign correspondents deliberately admitted), defendants drawn from the party’s founding generation, the use of Kirov’s murder as pretext, and the near-certainty of execution. Specific details from the photograph — the guarded dock, the prosecutor’s accusing gesture, Stalin’s portrait above the press table — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: December 1937, the height of the Great Terror — the NKVD’s anniversary celebrated as a state occasion while its mass operations (Order 00447, the national operations) ran at full pace under Yezhov, with the show trials of the old Bolsheviks in train and the purge reaching the army and the party’s own apparatus. Specific details from the photograph — the intimacy of leader and police chief, the occasion itself honouring the security organs — should be connected to those circumstances; the note’s detail that Yezhov was soon shot and erased from photographs may be used to characterise the system the image records. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -606,7 +631,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The theme should lead: the set represents control by terror — justice as theatre (Sources 1 and 2) resting on an industrial machinery of arrest and execution (Source 3). Strong responses widen the frame with own knowledge of the syllabus’s full list of methods: propaganda and the cult of personality, socialist realism and the harnessing of the arts, censorship, the purge of the army (Tukhachevsky, 1937), the Gulag’s economic role, denunciation and fear in daily life, and the earlier stages — Kirov’s murder, the 1936 Zinoviev–Kamenev trial. The strongest answers evaluate accuracy and completeness: the sources show compulsion but not persuasion, and control also worked through belief, careers and the real enthusiasms of the 1930s — an omission worth evaluating. A source-by-source recount caps in the middle bands.',
+          'The theme should lead: the set represents control by terror — the intimacy of leader and secret police (Source 1), justice as theatre (Source 2), and an industrial machinery of arrest and execution beneath both (Source 3). Strong responses widen the frame with own knowledge of the syllabus’s full list of methods: propaganda and the cult of personality, socialist realism and the harnessing of the arts, censorship, the purge of the army (Tukhachevsky, 1937), the Gulag’s economic role, denunciation and fear in daily life, and the earlier stages — Kirov’s murder, the 1936 Zinoviev–Kamenev trial. The strongest answers evaluate accuracy and completeness: the sources show compulsion but not persuasion, and control also worked through belief, careers and the real enthusiasms of the 1930s — an omission worth evaluating. A source-by-source recount caps in the middle bands.',
       },
     ],
   },
@@ -628,9 +653,14 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A Soviet propaganda poster, 1941.',
-        body: 'The poster shows a stern middle-aged woman in a red dress and headscarf against a background of massed bayonets. She raises one hand high, holding the text of the military oath; her other arm sweeps forward, out of the poster, towards the viewer. Her eyes fix the viewer directly. Across the bottom, in huge letters: “The Motherland calls!”',
-        note: 'Note: the poster appeared within weeks of the German invasion of 22 June 1941 and became the most reproduced Soviet image of the war.',
+          'Source 1: A press photograph of new recruits leaving a Moscow recruiting station during mobilisation, 23 June 1941 — the day after the German invasion.',
+        image: {
+          src: 'sources/mobilization-moscow-1941.jpg',
+          alt: 'Columns of new recruits in civilian clothes march away from a Moscow recruiting station on 23 June 1941, others waiting at the entrance',
+          credit: 'Anatoly Garanin / RIA Novosti archive, image #662757 / CC BY-SA 3.0, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a long column of young men in caps, jackets and open shirts — still in their civilian clothes, some with bundles over their shoulders — marching away down a sunlit street from a recruiting station, where more men queue at the doorway beneath freshly pasted notices. A uniformed officer watches the column pass.',
+        note: 'Note: the photograph was taken for the Soviet press by Anatoly Garanin. Some five million reservists were called up in the first week of the war.',
       },
       {
         n: 2,
@@ -661,7 +691,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the German invasion of June 1941, catastrophic early defeats and encirclements, mass mobilisation of men and women, the regime’s turn to patriotic — “Motherland” — rather than purely socialist appeals)', marks: '3' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the German invasion of 22 June 1941, catastrophic early defeats and encirclements, the mass mobilisation of reservists — some five million in the first week — and the press photograph’s role in projecting orderly, willing response)', marks: '3' },
               { descriptor: 'Outlines the context of the source by including some accurate details represented in and/or surrounding the source', marks: '2' },
               { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
             ],
@@ -669,7 +699,7 @@ export const RUS_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the first weeks after Barbarossa — the deepest military crisis of the Soviet state, millions encircled or captured, mass call-up under way, and propaganda pivoting from class to nation (the maternal Motherland figure, the oath, the direct summons to the viewer). Specific details from the poster should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the first days after Barbarossa — the deepest military crisis of the Soviet state, the front collapsing westward, mass call-up under way within twenty-four hours of the invasion, and the press already framing the war as a national cause. Specific details from the photograph — the recruits still in civilian clothes, the queue at the station door, the fresh notices, the watching officer — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',

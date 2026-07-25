@@ -23,9 +23,14 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A political cartoon published in a New York satirical magazine, 1904.',
-        body: 'The cartoon shows a giant octopus labelled “Standard Oil”, its body a bulging oil storage tank. Its tentacles are wrapped tightly around the domes of a state legislature and the United States Capitol, around a steel mill, a shipping wharf and a railway locomotive, while small figures of workers and taxpayers struggle in its grip. One remaining tentacle stretches, still open, towards the White House in the corner of the frame.',
-        note: 'Note: by 1904 the Standard Oil trust controlled about ninety per cent of oil refining in the United States.',
+          'Source 1: “Next!” — a political cartoon by Udo Keppler, published in the American satirical magazine Puck, September 1904.',
+        image: {
+          src: 'sources/standard-oil-octopus-1904.jpg',
+          alt: 'Puck cartoon of the Standard Oil trust as a giant octopus with tentacles around industry, a state house, the Capitol, and reaching for the White House',
+          credit: 'Udo J. Keppler, Puck, 7 September 1904. Library of Congress, public domain, via Wikimedia Commons',
+        },
+        body: 'The cartoon shows a giant octopus, its body a bulging oil storage tank marked “Standard Oil”, sprawled across the land. Its tentacles are wrapped tightly around a state house and the dome of the United States Capitol, and around small struggling figures of workers labelled with the steel, copper and shipping industries. One remaining tentacle stretches, still open, towards the White House in the corner of the frame.',
+        note: 'Note: the title “Next!” refers to the open tentacle reaching for the White House. By 1904 the Standard Oil trust controlled about ninety per cent of oil refining in the United States.',
         footnotes: [
           'Trust — a combination of companies under a single board, used to dominate an industry and limit competition.',
         ],
@@ -146,11 +151,16 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A full-page advertisement for a six-cylinder motor car, published in a mass-circulation American magazine, 1927.',
-        body: 'The advertisement shows a gleaming sedan drawn up before a suburban house with a trim lawn; a smiling young family — husband in a business suit, wife in fashionable dress, two children — stand beside it. The headline reads: “The Car You Have Earned”. Beneath, the copy promises “the open road, the family Sunday, the envy of the street”, and a banner across the corner announces: “Drive it home today — a small payment down, the balance monthly, on the Plan”.',
-        note: 'Note: by 1927 roughly three in every four American cars were bought on instalment credit, and there was about one motor vehicle for every five Americans.',
+          'Source 1: An illustration from a full-page Ford Motor Company advertisement, published in an American women’s magazine, 1924.',
+        image: {
+          src: 'sources/ford-ad-woman-business.jpg',
+          alt: 'A 1924 Ford advertisement illustration of a businesswoman using a telephone in an office, with a Ford closed car visible through the window',
+          credit: 'Ford Motor Company advertisement, The Delineator, 1924. Public domain, via Wikimedia Commons',
+        },
+        body: 'The illustration shows a fashionably dressed young woman standing at a large office desk, hat on, telephone in hand, letters and papers spread on the blotter before her. Through the window at her shoulder, drawn up at the kerb and filling the view, stands a gleaming black Ford closed car.',
+        note: 'Note: the advertisement’s caption read: “Her habit of measuring time in terms of dollars gives the woman in business keen insight into the true value of a Ford closed car for her personal use.” By 1927 roughly three in every four American cars were bought on instalment credit.',
         footnotes: [
-          'Instalment plan — buying on credit: a deposit followed by fixed monthly payments, with interest.',
+          'Instalment credit — buying on a deposit followed by fixed monthly payments, with interest.',
         ],
       },
       {
@@ -182,13 +192,13 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that the prosperous modern American family owns a car — and that credit puts that respectable prosperity within everyone’s immediate reach)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that the car has become part of modern American identity — the successful, independent, efficient woman of the 1920s naturally owns a Ford)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the headline “The Car You Have Earned” framing consumption as deserved reward, the idealised family and suburban home linking the product to status and belonging, the promise of “the envy of the street”, the banner urging purchase today on monthly payments)', marks: '3' },
+              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the fashionable businesswoman as the aspirational figure of the “new era”, the office setting and telephone linking the car to efficiency and dollars rather than luxury, the car placed in the window as the visible reward and tool of her success, the caption’s appeal to her “habit of measuring time in terms of dollars”)', marks: '3' },
               { descriptor: 'Explains how the source conveys the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Outlines a feature of the source connected to the message', marks: '1' },
             ],
@@ -196,7 +206,7 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The message should be stated as a claim (“The message of Source 1 is that…”). “Explain” requires the why and/or how: candidates should decode the advertisement’s devices — the aspirational family scene, the language of earned reward, the appeal to envy and status, and the instalment-plan banner that removes the obstacle of price — and connect each device to the message that consumption defines the good American life and is available now, on credit. Full marks require specific reference to elements of the source.',
+          'The message should be stated as a claim (“The message of Source 1 is that…”). “Explain” requires the why and/or how: candidates should decode the advertisement’s devices — the aspirational figure of the modern businesswoman, the office and telephone associating the car with efficiency and independence rather than indulgence, the placement of the car in the window as both reward and working tool, and the caption’s language of time and dollars — and connect each device to the message that consumption now defines the successful modern American. Advertising aimed at women as consumers and earners is itself evidence of the new consumer capitalism. Full marks require specific reference to elements of the source.',
       },
       {
         letter: 'b',
@@ -247,7 +257,7 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The theme should lead: the set represents consumerism as the engine of New Era capitalism — the advertisement manufactures desire and dissolves price with credit, the administration figure presents mass consumption as proof that enterprise works, the historian shows an economy reorganised around selling and its hidden fragility. Strong responses assess significance with own knowledge: Ford’s Model T and the five-dollar day, the spread of electrification and household appliances, advertising and the instalment plan, welfare capitalism, and the boundaries of the boom (agriculture, older industries, African American and immigrant workers largely excluded), reaching a judgement about how far consumerism defined — and destabilised — the capitalism of the decade. Omissions earn marks only when tied to evaluation (e.g. the set contains no farmer or industrial worker, and nothing on speculation in stocks and real estate). For higher marks candidates must balance source evidence and own knowledge.',
+          'The theme should lead: the set represents consumerism as the engine of New Era capitalism — the advertisement manufactures desire and ties the product to modern identity, the administration figure presents mass consumption as proof that enterprise works, the historian shows an economy reorganised around selling and its hidden fragility. Strong responses assess significance with own knowledge: Ford’s Model T and the five-dollar day, the spread of electrification and household appliances, advertising and the instalment plan, welfare capitalism, and the boundaries of the boom (agriculture, older industries, African American and immigrant workers largely excluded), reaching a judgement about how far consumerism defined — and destabilised — the capitalism of the decade. Omissions earn marks only when tied to evaluation (e.g. the set contains no farmer or industrial worker, and nothing on speculation in stocks and real estate). For higher marks candidates must balance source evidence and own knowledge.',
       },
     ],
   },
@@ -269,9 +279,14 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken in New York City, 1921.',
-        body: 'The photograph shows two federal Prohibition agents in overcoats tipping confiscated barrels of beer into an open street drain, watched by a crowd of onlookers. Broken barrels are stacked on a truck behind them; foam runs along the gutter. One agent looks at the camera; several men in the crowd grin, and a boy crouches at the edge of the frame beside the running gutter.',
-        note: 'Note: the Eighteenth Amendment, banning the manufacture and sale of intoxicating liquor, came into force in January 1920; the Volstead Act provided for its enforcement.',
+          'Source 1: A press photograph taken in New York City during the early years of Prohibition, c. 1921.',
+        image: {
+          src: 'sources/prohibition-liquor-1921.jpg',
+          alt: 'New York City agents pour confiscated liquor from a barrel into a sewer while officials and police watch, c. 1921',
+          credit: 'Library of Congress, public domain, via Wikimedia Commons',
+        },
+        body: 'The photograph shows two men in shirtsleeves tipping a confiscated barrel of liquor into an open manhole in the street, the drink streaming into the sewer. Deputy Police Commissioner John A. Leach, in suit and straw hat, stands over them with uniformed police officers; more barrels and numbered crates of seized liquor wait behind, beside a police department wagon.',
+        note: 'Note: the Eighteenth Amendment, banning the manufacture and sale of intoxicating liquor, came into force in January 1920; the Volstead Act provided for its enforcement. Destructions like this one were staged for the press.',
       },
       {
         n: 2,
@@ -308,7 +323,7 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context refers to the circumstances at the time the source was produced: the first years of national Prohibition, the machinery of enforcement (federal agents, confiscation, public destruction of liquor as a demonstration for the press), and the immediate emergence of evasion. Specific details from the photograph — the agents, the barrels, the watching and grinning crowd — should be connected to those circumstances, including the public-relations character of such destructions and the ambivalence of urban crowds. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context refers to the circumstances at the time the source was produced: the first years of national Prohibition, the machinery of enforcement (police and federal agents, confiscation, public destruction of liquor as a demonstration for the press), and the immediate emergence of evasion. Specific details from the photograph — the barrel poured into the sewer, the supervising Deputy Commissioner, the numbered evidence crates, the police wagon — should be connected to those circumstances, including the public-relations character of such destructions. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -387,9 +402,14 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph of a shanty settlement on waste ground at the edge of an American industrial city, 1932.',
-        body: 'The photograph shows several dozen makeshift shelters built of packing crates, tar-paper, flattened tins and salvaged boards, crowded together on muddy ground beside a rail yard. Smoke rises from a stovepipe in one hut. In the foreground three men in worn overcoats stand around a fire in an oil drum; behind them, washing is strung between two shanties. A hand-lettered sign on the nearest hut reads “HOOVER VILLE”.',
-        note: 'Note: by 1932 unemployment in the United States had reached about one quarter of the workforce; settlements like this one, named mockingly after President Hoover, appeared on the edges of most large cities.',
+          'Source 1: A photograph of the “Hooverville” shanty settlement on the tideflats of Seattle, Washington, February 1933.',
+        image: {
+          src: 'sources/hooverville-seattle-1933.jpg',
+          alt: 'Hooverville shanty town on the Seattle tideflats in 1933, with dozens of makeshift shacks and the city skyline behind',
+          credit: 'Seattle Municipal Archives / CC BY 2.0, via Wikimedia Commons',
+        },
+        body: 'The photograph shows scores of makeshift shelters built of salvaged boards, packing crates and flattened tin, crowded together on waste ground by the harbour. Washing is strung between the shacks. Immediately behind the settlement rise the docks, warehouses and office towers of the city’s business district.',
+        note: 'Note: by 1932 unemployment in the United States had reached about one quarter of the workforce; settlements like this one, named mockingly after President Hoover, appeared on the edges of most large cities. Seattle’s held more than a thousand men.',
       },
       {
         n: 2,
@@ -428,7 +448,7 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the trough of the Depression in 1932 — mass unemployment, evictions and homelessness, makeshift settlements on urban waste ground, and the bitter naming of them after Hoover as his reputation collapsed in the year of the Bonus Army and the coming presidential election. Specific details from the photograph (the salvaged materials, the rail yard site, the mocking sign) should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the trough of the Depression in 1932–33 — mass unemployment, evictions and homelessness, makeshift settlements on urban waste ground, and the bitter naming of them after Hoover as his reputation collapsed. Specific details from the photograph (the salvaged materials, the waste-ground site, the prosperous business district rising directly behind the shacks) should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -507,9 +527,14 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A poster produced for a New Deal public works agency, mid-1930s.',
-        body: 'The poster shows a broad-shouldered worker in overalls, sleeve rolled, swinging a hammer against a rising sun; behind him a new bridge, a dam and a line of power pylons march to the horizon. Bold letters across the top read “WORK PAYS AMERICA!”; beneath, in smaller type, “Prosperity — security — the American way”, with the agency’s initials in the corner.',
-        note: 'Note: at its peak the Works Progress Administration employed more than three million Americans on public projects — roads, schools, bridges, parks and arts programmes.',
+          'Source 1: A poster produced by the Federal Art Project for the Works Progress Administration, late 1930s.',
+        image: {
+          src: 'sources/wpa-work-pays-america.jpg',
+          alt: 'WPA poster showing a farmer with a rake and a worker with a sledgehammer clasping hands over a growing wheat stalk, headed “Work Pays America! Prosperity”',
+          credit: 'WPA Federal Art Project poster, Library of Congress, public domain, via Wikimedia Commons',
+        },
+        body: 'The poster shows a farmer with a rake and an industrial worker with a sledgehammer clasping hands over a tall stalk of wheat growing between them. A banner across the top reads “Work Pays America!”, with the word “PROSPERITY” arched beneath it; along the base runs “WORKS PROGRESS ADMINISTRATION”.',
+        note: 'Note: at its peak the Works Progress Administration employed more than three million Americans on public projects — roads, schools, bridges, parks and arts programmes. The poster itself was made by artists employed on the WPA’s Federal Art Project.',
       },
       {
         n: 2,
@@ -540,13 +565,13 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that government work programmes are rebuilding America and restoring dignity and prosperity — public employment is the American way back)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that government work programmes are restoring prosperity and uniting farm and factory — public employment is productive work, not charity)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the heroic worker figure and rising sun suggesting a new dawn, the dam, bridge and pylons as concrete achievements of public works, the slogan “Work pays America!” linking relief to productive labour rather than charity, “the American way” claiming patriotic legitimacy)', marks: '3' },
+              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the farmer and industrial worker clasping hands as the union of country and city behind the New Deal, the wheat stalk growing between them as returning prosperity, the slogan “Work pays America!” framing relief as productive labour rather than the dole, the agency’s name claiming the credit)', marks: '3' },
               { descriptor: 'Explains how the source conveys the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Outlines a feature of the source connected to the message', marks: '1' },
             ],
@@ -554,7 +579,7 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the poster’s devices — the monumental worker, the sunrise, the catalogue of infrastructure, the slogan’s insistence that relief work is earned pay and patriotically American — and connect each to the message that the New Deal’s programmes are restoring the nation. Full marks require specific reference to elements of the source.',
+          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the poster’s devices — the joined hands of farmer and worker (the New Deal coalition in emblem form), the growing wheat as recovery, the slogan’s insistence that relief work is earned pay, and the self-advertisement of a government agency — and connect each to the message that the New Deal’s programmes are restoring the nation. Full marks require specific reference to elements of the source.',
       },
       {
         letter: 'b',
@@ -627,8 +652,13 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A documentary photograph of a sharecropper family, taken for a federal photographic project in the American South, 1936.',
-        body: 'The photograph shows a family of seven on the porch of an unpainted single-room cabin: a gaunt father in patched overalls, a mother holding an infant, and four barefoot children. The boards of the porch are split; a cotton field, picked over, stretches behind the cabin to a line of trees. No shoes, glass windows or machinery are visible anywhere in the frame.',
+          'Source 1: A documentary photograph of a sharecropper and his son, taken by Walker Evans for a federal photographic project in Hale County, Alabama, 1936.',
+        image: {
+          src: 'sources/sharecroppers-hale-county.jpg',
+          alt: 'Walker Evans photograph of a young boy holding a piece of food, his sharecropper father in overalls beside him, against the boards of their cabin',
+          credit: 'Walker Evans, Farm Security Administration, 1936. Library of Congress, public domain, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a young boy in a worn, stained shirt standing against the unpainted boards of a cabin, a piece of food in his hand, looking directly into the camera. Beside him, his father — a gaunt young man in patched denim overalls — looks away along the porch. The timber wall behind them is rough-sawn and weathered, without paint, glass or ornament.',
         note: 'Note: photographers were employed by the federal Farm Security Administration to document rural poverty; sharecroppers farmed a landlord’s fields in return for a share of the crop, and most remained permanently in debt.',
       },
       {
@@ -669,7 +699,7 @@ export const CAP_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the mid-Depression South — sharecropping and tenancy as the successor to plantation agriculture, chronic rural poverty deepened by collapsed cotton prices, and the federal government’s decision to document that poverty through FSA photography (the tradition of Dorothea Lange and Walker Evans) partly to build support for New Deal rural programmes. Specific details from the photograph (the unpainted cabin, the barefoot children, the picked-over field) should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the mid-Depression South — sharecropping and tenancy as the successor to plantation agriculture, chronic rural poverty deepened by collapsed cotton prices, and the federal government’s decision to document that poverty through FSA photography (Walker Evans’s Hale County photographs later appeared in “Let Us Now Praise Famous Men”) partly to build support for New Deal rural programmes. Specific details from the photograph (the unpainted cabin boards, the patched overalls, the child’s stained clothing) should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',

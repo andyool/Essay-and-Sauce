@@ -23,9 +23,14 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A cartoon published in a British newspaper, March 1946.',
-        body: 'The cartoon shows a map of Europe. A vast curtain of iron plates, riveted like a battleship’s hull, has been drawn down the middle of the continent from the Baltic to the Adriatic; a padlock the size of a house fastens it at the bottom. On the western side, small figures of statesmen stand peering at the curtain, one raising a lantern. On the eastern side, only silhouettes of church towers and factory chimneys are visible above the curtain’s rim, and a tiny figure of a man with a pipe and marshal’s uniform looks over the top, drawing the curtain’s edge a little further.',
-        note: 'Note: Winston Churchill’s speech at Fulton, Missouri, on 5 March 1946 declared that “an iron curtain has descended across the Continent” from Stettin to Trieste.',
+          'Source 1: An official photograph of the “Big Three” — Clement Attlee, Harry S. Truman and Josef Stalin — at the Potsdam Conference, August 1945.',
+        image: {
+          src: 'sources/potsdam-big-three-1945.jpg',
+          alt: 'Attlee, Truman and Stalin seated in wicker chairs at the Potsdam Conference, 1945, smiling for the camera',
+          credit: 'US government photograph, 1945. Public domain, via Wikimedia Commons',
+        },
+        body: 'The photograph shows the three Allied leaders posed for the cameras in wicker armchairs in the garden of the Cecilienhof palace: Attlee, the new British Prime Minister, in a dark suit; Truman at the centre, smiling broadly with a folder of papers on his knee; and Stalin at ease in the cream dress tunic of a Generalissimo. All three smile.',
+        note: 'Note: the photograph was taken in the conference’s final days — after Attlee had replaced Churchill mid-conference on losing the British election, and after Truman had received word of the successful test of the atomic bomb. Potsdam was the last meeting of the wartime Big Three.',
       },
       {
         n: 2,
@@ -56,7 +61,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. Churchill’s Fulton “iron curtain” speech of March 1946, Soviet consolidation of eastern Europe behind the Red Army’s lines, western anxiety about Stalin’s intentions after Yalta and Potsdam)', marks: '3' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the Potsdam Conference of July–August 1945 settling occupied Germany, the surface unity of the victorious alliance already strained over Poland and reparations, Attlee’s mid-conference replacement of Churchill, Truman’s news of the atomic test)', marks: '3' },
               { descriptor: 'Outlines the context of the source by including some accurate details represented in and/or surrounding the source', marks: '2' },
               { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
             ],
@@ -64,7 +69,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: early 1946 — the wartime alliance dissolving, Soviet-installed governments consolidating in Poland, Romania and Bulgaria, the Red Army in occupation across eastern Europe, Kennan’s Long Telegram (February) and Churchill’s Fulton speech (March) naming the division. Specific details from the cartoon — the riveted curtain from Baltic to Adriatic, the padlock, the Stalin figure drawing it further, the western statesmen’s lantern — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Potsdam, July–August 1945 — Germany defeated and divided into occupation zones, the Red Army in possession of eastern Europe, disputes over Poland’s government and frontiers and over reparations already sharpening beneath the ceremony, Churchill replaced mid-conference by Attlee, and Truman privately informed of the successful atomic test (and mentioning “a new weapon” to Stalin, who already knew). Specific details from the photograph — the smiling pose, the new British premier, Stalin’s marshal’s tunic — should be connected to the last display of an alliance already dissolving. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -121,7 +126,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The theme should lead: the set represents the division of Europe from three vantage points — the western image of Soviet enclosure (Source 1), the American declaration of ideological contest (Source 2), and the historian’s security-dilemma synthesis (Source 3). Strong responses test the representation with own knowledge: Yalta and Potsdam, the fate of Poland, Kennan’s Long Telegram and containment, the Marshall Plan and Moscow’s refusal (including for Czechoslovakia), the Prague coup of February 1948, the Berlin blockade and airlift, the founding of NATO and the two Germanies in 1949. Omissions should be tied to evaluation — the set gives no direct Soviet voice (Stalin’s election speech or Zhdanov’s “two camps” would balance Truman’s binary), and the peoples of eastern Europe appear only as silhouettes. A source-by-source recount caps in the middle bands.',
+          'The theme should lead: the set represents the passage from alliance to division — the last smiling display of wartime unity (Source 1), the American declaration of ideological contest eighteen months later (Source 2), and the historian’s security-dilemma synthesis (Source 3). Strong responses test the representation with own knowledge: Yalta and Potsdam, the fate of Poland, Kennan’s Long Telegram and containment, the Marshall Plan and Moscow’s refusal (including for Czechoslovakia), the Prague coup of February 1948, the Berlin blockade and airlift, the founding of NATO and the two Germanies in 1949. Omissions should be tied to evaluation — the set gives no direct Soviet voice (Stalin’s election speech or Zhdanov’s “two camps” would balance Truman’s binary), and the peoples of eastern Europe, over whom the division was made, appear nowhere in the set. A source-by-source recount caps in the middle bands.',
       },
     ],
   },
@@ -143,9 +148,14 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken in Budapest, late October 1956.',
-        body: 'The photograph shows a city square littered with rubble and the burnt-out hull of a tank. On a fallen pedestal nearby lie the enormous bronze head and one boot of a statue; the head, several times larger than the men around it, wears a heavy moustache. Young men — one in a student’s coat with a rifle slung on his back, another in worker’s overalls — stand on the toppled head; one has planted the Hungarian tricolour, its centre cut out in a ragged circle, into the statue’s collar.',
-        note: 'Note: the eight-metre statue of Stalin in Budapest was pulled down on 23 October 1956; the flags of the rising had the communist coat of arms cut from their centre.',
+          'Source 1: A press photograph taken at the crossing of the Grand Boulevard and Rákóczi Street, Budapest, late October 1956.',
+        image: {
+          src: 'sources/stalin-head-budapest-1956.jpg',
+          alt: 'The severed bronze head of Budapest’s giant Stalin statue lies on the cobbles among tram rails and cables, passers-by walking around it, October 1956',
+          credit: 'FORTEPAN / Hofbauer Róbert / CC BY-SA 3.0, via Wikimedia Commons',
+        },
+        body: 'The photograph shows the severed bronze head of a statue of Stalin — taller than a man — lying on its side on the cobblestones of a city intersection, among tram rails, fallen cables and debris. A metal rod has been driven through the head. Around it, pedestrians in winter coats pass by; a few pause to look.',
+        note: 'Note: the eight-metre statue of Stalin was pulled down by demonstrators on 23 October 1956, dragged across the city and broken up where it lay; the crossing became known as “Boots Square”, after all that remained on the plinth.',
       },
       {
         n: 2,
@@ -176,13 +186,13 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that the Hungarian people have thrown off Stalinism and Soviet domination — the idol is down and the nation reclaims its flag)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that the Hungarian people have thrown down Stalinism — the idol that towered over the city lies broken in the gutter)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the toppled colossus and its dwarfed head as the humiliation of the cult of Stalin, the student and worker standing on it showing who made the revolution, the tricolour with the communist emblem cut out as the symbol of national reclamation, the burnt tank as the price)', marks: '3' },
+              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the colossal head reduced to street rubbish among the tram rails, the rod driven through it as deliberate desecration, the passers-by walking around it unafraid — the terror of the cult visibly dead, the dragging of the head across the city as public humiliation)', marks: '3' },
               { descriptor: 'Explains how the source conveys the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Outlines a feature of the source connected to the message', marks: '1' },
             ],
@@ -190,7 +200,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the photograph’s elements — the fallen statue (the cult literally overthrown), the ordinary young insurgents astride it, the mutilated flag as the rising’s emblem, the rubble and wrecked armour testifying to real fighting — and connect each to the message of popular national revolution against Soviet-imposed rule. Full marks require specific reference to elements of the source.',
+          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the photograph’s elements — the fallen colossus (the cult literally overthrown), its dumping among tram rails and debris as deliberate degradation, the rod through the head, and the ordinary pedestrians passing without fear — and connect each to the message of popular national revolution against Soviet-imposed rule. Candidates may note that the photograph itself, taken and kept by an ordinary Hungarian, is evidence of the days when the regime’s symbols could be defiled openly. Full marks require specific reference to elements of the source.',
       },
       {
         letter: 'b',
@@ -263,9 +273,14 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken at the Berlin sector boundary, August 1961.',
-        body: 'The photograph shows a cobbled street cut in half by a low barrier of fresh breeze-blocks and coiled barbed wire. On the eastern side, a young soldier in East German uniform stands guard, rifle slung, glancing over his shoulder towards the camera; behind him workmen in overalls are laying more blocks under the eyes of two officers. On the western side, a crowd presses close to the wire — a woman in an apron waves a handkerchief upward at an apartment block on the eastern side, where distant figures lean from windows and wave back.',
-        note: 'Note: the sector boundary through Berlin was sealed with wire in the early hours of 13 August 1961; in the preceding twelve years some 2.7 million people had left East Germany through the city.',
+          'Source 1: A press photograph of the Berlin Wall under construction, November 1961.',
+        image: {
+          src: 'sources/berlin-wall-construction-1961.jpg',
+          alt: 'Cranes lower concrete slabs onto the curving Berlin Wall in November 1961 while workers and guards stand on top; barbed wire runs along the western side',
+          credit: 'US National Archives, public domain, via Wikimedia Commons',
+        },
+        body: 'The photograph, taken from the western side, shows the wall curving away into the winter mist. Truck-mounted cranes lower great concrete slabs onto it; East German workmen stand along the top setting them in place while uniformed guards watch over the work. In front of the wall, on the western side, runs a low fence strung with barbed wire.',
+        note: 'Note: the sector boundary through Berlin was sealed with barbed wire in the early hours of 13 August 1961 and the concrete wall followed within days; in the preceding twelve years some 2.7 million people had left East Germany through the city.',
       },
       {
         n: 2,
@@ -296,7 +311,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the sealing of the Berlin sector boundary on 13 August 1961, the refugee exodus through Berlin — some 2.7 million since 1949, the Berlin crisis since Khrushchev’s 1958 ultimatum, families and a city cut in two overnight)', marks: '3' },
+              { descriptor: 'Outlines the context of the source by including accurate and specific details of events, people, and ideas represented in and/or surrounding the source (e.g. the sealing of the Berlin sector boundary on 13 August 1961 and the concrete wall raised in the following weeks, the refugee exodus through Berlin — some 2.7 million since 1949, the Berlin crisis since Khrushchev’s 1958 ultimatum, a city cut in two)', marks: '3' },
               { descriptor: 'Outlines the context of the source by including some accurate details represented in and/or surrounding the source', marks: '2' },
               { descriptor: 'Identifies the context of the source with a general comment or limited details', marks: '1' },
             ],
@@ -304,7 +319,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: August 1961 — the open sector boundary as the last gap in the iron curtain, the accelerating exodus (over 30,000 in July 1961 alone), Khrushchev’s renewed pressure on the western presence in Berlin, and the overnight sealing of the boundary with wire and blocks before the concrete wall proper. Specific details from the photograph — the fresh blocks and wire, the guard and supervising officers, the severed street and waving families — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: late 1961 — the open sector boundary had been the last gap in the iron curtain, the exodus was accelerating (over 30,000 in July 1961 alone), Khrushchev renewed his pressure on the western presence in Berlin, the boundary was sealed overnight on 13 August, and through the autumn the wire was replaced by the permanent concrete wall. Specific details from the photograph — the cranes and prefabricated slabs showing an industrial, state-organised undertaking, the guards supervising the workmen, the wire on the western face — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -384,8 +399,13 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         kind: 'visual',
         attribution:
           'Source 1: A press photograph taken in central Prague, 21 August 1968.',
-        body: 'The photograph shows a Soviet tank halted in a narrow street, its barrel draped with a Czechoslovak flag thrown by the crowd. Young people surround it on all sides: a man in shirt-sleeves argues with the tank commander, gesturing at a wall chalked with the words “DUBČEK — SVOBODA” and “Ivan go home!”; a girl holds up a bloodied shirt on a pole. None of the crowd is armed. Smoke rises from a building at the street’s end, and torn leaflets litter the cobbles.',
-        note: 'Note: Warsaw Pact forces entered Czechoslovakia on the night of 20–21 August 1968; Alexander Dubček’s reform programme had promised “socialism with a human face”. Svoboda — the name of the Czechoslovak president — is also the Czech word for freedom.',
+        image: {
+          src: 'sources/prague-tanks-1968.jpg',
+          alt: 'Two Soviet tanks marked with white invasion stripes hemmed in on every side by a vast unarmed crowd in Prague, August 1968',
+          credit: 'Engramma.it / CC BY-SA 3.0, via Wikimedia Commons',
+        },
+        body: 'The photograph, taken from above, shows two Soviet tanks marked with broad white identification stripes brought to a standstill in a city square, hemmed in on every side by an enormous crowd. The people press to within arm’s length of the armour; a man has climbed onto the leading tank’s hull to argue with its crew, whose commander stands in the turret hatch. No one in the crowd is armed.',
+        note: 'Note: Warsaw Pact forces entered Czechoslovakia on the night of 20–21 August 1968; invading vehicles were marked with white stripes to distinguish them from the identical tanks of the Czechoslovak army. Alexander Dubček’s reform programme had promised “socialism with a human face”.',
       },
       {
         n: 2,
@@ -424,7 +444,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Czechoslovakia in August 1968 — eight months of reform (censorship abolished, rehabilitation of victims, economic decentralisation, the Action Programme), Moscow’s mounting alarm through the summer (the Warsaw letter, Čierna talks), and the invasion by some quarter of a million Warsaw Pact troops met with unarmed resistance, argument and protest rather than battle. Specific details from the photograph — the flag on the barrel, the chalked names, the arguing crowd, the bloodied shirt — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: Czechoslovakia in August 1968 — eight months of reform (censorship abolished, rehabilitation of victims, economic decentralisation, the Action Programme), Moscow’s mounting alarm through the summer (the Warsaw letter, Čierna talks), and the invasion by some quarter of a million Warsaw Pact troops met with unarmed resistance, argument and protest rather than battle. Specific details from the photograph — the white invasion stripes, the tanks swallowed by an unarmed crowd, the man on the hull arguing with the crew — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
@@ -503,9 +523,14 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken at the Brandenburg Gate, Berlin, on the night of 9–10 November 1989.',
-        body: 'The photograph shows the top of the Berlin Wall crowded with people standing, sitting and dancing along its whole visible length, silhouetted against floodlights. Below, on both sides, vast crowds press to the wall; several young people are being pulled up by outstretched hands, and one man swings a hammer against the concrete while others cheer. Sparkling wine sprays across the frame; a hand-painted banner hung on the wall reads, in German, “The wall is gone — Germany is one”.',
-        note: 'Note: the East German government announced the opening of its borders on the evening of 9 November 1989; the crossings were overwhelmed by crowds within hours.',
+          'Source 1: A photograph taken at the Berlin Wall beside the Brandenburg Gate, November 1989.',
+        image: {
+          src: 'sources/wall-brandenburg-1989.jpg',
+          alt: 'Crowds stand on top of the graffiti-covered Berlin Wall at the Brandenburg Gate in November 1989; a man is helped up past a defaced border sign',
+          credit: 'Sue Ream / CC BY 3.0, via Wikimedia Commons',
+        },
+        body: 'The photograph shows the broad top of the Berlin Wall at the Brandenburg Gate packed shoulder to shoulder with people; one man is being hauled up the graffiti-covered concrete by the hands of those above. In the foreground, more crowds and a television crew surround the official border sign — “Achtung! Sie verlassen jetzt West-Berlin” (“Attention! You are now leaving West Berlin”) — across which someone has sprayed the words “Wie denn?”.',
+        note: 'Note: the sprayed words mean “How, then?” — the joke being that with the Wall open and overrun, “leaving West Berlin” no longer meant anything. The East German government had announced the opening of its borders on the evening of 9 November 1989.',
       },
       {
         n: 2,
@@ -536,13 +561,13 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         key: [
           {
             rows: [
-              { descriptor: 'Correctly identifies the message of the source (e.g. that the division of Berlin, Germany and Europe is over — the people themselves have overwhelmed and are dismantling the Cold War’s central symbol in joy, not war)', marks: '1' },
+              { descriptor: 'Correctly identifies the message of the source (e.g. that the division of Berlin and of Europe is over — the people themselves have taken possession of the Cold War’s central symbol, in joy rather than war)', marks: '1' },
             ],
             subtotal: 1,
           },
           {
             rows: [
-              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the crowds standing on the very structure that had been a death-strip, easterners pulled up by western hands as reunification in miniature, the hammer already breaking the concrete, the celebration — wine, dancing, floodlights — and the banner announcing Germany is one)', marks: '3' },
+              { descriptor: 'Explains how the source conveys the message by providing detailed, accurate and relevant evidence from the source (e.g. the crowds standing on the very structure people had been shot for approaching, strangers hauling one another up as the division dissolving in miniature, the graffiti covering the “anti-fascist protection rampart”, the defaced border sign — “you are now leaving West Berlin… how, then?” — turning the state’s language into a joke, the world’s cameras watching)', marks: '3' },
               { descriptor: 'Explains how the source conveys the message with some accurate and relevant evidence from the source', marks: '2' },
               { descriptor: 'Outlines a feature of the source connected to the message', marks: '1' },
             ],
@@ -550,7 +575,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the photograph’s elements — the occupation of the wall itself, the joined hands across it, the hammer, the festival atmosphere where a year earlier searchlights and orders to shoot had ruled, the banner’s explicit text — and connect each to the message that the people have ended the division of Europe peacefully. Full marks require specific reference to elements of the source.',
+          'The message should be stated as a claim. “Explain” requires the how: candidates should decode the photograph’s elements — the occupation of the wall itself, the joined hands hauling people up, the festival atmosphere where searchlights and orders to shoot had ruled a week earlier, and the defaced official sign whose warning had become absurd overnight — and connect each to the message that the people have ended the division of Europe peacefully. Full marks require specific reference to elements of the source.',
       },
       {
         letter: 'b',
@@ -623,9 +648,14 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
         n: 1,
         kind: 'visual',
         attribution:
-          'Source 1: A press photograph taken in Sarajevo, 1993.',
-        body: 'The photograph shows a wide city boulevard lined with modern apartment towers, their upper floors blackened and holed by shellfire. Across the empty roadway, a hand-painted sign leans against a wrecked car: “PAZI — SNAJPER!” (“Beware — sniper!”). In the foreground a woman in a winter coat, carrying two plastic water canisters, runs low across the open ground; behind her a man pushing a bicycle loaded with firewood waits at the corner for his turn to cross.',
-        note: 'Note: Sarajevo, capital of Bosnia-Herzegovina, was besieged by Bosnian Serb forces from 1992 to 1996 — the longest siege of a capital in modern history; its main boulevard became known as “Sniper Alley”.',
+          'Source 1: A photograph taken on Marshal Tito Street during the siege of Sarajevo, winter 1992–93.',
+        image: {
+          src: 'sources/sarajevo-sniper-junction.jpg',
+          alt: 'Pedestrians hurry across a snowy Sarajevo junction during the siege; stacked shipping containers screen the crossing from snipers',
+          credit: 'Christian Maréchal / CC BY 3.0, via Wikimedia Commons',
+        },
+        body: 'The photograph shows a snowy junction on the city’s main street. Pedestrians in winter coats hurry across the open roadway, spread out and moving fast; a single car crosses at speed. At the left edge of the frame, shipping containers have been stacked across the street’s mouth to screen the crossing from rifle fire; a road sign still points the way to Tuzla and Vogošća.',
+        note: 'Note: Sarajevo, capital of Bosnia-Herzegovina, was besieged by Bosnian Serb forces from 1992 to 1996 — the longest siege of a capital in modern history. Containers and wrecked vehicles were stacked at intersections as sniper screens; people were still shot crossing the gaps.',
       },
       {
         n: 2,
@@ -664,7 +694,7 @@ export const EUR_SOURCE_SETS: SourceSet[] = [
           },
         ],
         notes:
-          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the wars of Yugoslav succession — Slovenia and Croatia’s secession in 1991, Bosnia’s descent into war in 1992, and the siege of Sarajevo in which civilians crossed sniper-covered streets for water and fuel while Europe debated. Specific details from the photograph — the shell-damaged towers, the warning sign, the woman running with water canisters — should be connected to those circumstances. Not all points are required for full marks.',
+          '“Outline” means candidates provide the characteristics or features but not the reasons why. Context: the wars of Yugoslav succession — Slovenia and Croatia’s secession in 1991, Bosnia’s descent into war in 1992, and the siege of Sarajevo in which civilians crossed sniper-covered streets for water and fuel while Europe debated. Specific details from the photograph — the container barricades against snipers, the pedestrians hurrying dispersed across the open junction, ordinary errands run at mortal risk — should be connected to those circumstances. Not all points are required for full marks.',
       },
       {
         letter: 'b',
