@@ -43,15 +43,16 @@ or past attempt to mark it section by section with the clickable marking keys.
 The question bank was authored following the two construction manuals (source analysis
 and essay) and lives in `src/data/`:
 
-- `sourceSets1–18.ts` — 72 Nazism source-analysis sets with marking keys, each with
-  1–2 real historical images (Wikimedia Commons, credited)
+- `sourceSets1–18.ts` — 72 Nazism source-analysis sets with marking keys
 - `essays1–4.ts` — 85 Nazism essay questions (frames E1–E10) with markers' notes
-- `capSourceSets.ts` / `capEssays.ts` — Capitalism starter bank (6 sets, 17 essays)
-- `rusSourceSets.ts` / `rusEssays.ts` — Russia & USSR starter bank (6 sets, 17 essays)
-- `eurSourceSets.ts` / `eurEssays.ts` — Changing European world starter bank (6 sets, 16 essays)
+- `capSourceSets*.ts` / `capEssays*.ts` — Capitalism bank (20 sets, 44 essays)
+- `rusSourceSets*.ts` / `rusEssays*.ts` — Russia & USSR bank (17 sets, 39 essays)
+- `eurSourceSets*.ts` / `eurEssays*.ts` — Changing European world bank (15 sets, 39 essays)
 - `units.ts` — the four electives and their syllabus checklists
 
-Newer units' visual sources are presented as descriptions until image files are added.
+Every source set in every unit carries 1–2 real historical images (photographs,
+political cartoons and posters from Wikimedia Commons and public archives, credited),
+and the validator enforces this.
 
 `src/lib/generator.ts` assembles each section per student: only topics they've ticked,
 a source set they haven't seen, and essay trios with three distinct frames, at most one
