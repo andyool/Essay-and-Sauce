@@ -1,12 +1,12 @@
 // Core data model for the question bank and student attempts.
 
-export type SyllabusPointId =
-  | 'p1' | 'p2' | 'p3' | 'p4' | 'p5' | 'p6'
-  // The "significant individuals" dot point, split so each person is
-  // individually tickable. ('p7' appears in older saved data and is migrated
-  // to the full set of individuals on load.)
-  | 'i-hitler' | 'i-stresemann' | 'i-hindenburg' | 'i-riefenstahl' | 'i-krupp'
-  | 'i-goebbels' | 'i-goering' | 'i-himmler' | 'i-heydrich' | 'i-speer';
+/** The four electives the app covers, one per semester of study. */
+export type UnitId = 'capitalism' | 'nazism' | 'russia' | 'europe';
+
+/** Syllabus dot-point ids are namespaced per unit: the original Nazism points
+ *  keep their unprefixed ids ('p1'…'p6', 'i-hitler'…), newer units prefix
+ *  theirs ('cap-p1', 'rus-p3', 'cap-i-ford', …). */
+export type SyllabusPointId = string;
 
 export interface SyllabusPoint {
   id: SyllabusPointId;
@@ -89,10 +89,32 @@ export interface Answers {
   c: string;
 }
 
+/** One section of a paper. A paper is any combination of source-analysis and
+ *  essay sections, possibly drawn from different units. */
+export interface SourceSection {
+  kind: 'source';
+  unit: UnitId;
+  sourceSetId: string;
+  answers: Answers;
+}
+
+export interface EssaySection {
+  kind: 'essay';
+  unit: UnitId;
+  essayIds: string[];
+  essayChoice: number | null; // index into essayIds
+  essayText: string;
+}
+
+export type AttemptSection = SourceSection | EssaySection;
+
 export type AttemptStatus = 'in-progress' | 'submitted';
 
-/** Keys into the four markable parts of an attempt. */
-export type FeedbackPart = 'a' | 'b' | 'c' | 'essay';
+/** Key into one markable part of an attempt: 's{section}{part}', e.g. 's1a'
+ *  is question (a) of the first section, 's3e' the essay of the third.
+ *  Feedback saved before papers had sections used bare keys ('a', 'b', 'c',
+ *  'essay'); upgradeAttempt() rewrites those on load. */
+export type FeedbackPart = string;
 
 /** Teacher marking for a submitted attempt. Hidden from the student until
  *  returnedAt is set. */
@@ -127,8 +149,9 @@ export interface ExamTiming {
   mode: TimerMode;
   /** Total working time allowed, in minutes (0 when the mode is 'off'). */
   totalMinutes: number;
-  /** Suggested minutes for Section One; the rest is for Section Two. */
-  sectionOneMinutes: number;
+  /** Legacy: suggested minutes for Section One of a two-section paper.
+   *  Suggested section times are now computed from the paper's marks. */
+  sectionOneMinutes?: number;
   /** When the student first started the clock; null until they do. */
   startedAt: number | null;
   /** Working time banked from earlier runs, in ms. */
@@ -154,17 +177,24 @@ export interface Attempt {
   submittedAt: number | null;
   status: AttemptStatus;
   syllabusPoints: SyllabusPointId[];
-  sourceSetId: string;
-  essayIds: string[];
-  answers: Answers;
-  essayChoice: number | null; // index into essayIds
-  essayText: string;
-  page: 1 | 2;
+  /** The paper, section by section. Attempts made before papers had sections
+   *  stored the two fixed sections in the legacy fields below; upgradeAttempt()
+   *  (lib/paper.ts) rebuilds them into this form on load. */
+  sections: AttemptSection[];
+  /** The section of the paper currently open, 1-based. */
+  page: number;
   /** The clock for this attempt. Absent on attempts made before timing
    *  existed, which are treated as untimed. */
   timing?: ExamTiming;
   /** Present once the teacher has started marking this attempt. */
   feedback?: TeacherFeedback;
+
+  // ---- legacy single-elective paper fields (pre-units attempts) ----
+  sourceSetId?: string;
+  essayIds?: string[];
+  answers?: Answers;
+  essayChoice?: number | null;
+  essayText?: string;
 }
 
 export interface StudentProfile {
@@ -172,6 +202,9 @@ export interface StudentProfile {
   name: string;
   classId: string;
   classCode: string;
+  /** Year level of the class joined (11 or 12). Profiles created before year
+   *  levels existed lack this; treat as 11. */
+  yearLevel?: 11 | 12;
   /** Stable identity: class + normalised name. Lets a student reconnect to
    *  their work after signing out or switching devices. */
   studentKey: string;
@@ -197,5 +230,8 @@ export interface ClassInfo {
   id: string;
   name: string;
   code: string;
+  /** 11 or 12 — decides which two units the class's papers draw on. Classes
+   *  created before year levels existed lack this; treat as 11. */
+  yearLevel?: 11 | 12;
   createdAt: number;
 }

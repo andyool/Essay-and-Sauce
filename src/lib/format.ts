@@ -1,5 +1,3 @@
-import type { TeacherFeedback } from '../data/types';
-
 export function fmtDate(ts: number): string {
   return new Date(ts).toLocaleString(undefined, {
     day: 'numeric',
@@ -60,18 +58,6 @@ export function wordZone(words: number, [lo, hi]: [number, number]): 'low' | 'go
   if (words < lo) return 'low';
   if (words <= hi * 1.25) return 'good';
   return 'high';
-}
-
-/** Sum of the marks entered so far (unmarked parts count as 0). */
-export function feedbackTotal(f: TeacherFeedback): number {
-  return (f.marks.a ?? 0) + (f.marks.b ?? 0) + (f.marks.c ?? 0) + (f.marks.essay ?? 0);
-}
-
-/** True once every part (a, b, c and the essay) has a mark. */
-export function feedbackComplete(f: TeacherFeedback): boolean {
-  return (
-    f.marks.a !== null && f.marks.b !== null && f.marks.c !== null && f.marks.essay !== null
-  );
 }
 
 export function newId(): string {

@@ -29,7 +29,10 @@ export interface Store {
   teacherSignOut(): Promise<void>;
   isTeacherSignedIn(): boolean;
   listClasses(): Promise<ClassInfo[]>;
-  createClass(name: string): Promise<ClassInfo>;
+  createClass(name: string, yearLevel: 11 | 12): Promise<ClassInfo>;
+  /** Look up one class (students may call this for their own class, to learn
+   *  its year level). Null when the class no longer exists. */
+  getClassInfo(classId: string): Promise<ClassInfo | null>;
   /** Live class roster: fires straight away, then again whenever a student
    *  joins a class or rejoins on another device. */
   subscribeStudents(cb: (students: StudentProfile[]) => void): Unsubscribe;

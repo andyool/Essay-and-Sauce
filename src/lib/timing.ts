@@ -17,17 +17,30 @@ export const HEARTBEAT_MS = 30_000;
 export const CRASH_GRACE_MS = 60_000;
 
 /** Working-time options, in minutes. */
-export const DURATION_MINUTES = [60, 90, 120, 150, 180] as const;
+export const DURATION_MINUTES = [45, 60, 90, 120, 150, 180] as const;
 
 /** Half a three-hour paper, for a paper of half the length. */
 export const DEFAULT_DURATION = 90;
 
-const SECTION_ONE_MARKS = 20;
-const PAPER_MARKS = 50;
+/** The real papers allow roughly 1.8 minutes per mark (a 50-mark half-paper
+ *  gets 90 minutes). Suggest the closest offered duration for this paper. */
+export function suggestedDuration(paperMarks: number): number {
+  const ideal = paperMarks * 1.8;
+  let best: number = DURATION_MINUTES[0];
+  for (const m of DURATION_MINUTES) {
+    if (Math.abs(m - ideal) < Math.abs(best - ideal)) best = m;
+  }
+  return best;
+}
 
-/** Time for Section One, pro rata on marks and rounded to five minutes. */
-export function suggestedSectionOne(totalMinutes: number): number {
-  return Math.round((totalMinutes * SECTION_ONE_MARKS) / PAPER_MARKS / 5) * 5;
+/** Split the working time across the paper's sections, pro rata on marks and
+ *  rounded to five minutes (the last section absorbs the rounding). */
+export function splitMinutes(sectionMarks: number[], totalMinutes: number): number[] {
+  const total = sectionMarks.reduce((a, b) => a + b, 0);
+  if (total === 0 || sectionMarks.length === 0) return sectionMarks.map(() => 0);
+  const out = sectionMarks.map((m) => Math.round((totalMinutes * m) / total / 5) * 5);
+  out[out.length - 1] += totalMinutes - out.reduce((a, b) => a + b, 0);
+  return out;
 }
 
 export function newTiming(mode: TimerMode, totalMinutes: number): ExamTiming {
@@ -35,7 +48,6 @@ export function newTiming(mode: TimerMode, totalMinutes: number): ExamTiming {
   return {
     mode,
     totalMinutes: total,
-    sectionOneMinutes: mode === 'off' ? 0 : suggestedSectionOne(total),
     startedAt: null,
     elapsedMs: 0,
     runningSince: null,

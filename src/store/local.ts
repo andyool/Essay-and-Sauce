@@ -1,5 +1,6 @@
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
 import { hashPin, makeStudentKey } from '../lib/format';
+import { upgradeAttempt } from '../lib/paper';
 import type { Store, Unsubscribe } from './types';
 
 // LocalStore: single-browser fallback used until Firebase is configured.
@@ -25,7 +26,9 @@ function write(key: string, value: unknown) {
 }
 
 function readAttempts(): Record<string, Attempt> {
-  return read<Record<string, Attempt>>(KEY_ATTEMPTS, {});
+  const all = read<Record<string, Attempt>>(KEY_ATTEMPTS, {});
+  for (const id of Object.keys(all)) all[id] = upgradeAttempt(all[id]);
+  return all;
 }
 
 export class LocalStore implements Store {
@@ -41,7 +44,7 @@ export class LocalStore implements Store {
     const classes = read<ClassInfo[]>(KEY_CLASSES, []);
     let cls = classes.find((c) => c.code === code);
     if (!cls) {
-      cls = { id: 'local-' + code, name: 'Class ' + code, code, createdAt: Date.now() };
+      cls = { id: 'local-' + code, name: 'Class ' + code, code, yearLevel: 11, createdAt: Date.now() };
       classes.push(cls);
       write(KEY_CLASSES, classes);
     }
@@ -64,6 +67,7 @@ export class LocalStore implements Store {
       name: name.trim(),
       classId: cls.id,
       classCode: code,
+      yearLevel: cls.yearLevel ?? 11,
       studentKey,
       pinHash,
       createdAt: existing?.createdAt ?? Date.now(),
@@ -133,13 +137,17 @@ export class LocalStore implements Store {
     return read<ClassInfo[]>(KEY_CLASSES, []);
   }
 
-  async createClass(name: string): Promise<ClassInfo> {
+  async createClass(name: string, yearLevel: 11 | 12): Promise<ClassInfo> {
     const classes = read<ClassInfo[]>(KEY_CLASSES, []);
     const code = Math.random().toString(36).slice(2, 7).toUpperCase();
-    const cls: ClassInfo = { id: 'local-' + code, name, code, createdAt: Date.now() };
+    const cls: ClassInfo = { id: 'local-' + code, name, code, yearLevel, createdAt: Date.now() };
     classes.push(cls);
     write(KEY_CLASSES, classes);
     return cls;
+  }
+
+  async getClassInfo(classId: string): Promise<ClassInfo | null> {
+    return read<ClassInfo[]>(KEY_CLASSES, []).find((c) => c.id === classId) ?? null;
   }
 
   // Only this browser's student exists in local mode, but polling still shows

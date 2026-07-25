@@ -4,8 +4,10 @@
 // that each award a number of marks. Marking is therefore just picking rows:
 // the mark for the question is the sum of what has been picked.
 
+import { getSourceSet } from '../data/bank';
 import { ESSAY_RUBRIC } from '../data/rubric';
-import type { FeedbackPart, KeySection, SourceSet } from '../data/types';
+import type { AttemptSection, KeySection } from '../data/types';
+import type { PartLetter } from './paper';
 
 /** The marks a row can award: '3' → [3]; '7–8' → [7, 8]. */
 export function rowMarks(marks: string): number[] {
@@ -45,9 +47,10 @@ export const ESSAY_SECTIONS: KeySection[] = ESSAY_RUBRIC.map((c) => ({
 }));
 
 /** The sections the teacher clicks through to mark one part of the paper. */
-export function sectionsFor(part: FeedbackPart, set: SourceSet): KeySection[] {
-  if (part === 'essay') return ESSAY_SECTIONS;
-  return set.questions.find((q) => q.letter === part)!.key;
+export function keySectionsFor(section: AttemptSection, letter: PartLetter): KeySection[] {
+  if (letter === 'essay' || section.kind !== 'source') return ESSAY_SECTIONS;
+  const set = getSourceSet(section.sourceSetId);
+  return set?.questions.find((q) => q.letter === letter)?.key ?? [];
 }
 
 // Rows are numbered straight through a key, section after section, so one flat

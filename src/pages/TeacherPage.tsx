@@ -1,9 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { ConfirmDialog } from '../components/Feedback';
-import { getSourceSet } from '../data/bank';
+import { getUnit } from '../data/units';
 import type { Attempt, ClassInfo, StudentProfile } from '../data/types';
-import { feedbackComplete, feedbackTotal, fmtDate, timeAgo, wordCount } from '../lib/format';
+import { fmtDate, timeAgo, wordCount } from '../lib/format';
+import {
+  attemptWords,
+  feedbackComplete,
+  feedbackTotal,
+  paperLabel,
+  paperMarks,
+  sectionTitle,
+} from '../lib/paper';
 import { elapsed, modeLabel, remaining, timingBrief } from '../lib/timing';
 import { getStore } from '../store';
 import { TEACHER_EMAILS } from '../store/firebaseConfig';
@@ -13,12 +21,25 @@ type Tab = 'live' | 'students' | 'attempts' | 'classes';
 /** A student profile row joined a class less than this ago counts as new. */
 const JUST_JOINED_MS = 10 * 60 * 1000;
 
+/** The most recent writing: the open section's text first, then anything. */
 function latestSnippet(a: Attempt): string {
-  if (a.page === 2 && a.essayText.trim()) return a.essayText.trim().slice(-320);
-  for (const letter of ['c', 'b', 'a'] as const) {
-    if (a.answers[letter].trim()) return a.answers[letter].trim().slice(-320);
+  const texts: string[] = [];
+  for (const s of a.sections) {
+    if (s.kind === 'source') {
+      for (const letter of ['c', 'b', 'a'] as const) texts.push(s.answers[letter]);
+    } else {
+      texts.push(s.essayText);
+    }
   }
-  if (a.essayText.trim()) return a.essayText.trim().slice(-320);
+  const current = a.sections[Math.min(Math.max(a.page, 1), a.sections.length) - 1];
+  if (current) {
+    const own =
+      current.kind === 'essay'
+        ? [current.essayText]
+        : [current.answers.c, current.answers.b, current.answers.a];
+    texts.unshift(...own);
+  }
+  for (const t of texts) if (t.trim()) return t.trim().slice(-320);
   return '';
 }
 
@@ -29,16 +50,10 @@ function identityOf(x: { studentKey?: string; studentUid?: string; uid?: string 
   return x.studentKey ?? x.studentUid ?? x.uid ?? '?';
 }
 
-function attemptWords(a: Attempt): number {
-  return (
-    wordCount(a.answers.a) + wordCount(a.answers.b) + wordCount(a.answers.c) + wordCount(a.essayText)
-  );
-}
-
 function markLabel(a: Attempt): string {
   if (a.feedback?.returnedAt) {
-    return feedbackComplete(a.feedback)
-      ? feedbackTotal(a.feedback) + '/50'
+    return feedbackComplete(a.feedback, a.sections)
+      ? feedbackTotal(a.feedback) + '/' + paperMarks(a.sections)
       : feedbackTotal(a.feedback) + ' (partial)';
   }
   if (a.feedback) return 'Draft';
@@ -55,24 +70,29 @@ function attemptsCsv(rows: Attempt[]): string {
   const lines = [
     [
       'Student', 'Class', 'Paper', 'Status', 'Started', 'Submitted',
-      'Words (a)', 'Words (b)', 'Words (c)', 'Words (essay)', 'Words total',
+      'Words (sources)', 'Words (essays)', 'Words total',
       'Minutes worked', 'Mark',
     ].join(','),
   ];
   for (const a of rows) {
-    const wa = wordCount(a.answers.a);
-    const wb = wordCount(a.answers.b);
-    const wc = wordCount(a.answers.c);
-    const we = wordCount(a.essayText);
+    let sourceWords = 0;
+    let essayWords = 0;
+    for (const s of a.sections) {
+      if (s.kind === 'source') {
+        sourceWords += wordCount(s.answers.a) + wordCount(s.answers.b) + wordCount(s.answers.c);
+      } else {
+        essayWords += wordCount(s.essayText);
+      }
+    }
     lines.push(
       [
         esc(a.studentName),
         esc(a.classCode),
-        esc(getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId),
+        esc(paperLabel(a.sections)),
         a.status,
         esc(fmtDate(a.createdAt)),
         esc(a.submittedAt ? fmtDate(a.submittedAt) : ''),
-        wa, wb, wc, we, wa + wb + wc + we,
+        sourceWords, essayWords, sourceWords + essayWords,
         a.timing ? Math.round(elapsed(a.timing) / 60000) : '',
         esc(markLabel(a)),
       ].join(','),
@@ -122,14 +142,14 @@ function AttemptsTable({
           <tr key={a.id}>
             {showStudent && <td>{a.studentName}</td>}
             {showStudent && <td>{a.classCode}</td>}
-            <td>{getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId}</td>
+            <td>{paperLabel(a.sections)}</td>
             <td>
               <span className={'badge ' + (a.status === 'submitted' ? 'submitted' : 'progress')}>
                 {a.status === 'submitted' ? 'Submitted' : 'In progress'}
               </span>
             </td>
             <td>{fmtDate(a.createdAt)}</td>
-            <td>{attemptWords(a)}</td>
+            <td>{attemptWords(a.sections)}</td>
             <td style={{ whiteSpace: 'nowrap' }}>{a.timing ? timingBrief(a.timing, a.status) : '—'}</td>
             <td style={{ whiteSpace: 'nowrap' }}>{markLabel(a)}</td>
             <td style={{ whiteSpace: 'nowrap' }}>
@@ -257,13 +277,19 @@ function StudentDetail({
   const submitted = attempts.filter((a) => a.status === 'submitted').length;
   const inProgress = attempts.length - submitted;
   const returned = attempts.filter(
-    (a) => a.feedback?.returnedAt && feedbackComplete(a.feedback),
+    (a) => a.feedback?.returnedAt && feedbackComplete(a.feedback, a.sections),
   );
+  // Papers can be different lengths, so the average is a percentage.
   const average =
     returned.length > 0
       ? Math.round(
-          (returned.reduce((sum, a) => sum + feedbackTotal(a.feedback!), 0) / returned.length) * 10,
-        ) / 10
+          (returned.reduce(
+            (sum, a) => sum + feedbackTotal(a.feedback!) / Math.max(1, paperMarks(a.sections)),
+            0,
+          ) /
+            returned.length) *
+            100,
+        )
       : null;
 
   return (
@@ -306,7 +332,7 @@ function StudentDetail({
           )}
           {average !== null && (
             <div className="chip">
-              <b>{average}/50</b>
+              <b>{average}%</b>
               <span>average mark</span>
             </div>
           )}
@@ -338,6 +364,7 @@ export function TeacherPage() {
   const [classFilter, setClassFilter] = useState('all');
   const [search, setSearch] = useState('');
   const [newClassName, setNewClassName] = useState('');
+  const [newClassYear, setNewClassYear] = useState<11 | 12>(11);
   /** Identity of the student whose history is open on the Students tab. */
   const [openStudent, setOpenStudent] = useState<string | null>(null);
   /** Identity of the student the remove dialog is asking about. */
@@ -500,7 +527,7 @@ export function TeacherPage() {
   async function createClass(e: React.FormEvent) {
     e.preventDefault();
     if (!newClassName.trim()) return;
-    await store.createClass(newClassName.trim());
+    await store.createClass(newClassName.trim(), newClassYear);
     setNewClassName('');
     void refresh();
   }
@@ -622,7 +649,7 @@ export function TeacherPage() {
           <div className="brand">
             <Link to="/teacher">Essay &amp; Sauce</Link>
           </div>
-          <div className="sub">Teacher dashboard — Nazism in Germany</div>
+          <div className="sub">Teacher dashboard — ATAR Modern History</div>
         </div>
         <div className="who">
           {store.mode === 'cloud' ? 'Signed in as teacher' : 'Local mode'}
@@ -660,12 +687,10 @@ export function TeacherPage() {
           ) : (
             <div className="live-grid">
               {active.map((a) => {
-                const words =
-                  wordCount(a.answers.a) +
-                  wordCount(a.answers.b) +
-                  wordCount(a.answers.c) +
-                  wordCount(a.essayText);
+                const words = attemptWords(a.sections);
                 const snippet = latestSnippet(a);
+                const current =
+                  a.sections[Math.min(Math.max(a.page, 1), a.sections.length) - 1];
                 const recentlyTyping = Date.now() - a.updatedAt < 30000;
                 const timing = a.timing;
                 const outOfTime = !!timing && timing.mode !== 'off' && remaining(timing) <= 0;
@@ -684,8 +709,11 @@ export function TeacherPage() {
                       </div>
                       <div className="meta">
                         Class {a.classCode} ·{' '}
-                        {a.page === 1 ? 'Source Analysis' : 'Essay'} · {words} words · active{' '}
-                        {timeAgo(a.updatedAt)}
+                        {current
+                          ? (current.kind === 'source' ? 'Source Analysis' : 'Essay') +
+                            ' (' + getUnit(current.unit).short + ')'
+                          : ''}{' '}
+                        · {words} words · active {timeAgo(a.updatedAt)}
                       </div>
                       {timing && (
                         <div className={'meta clock-line' + (outOfTime ? ' over' : '')}>
@@ -698,8 +726,7 @@ export function TeacherPage() {
                         <div className="meta">Nothing written yet.</div>
                       )}
                       <div className="meta">
-                        Paper: {getSourceSet(a.sourceSetId)?.title ?? a.sourceSetId} · click to watch
-                        live
+                        Paper: {paperLabel(a.sections)} · click to watch live
                       </div>
                     </div>
                   </Link>
@@ -830,17 +857,31 @@ export function TeacherPage() {
 
       {tab === 'classes' && (
         <>
-          <form onSubmit={createClass} style={{ display: 'flex', gap: 10, marginBottom: 18, maxWidth: 460 }}>
+          <form onSubmit={createClass} style={{ display: 'flex', gap: 10, marginBottom: 8, maxWidth: 620 }}>
             <input
               type="text"
               placeholder="New class name, e.g. Year 12 Modern History"
               value={newClassName}
               onChange={(e) => setNewClassName(e.target.value)}
             />
+            <select
+              className="class-select"
+              value={newClassYear}
+              onChange={(e) => setNewClassYear(Number(e.target.value) === 12 ? 12 : 11)}
+              title="The year level decides which two units the class's papers draw on"
+            >
+              <option value={11}>Year 11</option>
+              <option value={12}>Year 12</option>
+            </select>
             <button className="primary" type="submit">
               Create
             </button>
           </form>
+          <p style={{ margin: '0 0 18px', color: 'var(--ink-soft)', fontSize: 13.5 }}>
+            The year level decides what the class's practice exams draw on — Year 11: Capitalism
+            (Sem 1) and Nazism in Germany (Sem 2); Year 12: Russia &amp; the USSR (Sem 1) and the
+            changing European world (Sem 2).
+          </p>
           {classes.length === 0 ? (
             <div className="empty">
               No classes yet. Create one — students join with the short code it generates.
@@ -850,6 +891,7 @@ export function TeacherPage() {
               <thead>
                 <tr>
                   <th>Class</th>
+                  <th>Year</th>
                   <th>Join code</th>
                   <th>Created</th>
                   <th>Students</th>
@@ -870,6 +912,7 @@ export function TeacherPage() {
                         {c.name}
                       </button>
                     </td>
+                    <td>Year {c.yearLevel ?? 11}</td>
                     <td>
                       <span className="class-code">{c.code}</span>
                     </td>
@@ -944,9 +987,9 @@ export function TeacherPage() {
           body={
             'Their ' +
             (deletingAttempt.status === 'submitted' ? 'submitted' : 'in-progress') +
-            ' paper “' +
-            (getSourceSet(deletingAttempt.sourceSetId)?.title ?? deletingAttempt.sourceSetId) +
-            '” will be permanently removed, including all their answers. This cannot be undone.'
+            ' paper (' +
+            paperLabel(deletingAttempt.sections) +
+            ') will be permanently removed, including all their answers. This cannot be undone.'
           }
           actionLabel="Delete exam"
           danger

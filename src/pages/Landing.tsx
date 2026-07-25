@@ -49,7 +49,7 @@ export function Landing() {
     <div className="page narrow">
       <div className="hero">
         <div className="brand">Essay &amp; Sauce</div>
-        <div className="tag">ATAR Modern History practice — Nazism in Germany</div>
+        <div className="tag">ATAR Modern History practice — Years 11 &amp; 12</div>
       </div>
       <form className="join-card" onSubmit={join}>
         <h3>Student sign-in</h3>

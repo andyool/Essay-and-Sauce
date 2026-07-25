@@ -24,6 +24,7 @@ import {
 } from 'firebase/firestore';
 import type { Attempt, ClassInfo, Identity, StudentProfile } from '../data/types';
 import { hashPin, makeStudentKey } from '../lib/format';
+import { upgradeAttempt } from '../lib/paper';
 import { TEACHER_EMAILS } from './firebaseConfig';
 import type { Store, Unsubscribe } from './types';
 
@@ -140,6 +141,7 @@ export class CloudStore implements Store {
       name: name.trim(),
       classId: clsDoc.id,
       classCode: code,
+      yearLevel: (clsDoc.data() as ClassInfo).yearLevel ?? 11,
       studentKey,
       pinHash,
       createdAt: fresh.exists() ? (fresh.data() as StudentProfile).createdAt : Date.now(),
@@ -190,14 +192,14 @@ export class CloudStore implements Store {
     const uidSnap = await getDocs(
       query(collection(this.db, 'attempts'), where('studentUid', '==', student.uid)),
     );
-    for (const d of uidSnap.docs) byId.set(d.id, d.data() as Attempt);
+    for (const d of uidSnap.docs) byId.set(d.id, upgradeAttempt(d.data() as Attempt));
     // Work from earlier sessions/devices, found via the stable identity. This
     // query needs the updated security rules; tolerate denial until then.
     try {
       const keySnap = await getDocs(
         query(collection(this.db, 'attempts'), where('studentKey', '==', student.studentKey)),
       );
-      for (const d of keySnap.docs) byId.set(d.id, d.data() as Attempt);
+      for (const d of keySnap.docs) byId.set(d.id, upgradeAttempt(d.data() as Attempt));
     } catch {
       /* rules not updated yet — same-session attempts still listed above */
     }
@@ -207,7 +209,7 @@ export class CloudStore implements Store {
   async getAttempt(id: string): Promise<Attempt | null> {
     await this.initialAuth;
     const snap = await getDoc(doc(this.db, 'attempts', id));
-    return snap.exists() ? (snap.data() as Attempt) : null;
+    return snap.exists() ? upgradeAttempt(snap.data() as Attempt) : null;
   }
 
   async createAttempt(attempt: Attempt): Promise<void> {
@@ -235,7 +237,7 @@ export class CloudStore implements Store {
     void this.initialAuth.then(() => {
       if (cancelled) return;
       inner = onSnapshot(doc(this.db, 'attempts', id), (snap) => {
-        cb(snap.exists() ? (snap.data() as Attempt) : null);
+        cb(snap.exists() ? upgradeAttempt(snap.data() as Attempt) : null);
       });
     });
     return () => {
@@ -296,13 +298,23 @@ export class CloudStore implements Store {
       .sort((a, b) => a.createdAt - b.createdAt);
   }
 
-  async createClass(name: string): Promise<ClassInfo> {
+  async createClass(name: string, yearLevel: 11 | 12): Promise<ClassInfo> {
     await this.initialAuth;
     const code = Math.random().toString(36).replace(/[^a-z0-9]/g, '').slice(0, 5).toUpperCase();
     const id = 'class-' + code;
-    const cls: ClassInfo = { id, name, code, createdAt: Date.now() };
+    const cls: ClassInfo = { id, name, code, yearLevel, createdAt: Date.now() };
     await setDoc(doc(this.db, 'classes', id), cls);
     return cls;
+  }
+
+  async getClassInfo(classId: string): Promise<ClassInfo | null> {
+    await this.initialAuth;
+    try {
+      const snap = await getDoc(doc(this.db, 'classes', classId));
+      return snap.exists() ? { ...(snap.data() as ClassInfo), id: snap.id } : null;
+    } catch {
+      return null;
+    }
   }
 
   subscribeStudents(cb: (students: StudentProfile[]) => void): Unsubscribe {
@@ -345,7 +357,9 @@ export class CloudStore implements Store {
   async listAllAttempts(): Promise<Attempt[]> {
     await this.initialAuth;
     const snap = await getDocs(collection(this.db, 'attempts'));
-    return snap.docs.map((d) => d.data() as Attempt).sort((a, b) => b.createdAt - a.createdAt);
+    return snap.docs
+      .map((d) => upgradeAttempt(d.data() as Attempt))
+      .sort((a, b) => b.createdAt - a.createdAt);
   }
 
   subscribeActiveAttempts(cb: (attempts: Attempt[]) => void): Unsubscribe {
@@ -355,7 +369,11 @@ export class CloudStore implements Store {
       if (cancelled) return;
       const q = query(collection(this.db, 'attempts'), where('status', '==', 'in-progress'));
       inner = onSnapshot(q, (snap) => {
-        cb(snap.docs.map((d) => d.data() as Attempt).sort((a, b) => b.updatedAt - a.updatedAt));
+        cb(
+          snap.docs
+            .map((d) => upgradeAttempt(d.data() as Attempt))
+            .sort((a, b) => b.updatedAt - a.updatedAt),
+        );
       });
     });
     return () => {

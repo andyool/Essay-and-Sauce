@@ -3,8 +3,17 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { EssayRubric, SAQuestionText, SourceCard } from '../components/ExamParts';
 import { ConfirmDialog, Loading } from '../components/Feedback';
 import { getEssay, getSourceSet } from '../data/bank';
-import type { Answers, Attempt, ExamTiming } from '../data/types';
+import { getUnit } from '../data/units';
+import type {
+  Answers,
+  Attempt,
+  AttemptSection,
+  EssaySection,
+  ExamTiming,
+  SourceSection,
+} from '../data/types';
 import { wordCount, wordTarget, wordZone } from '../lib/format';
+import { attemptWords, sectionMarks, sectionTab, sectionTitle } from '../lib/paper';
 import {
   HEARTBEAT_MS,
   clock,
@@ -16,6 +25,7 @@ import {
   remaining,
   reopenTiming,
   shortDuration,
+  splitMinutes,
   startTiming,
   stopTiming,
 } from '../lib/timing';
@@ -72,17 +82,19 @@ function TimerChip({ timing, now }: { timing: ExamTiming; now: number }) {
  *  first start, after a pause, and when picking the exam back up later. */
 function ClockGate({
   timing,
+  sections,
   onStart,
   onExit,
 }: {
   timing: ExamTiming;
+  sections: AttemptSection[];
   onStart: () => void;
   onExit: () => void;
 }) {
   const first = timing.startedAt === null;
   const left = remaining(timing);
   const over = left <= 0;
-  const sectionTwo = timing.totalMinutes - timing.sectionOneMinutes;
+  const mins = splitMinutes(sections.map(sectionMarks), timing.totalMinutes);
   return (
     <div className="page narrow">
       <div className="clock-gate">
@@ -100,16 +112,16 @@ function ClockGate({
         </div>
         <p className="blurb">{modeBlurb(timing.mode)}</p>
         <div className="split">
-          <div>
-            <strong>Section One</strong>
-            <span>Source analysis · 20 marks</span>
-            <span>suggested {timing.sectionOneMinutes} min</span>
-          </div>
-          <div>
-            <strong>Section Two</strong>
-            <span>Essay · 30 marks</span>
-            <span>suggested {sectionTwo} min</span>
-          </div>
+          {sections.map((s, i) => (
+            <div key={i}>
+              <strong>Section {i + 1}</strong>
+              <span>
+                {(s.kind === 'source' ? 'Source analysis' : 'Essay') +
+                  ' (' + getUnit(s.unit).short + ') · ' + sectionMarks(s) + ' marks'}
+              </span>
+              <span>suggested {mins[i]} min</span>
+            </div>
+          ))}
         </div>
         <p className="blurb">
           The clock only runs while this page is open. If you close it, it stops — but your teacher
@@ -330,9 +342,13 @@ export function ExamPage() {
   }
   if (!attempt) return <Loading text="Loading your exam…" />;
 
-  const sourceSet = getSourceSet(attempt.sourceSetId);
-  const essays = attempt.essayIds.map((eid) => getEssay(eid));
-  if (!sourceSet || essays.some((e) => !e)) {
+  const sections = attempt.sections;
+  const bankOk = sections.every((s) =>
+    s.kind === 'source'
+      ? !!getSourceSet(s.sourceSetId)
+      : s.essayIds.every((eid) => !!getEssay(eid)),
+  );
+  if (sections.length === 0 || !bankOk) {
     return (
       <div className="page narrow">
         <p>This exam references questions that are no longer in the bank.</p>
@@ -341,17 +357,32 @@ export function ExamPage() {
     );
   }
 
+  const pageIndex = Math.min(Math.max(attempt.page, 1), sections.length) - 1;
+  const section = sections[pageIndex];
+
   const timing = attempt.timing ?? null;
   const timed = timing !== null && timing.mode !== 'off';
   const used = timing ? elapsed(timing, now) : 0;
   const left = timing ? remaining(timing, now) : Number.POSITIVE_INFINITY;
   const overtime = timed && left <= 0;
+  const sectionMins = timed ? splitMinutes(sections.map(sectionMarks), timing!.totalMinutes) : [];
+  // The suggested moment to have finished the current section.
+  const cumulativeEndMs =
+    sectionMins.slice(0, pageIndex + 1).reduce((a, b) => a + b, 0) * 60_000;
+  const pastSection = timed && used > cumulativeEndMs;
 
-  const setAnswer = (letter: keyof Answers, value: string) => {
-    queue({ answers: { ...attempt.answers, [letter]: value } });
+  const updateSection = (index: number, next: AttemptSection) => {
+    const list = sections.slice();
+    list[index] = next;
+    queue({ sections: list });
   };
 
-  const setPage = (page: 1 | 2) => {
+  const setAnswer = (index: number, letter: keyof Answers, value: string) => {
+    const s = sections[index] as SourceSection;
+    updateSection(index, { ...s, answers: { ...s.answers, [letter]: value } });
+  };
+
+  const setPage = (page: number) => {
     queue({ page });
     void flush();
     window.scrollTo({ top: 0 });
@@ -384,13 +415,17 @@ export function ExamPage() {
   }
 
   function submit() {
-    const essayWords = wordCount(attempt!.essayText);
-    const saWords =
-      wordCount(attempt!.answers.a) + wordCount(attempt!.answers.b) + wordCount(attempt!.answers.c);
     const warnings: string[] = [];
-    if (attempt!.essayChoice === null) warnings.push('you have not chosen an essay question');
-    if (saWords === 0) warnings.push('your source analysis answers are empty');
-    if (essayWords === 0) warnings.push('your essay is empty');
+    sections.forEach((s, i) => {
+      const name = 'Section ' + (i + 1) + ' (' + getUnit(s.unit).short + ')';
+      if (s.kind === 'source') {
+        const words = wordCount(s.answers.a) + wordCount(s.answers.b) + wordCount(s.answers.c);
+        if (words === 0) warnings.push(name + ': your source analysis answers are empty');
+      } else {
+        if (s.essayChoice === null) warnings.push(name + ': you have not chosen an essay question');
+        if (wordCount(s.essayText) === 0) warnings.push(name + ': your essay is empty');
+      }
+    });
     setConfirmSubmit(
       warnings.length > 0
         ? 'Heads up: ' + warnings.join('; ') + '. You cannot edit after submitting.'
@@ -412,7 +447,14 @@ export function ExamPage() {
   // A stopped clock means the paper is not being sat right now: show the gate
   // rather than the questions.
   if (timed && timing!.runningSince === null && !submittingRef.current) {
-    return <ClockGate timing={timing!} onStart={startClock} onExit={() => void saveAndExit()} />;
+    return (
+      <ClockGate
+        timing={timing!}
+        sections={sections}
+        onStart={startClock}
+        onExit={() => void saveAndExit()}
+      />
+    );
   }
 
   const saveLabel = saveIssue
@@ -422,9 +464,7 @@ export function ExamPage() {
       : saveState === 'saving'
         ? 'Saving…'
         : 'Typing…';
-  const sectionOneMs = timed ? timing!.sectionOneMinutes * 60_000 : 0;
-  const pastSectionOne = timed && used > sectionOneMs;
-  const sectionTwoMinutes = timed ? timing!.totalMinutes - timing!.sectionOneMinutes : 0;
+  const lastSection = pageIndex === sections.length - 1;
 
   return (
     <div>
@@ -432,12 +472,16 @@ export function ExamPage() {
         <div className="left">
           <span className="title">Practice Examination</span>
           <div className="pages">
-            <button className={attempt.page === 1 ? 'active' : ''} onClick={() => setPage(1)}>
-              Section One — Source Analysis
-            </button>
-            <button className={attempt.page === 2 ? 'active' : ''} onClick={() => setPage(2)}>
-              Section Two — Essay
-            </button>
+            {sections.map((s, i) => (
+              <button
+                key={i}
+                className={pageIndex === i ? 'active' : ''}
+                onClick={() => setPage(i + 1)}
+                title={sectionTitle(s, i)}
+              >
+                {sectionTab(s, i)}
+              </button>
+            ))}
           </div>
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -469,11 +513,9 @@ export function ExamPage() {
 
       <div className="exam-paper">
         <div className="paper-head">
-          <div className="exam-title">Modern History — Nazism in Germany</div>
+          <div className="exam-title">Modern History — {getUnit(section.unit).name}</div>
           <div className="exam-sub">
-            {attempt.page === 1
-              ? 'Section One: Source Analysis — 20 marks'
-              : 'Section Two: Essay — 30 marks'}
+            {sectionTitle(section, pageIndex)} — {sectionMarks(section)} marks
             {' · '}
             {attempt.studentName}
           </div>
@@ -487,115 +529,65 @@ export function ExamPage() {
           </div>
         )}
 
-        {attempt.page === 1 ? (
-          <div className="paper-body">
-            <p className="section-note">
-              Examine Sources 1, 2 and 3 and answer all three questions. Type each answer in the
-              space beneath its question. Sources are constructed for skills practice in the style
-              of the period.
-            </p>
-            {timed && (
-              <div className={'section-timing' + (pastSectionOne && !overtime ? ' over' : '')}>
-                Suggested time for this section: <strong>{timing!.sectionOneMinutes} minutes</strong>{' '}
-                of {describeDuration(timing!.totalMinutes)}.{' '}
-                {pastSectionOne
-                  ? 'You have used ' + shortDuration(used) + ' — aim to move on to Section Two.'
-                  : 'You have used ' + shortDuration(used) + '.'}
-              </div>
-            )}
-            {sourceSet.sources.map((s) => (
-              <SourceCard key={s.n} source={s} />
-            ))}
-            {sourceSet.questions.map((q) => (
-              <div className="question-block" key={q.letter}>
-                <SAQuestionText q={q} />
-                <textarea
-                  rows={q.letter === 'c' ? 14 : q.letter === 'b' ? 10 : 6}
-                  value={attempt.answers[q.letter]}
-                  onChange={(e) => setAnswer(q.letter, e.target.value)}
-                  placeholder={'Type your answer to question (' + q.letter + ') here…'}
-                />
-                <div className="answer-meta">
-                  <span>
-                    {q.marks} mark{q.marks === 1 ? '' : 's'} · aim for ~
-                    {wordTarget(q.letter, q.marks)[0]}–{wordTarget(q.letter, q.marks)[1]} words
-                  </span>
-                  <span
-                    className={'wc wc-' + wordZone(wordCount(attempt.answers[q.letter]), wordTarget(q.letter, q.marks))}
-                  >
-                    {wordCount(attempt.answers[q.letter])} words
-                  </span>
-                </div>
-              </div>
-            ))}
-            <div style={{ textAlign: 'right', marginTop: 20 }}>
-              <button className="primary big" onClick={() => setPage(2)}>
-                Continue to Section Two →
-              </button>
-            </div>
-          </div>
-        ) : (
-          <div className="paper-body">
-            <p className="section-note">
-              Choose <strong>one</strong> of the three questions below and write an extended answer.
-              Your essay should be a sustained argument supported by detailed and accurate evidence.
-            </p>
-            {timed && (
-              <div className={'section-timing' + (overtime ? ' over' : '')}>
-                Suggested time for this section: <strong>{sectionTwoMinutes} minutes</strong>.{' '}
-                {overtime
-                  ? 'You are into overtime.'
-                  : shortDuration(left) + ' of working time remaining.'}
-              </div>
-            )}
-            {essays.map((e, i) => (
-              <label
-                key={e!.id}
-                className={'essay-choice' + (attempt.essayChoice === i ? ' selected' : '')}
-              >
-                <input
-                  type="radio"
-                  name="essayChoice"
-                  checked={attempt.essayChoice === i}
-                  onChange={() => queue({ essayChoice: i })}
-                />
-                <span>
-                  <strong>Question {i + 1}.</strong> {e!.text}{' '}
-                  <span className="marks">(30 marks)</span>
-                </span>
-              </label>
-            ))}
-            <EssayRubric />
-            <div className="question-block">
-              <div className="question-text">
-                <span className="qletter">Your essay</span>
-                {attempt.essayChoice === null && (
-                  <span className="marks">— select a question above first</span>
+        {section.kind === 'source' ? (
+          <SourceSectionBody
+            key={pageIndex}
+            section={section}
+            index={pageIndex}
+            timed={timed}
+            suggestedMins={sectionMins[pageIndex] ?? 0}
+            used={used}
+            pastSection={pastSection && !overtime}
+            totalMinutes={timing?.totalMinutes ?? 0}
+            onAnswer={(letter, value) => setAnswer(pageIndex, letter, value)}
+            footer={
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
+                {pageIndex > 0 ? (
+                  <button onClick={() => setPage(pageIndex)}>← Section {pageIndex}</button>
+                ) : (
+                  <span />
+                )}
+                {lastSection ? (
+                  <button className="primary big" onClick={submit}>
+                    Submit exam
+                  </button>
+                ) : (
+                  <button className="primary big" onClick={() => setPage(pageIndex + 2)}>
+                    Continue to Section {pageIndex + 2} →
+                  </button>
                 )}
               </div>
-              <textarea
-                rows={26}
-                value={attempt.essayText}
-                onChange={(e) => queue({ essayText: e.target.value })}
-                placeholder="Plan briefly, then write your essay here…"
-              />
-              <div className="answer-meta">
-                <span>
-                  A sustained, structured argument — aim for ~{wordTarget('essay', 30)[0]}–
-                  {wordTarget('essay', 30)[1]} words
-                </span>
-                <span className={'wc wc-' + wordZone(wordCount(attempt.essayText), wordTarget('essay', 30))}>
-                  {wordCount(attempt.essayText)} words
-                </span>
+            }
+          />
+        ) : (
+          <EssaySectionBody
+            key={pageIndex}
+            section={section}
+            timed={timed}
+            suggestedMins={sectionMins[pageIndex] ?? 0}
+            left={left}
+            overtime={overtime}
+            onChoose={(i) => updateSection(pageIndex, { ...section, essayChoice: i })}
+            onText={(text) => updateSection(pageIndex, { ...section, essayText: text })}
+            footer={
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
+                {pageIndex > 0 ? (
+                  <button onClick={() => setPage(pageIndex)}>← Section {pageIndex}</button>
+                ) : (
+                  <span />
+                )}
+                {lastSection ? (
+                  <button className="primary big" onClick={submit}>
+                    Submit exam
+                  </button>
+                ) : (
+                  <button className="primary big" onClick={() => setPage(pageIndex + 2)}>
+                    Continue to Section {pageIndex + 2} →
+                  </button>
+                )}
               </div>
-            </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: 20 }}>
-              <button onClick={() => setPage(1)}>← Back to Section One</button>
-              <button className="primary big" onClick={submit}>
-                Submit exam
-              </button>
-            </div>
-          </div>
+            }
+          />
         )}
       </div>
 
@@ -618,6 +610,153 @@ export function ExamPage() {
           onConfirm={leaveNow}
         />
       )}
+    </div>
+  );
+}
+
+function SourceSectionBody({
+  section,
+  timed,
+  suggestedMins,
+  used,
+  pastSection,
+  totalMinutes,
+  onAnswer,
+  footer,
+}: {
+  section: SourceSection;
+  index: number;
+  timed: boolean;
+  suggestedMins: number;
+  used: number;
+  pastSection: boolean;
+  totalMinutes: number;
+  onAnswer: (letter: keyof Answers, value: string) => void;
+  footer: React.ReactNode;
+}) {
+  const sourceSet = getSourceSet(section.sourceSetId)!;
+  return (
+    <div className="paper-body">
+      <p className="section-note">
+        Examine Sources 1, 2 and 3 and answer all three questions. Type each answer in the
+        space beneath its question. Sources are constructed for skills practice in the style
+        of the period.
+      </p>
+      {timed && (
+        <div className={'section-timing' + (pastSection ? ' over' : '')}>
+          Suggested time for this section: <strong>{suggestedMins} minutes</strong>{' '}
+          of {describeDuration(totalMinutes)}.{' '}
+          {pastSection
+            ? 'You have used ' + shortDuration(used) + ' — aim to move on.'
+            : 'You have used ' + shortDuration(used) + '.'}
+        </div>
+      )}
+      {sourceSet.sources.map((s) => (
+        <SourceCard key={s.n} source={s} />
+      ))}
+      {sourceSet.questions.map((q) => (
+        <div className="question-block" key={q.letter}>
+          <SAQuestionText q={q} />
+          <textarea
+            rows={q.letter === 'c' ? 14 : q.letter === 'b' ? 10 : 6}
+            value={section.answers[q.letter]}
+            onChange={(e) => onAnswer(q.letter, e.target.value)}
+            placeholder={'Type your answer to question (' + q.letter + ') here…'}
+          />
+          <div className="answer-meta">
+            <span>
+              {q.marks} mark{q.marks === 1 ? '' : 's'} · aim for ~
+              {wordTarget(q.letter, q.marks)[0]}–{wordTarget(q.letter, q.marks)[1]} words
+            </span>
+            <span
+              className={'wc wc-' + wordZone(wordCount(section.answers[q.letter]), wordTarget(q.letter, q.marks))}
+            >
+              {wordCount(section.answers[q.letter])} words
+            </span>
+          </div>
+        </div>
+      ))}
+      {footer}
+    </div>
+  );
+}
+
+function EssaySectionBody({
+  section,
+  timed,
+  suggestedMins,
+  left,
+  overtime,
+  onChoose,
+  onText,
+  footer,
+}: {
+  section: EssaySection;
+  timed: boolean;
+  suggestedMins: number;
+  left: number;
+  overtime: boolean;
+  onChoose: (i: number) => void;
+  onText: (text: string) => void;
+  footer: React.ReactNode;
+}) {
+  const essays = section.essayIds.map((eid) => getEssay(eid)!);
+  return (
+    <div className="paper-body">
+      <p className="section-note">
+        Choose <strong>one</strong> of the three questions below and write an extended answer.
+        Your essay should be a sustained argument supported by detailed and accurate evidence.
+      </p>
+      {timed && (
+        <div className={'section-timing' + (overtime ? ' over' : '')}>
+          Suggested time for this section: <strong>{suggestedMins} minutes</strong>.{' '}
+          {overtime
+            ? 'You are into overtime.'
+            : shortDuration(left) + ' of working time remaining.'}
+        </div>
+      )}
+      {essays.map((e, i) => (
+        <label
+          key={e.id}
+          className={'essay-choice' + (section.essayChoice === i ? ' selected' : '')}
+        >
+          <input
+            type="radio"
+            name="essayChoice"
+            checked={section.essayChoice === i}
+            onChange={() => onChoose(i)}
+          />
+          <span>
+            <strong>Question {i + 1}.</strong> {e.text}{' '}
+            <span className="marks">(30 marks)</span>
+          </span>
+        </label>
+      ))}
+      <EssayRubric />
+      <div className="question-block">
+        <div className="question-text">
+          <span className="qletter">Your essay</span>
+          {section.essayChoice === null && (
+            <span className="marks">— select a question above first</span>
+          )}
+        </div>
+        <textarea
+          rows={26}
+          value={section.essayText}
+          onChange={(e) => onText(e.target.value)}
+          placeholder="Plan briefly, then write your essay here…"
+        />
+        <div className="answer-meta">
+          <span>
+            A sustained, structured argument — aim for ~{wordTarget('essay', 30)[0]}–
+            {wordTarget('essay', 30)[1]} words
+          </span>
+          <span className={'wc wc-' + wordZone(wordCount(section.essayText), wordTarget('essay', 30))}>
+            {wordCount(section.essayText)} words
+          </span>
+        </div>
+      </div>
+      {footer}
     </div>
   );
 }

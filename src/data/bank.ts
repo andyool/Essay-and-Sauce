@@ -20,9 +20,15 @@ import { ESSAYS_1 } from './essays1';
 import { ESSAYS_2 } from './essays2';
 import { ESSAYS_3 } from './essays3';
 import { ESSAYS_4 } from './essays4';
-import type { EssayQuestion, SourceSet } from './types';
+import { CAP_SOURCE_SETS } from './capSourceSets';
+import { CAP_ESSAYS } from './capEssays';
+import { RUS_SOURCE_SETS } from './rusSourceSets';
+import { RUS_ESSAYS } from './rusEssays';
+import { EUR_SOURCE_SETS } from './eurSourceSets';
+import { EUR_ESSAYS } from './eurEssays';
+import type { EssayQuestion, SourceSet, UnitId } from './types';
 
-export const SOURCE_SETS: SourceSet[] = [
+const NAZISM_SOURCE_SETS: SourceSet[] = [
   ...SOURCE_SETS_1,
   ...SOURCE_SETS_2,
   ...SOURCE_SETS_3,
@@ -43,7 +49,24 @@ export const SOURCE_SETS: SourceSet[] = [
   ...SOURCE_SETS_18,
 ];
 
-export const ESSAYS: EssayQuestion[] = [...ESSAYS_1, ...ESSAYS_2, ...ESSAYS_3, ...ESSAYS_4];
+const NAZISM_ESSAYS: EssayQuestion[] = [...ESSAYS_1, ...ESSAYS_2, ...ESSAYS_3, ...ESSAYS_4];
+
+export const SOURCE_SETS_BY_UNIT: Record<UnitId, SourceSet[]> = {
+  capitalism: CAP_SOURCE_SETS,
+  nazism: NAZISM_SOURCE_SETS,
+  russia: RUS_SOURCE_SETS,
+  europe: EUR_SOURCE_SETS,
+};
+
+export const ESSAYS_BY_UNIT: Record<UnitId, EssayQuestion[]> = {
+  capitalism: CAP_ESSAYS,
+  nazism: NAZISM_ESSAYS,
+  russia: RUS_ESSAYS,
+  europe: EUR_ESSAYS,
+};
+
+export const SOURCE_SETS: SourceSet[] = Object.values(SOURCE_SETS_BY_UNIT).flat();
+export const ESSAYS: EssayQuestion[] = Object.values(ESSAYS_BY_UNIT).flat();
 
 const sourceSetIndex = new Map(SOURCE_SETS.map((s) => [s.id, s]));
 const essayIndex = new Map(ESSAYS.map((e) => [e.id, e]));

@@ -12,16 +12,35 @@ import {
   SourceCard,
 } from '../components/ExamParts';
 import { getEssay, getSourceSet } from '../data/bank';
-import type { Attempt, FeedbackPart, KeySection, TeacherFeedback } from '../data/types';
-import { feedbackComplete, feedbackTotal, fmtDate, timeAgo, wordCount } from '../lib/format';
+import { getUnit } from '../data/units';
+import type {
+  Attempt,
+  AttemptSection,
+  EssaySection,
+  FeedbackPart,
+  KeySection,
+  SourceSection,
+  TeacherFeedback,
+} from '../data/types';
+import { fmtDate, timeAgo, wordCount } from '../lib/format';
 import {
   ESSAY_SECTIONS,
   isChecklist,
+  keySectionsFor,
   picksTotal,
   rowCount,
   sectionStarts,
-  sectionsFor,
 } from '../lib/marking';
+import {
+  emptyFeedback,
+  feedbackComplete,
+  feedbackTotal,
+  paperMarks,
+  partKey,
+  sectionTitle,
+  sectionWord,
+  type PartLetter,
+} from '../lib/paper';
 import {
   clock,
   describeDuration,
@@ -33,15 +52,6 @@ import {
   timeAway,
 } from '../lib/timing';
 import { getStore } from '../store';
-
-const EMPTY_FEEDBACK: TeacherFeedback = {
-  marks: { a: null, b: null, c: null, essay: null },
-  comments: { a: '', b: '', c: '', essay: '' },
-  picks: { a: [], b: [], c: [], essay: [] },
-  overall: '',
-  returnedAt: null,
-  updatedAt: 0,
-};
 
 function AnswerBlock({ text }: { text: string }) {
   return text.trim() ? (
@@ -64,8 +74,8 @@ function FeedbackBox({
   max: number;
   sections: KeySection[];
 }) {
-  const mark = fb.marks[part];
-  const comment = fb.comments[part].trim();
+  const mark = fb.marks[part] ?? null;
+  const comment = (fb.comments[part] ?? '').trim();
   const picks = fb.picks?.[part] ?? [];
   const marked = picks.some((p) => p !== null && p !== undefined);
   if (mark === null && !comment) return null;
@@ -176,7 +186,7 @@ export function AttemptViewPage() {
 
   // Seed the working copy from the stored attempt until the teacher edits it.
   useEffect(() => {
-    if (attempt && !dirty) setFb(attempt.feedback ?? EMPTY_FEEDBACK);
+    if (attempt && !dirty) setFb(attempt.feedback ?? emptyFeedback(attempt.sections));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [attempt]);
 
@@ -197,22 +207,29 @@ export function AttemptViewPage() {
   }
   if (!attempt) return <Loading text="Loading this attempt…" />;
 
-  const sourceSet = getSourceSet(attempt.sourceSetId);
-  const essays = attempt.essayIds.map((eid) => getEssay(eid));
-  if (!sourceSet || essays.some((e) => !e)) {
+  const sections = attempt.sections;
+  const bankOk = sections.every((s) =>
+    s.kind === 'source'
+      ? !!getSourceSet(s.sourceSetId)
+      : s.essayIds.every((eid) => !!getEssay(eid)),
+  );
+  if (sections.length === 0 || !bankOk) {
     return <div className="page narrow">This attempt references questions no longer in the bank.</div>;
   }
 
   const live = attempt.status === 'in-progress';
-  const chosenEssay = attempt.essayChoice !== null ? essays[attempt.essayChoice] : null;
   const backTo = isTeacher ? '/teacher' : '/dashboard';
+  const totalMax = paperMarks(sections);
 
   const marking = isTeacher && attempt.status === 'submitted' && fb !== null;
   // What the student sees: only feedback the teacher has returned.
   const returned = !isTeacher && attempt.feedback?.returnedAt ? attempt.feedback : null;
 
-  const maxFor = (part: FeedbackPart): number =>
-    part === 'essay' ? 30 : sourceSet.questions.find((q) => q.letter === part)!.marks;
+  const maxFor = (section: AttemptSection, letter: PartLetter): number => {
+    if (letter === 'essay') return 30;
+    const set = getSourceSet((section as SourceSection).sourceSetId)!;
+    return set.questions.find((q) => q.letter === letter)!.marks;
+  };
 
   const picksFor = (part: FeedbackPart): (number | null)[] => fb?.picks?.[part] ?? [];
 
@@ -220,18 +237,27 @@ export function AttemptViewPage() {
    *  to what the picks now add up to (nothing picked means unmarked). The
    *  change is made inside the state update so that presses in quick
    *  succession all count. */
-  function editPicks(part: FeedbackPart, change: (picks: (number | null)[]) => void) {
+  function editPicks(
+    section: AttemptSection,
+    sectionIndex: number,
+    letter: PartLetter,
+    change: (picks: (number | null)[]) => void,
+  ) {
+    const part = partKey(sectionIndex, letter);
     setFb((cur) => {
       if (!cur) return cur;
-      const sections = sectionsFor(part, sourceSet!);
+      const keySections = keySectionsFor(section, letter);
       const picks = (cur.picks?.[part] ?? []).slice();
-      while (picks.length < rowCount(sections)) picks.push(null);
+      while (picks.length < rowCount(keySections)) picks.push(null);
       change(picks);
       const anything = picks.some((p) => p !== null && p !== undefined);
       return {
         ...cur,
-        picks: { ...(cur.picks ?? EMPTY_FEEDBACK.picks!), [part]: picks },
-        marks: { ...cur.marks, [part]: anything ? Math.min(maxFor(part), picksTotal(picks)) : null },
+        picks: { ...(cur.picks ?? {}), [part]: picks },
+        marks: {
+          ...cur.marks,
+          [part]: anything ? Math.min(maxFor(section, letter), picksTotal(picks)) : null,
+        },
       };
     });
     setDirty(true);
@@ -241,34 +267,47 @@ export function AttemptViewPage() {
   /** Press a mark button in the key: award those marks, or take them back if
    *  that button was already on. In a ladder section the award moves, since
    *  only one description there can be met. */
-  function pickRow(part: FeedbackPart, section: number, row: number, marks: number) {
-    const sections = sectionsFor(part, sourceSet!);
-    const start = sectionStarts(sections)[section];
-    const rows = sections[section].rows.length;
-    const ladder = !isChecklist(sections[section]);
-    editPicks(part, (picks) => {
+  function pickRow(
+    section: AttemptSection,
+    sectionIndex: number,
+    letter: PartLetter,
+    keyIndex: number,
+    row: number,
+    marks: number,
+  ) {
+    const keySections = keySectionsFor(section, letter);
+    const start = sectionStarts(keySections)[keyIndex];
+    const rows = keySections[keyIndex].rows.length;
+    const ladder = !isChecklist(keySections[keyIndex]);
+    editPicks(section, sectionIndex, letter, (picks) => {
       const already = picks[start + row] === marks;
       if (ladder) for (let i = 0; i < rows; i++) picks[start + i] = null;
       picks[start + row] = already ? null : marks;
     });
   }
 
-  function clearSection(part: FeedbackPart, section: number) {
-    const sections = sectionsFor(part, sourceSet!);
-    const start = sectionStarts(sections)[section];
-    const rows = sections[section].rows.length;
-    editPicks(part, (picks) => {
+  function clearKeySection(
+    section: AttemptSection,
+    sectionIndex: number,
+    letter: PartLetter,
+    keyIndex: number,
+  ) {
+    const keySections = keySectionsFor(section, letter);
+    const start = sectionStarts(keySections)[keyIndex];
+    const rows = keySections[keyIndex].rows.length;
+    editPicks(section, sectionIndex, letter, (picks) => {
       for (let i = 0; i < rows; i++) picks[start + i] = null;
     });
   }
 
   /** Wipe a part's picks: either back to unmarked, or a deliberate zero. */
-  function resetPart(part: FeedbackPart, zero: boolean) {
+  function resetPart(sectionIndex: number, letter: PartLetter, zero: boolean) {
+    const part = partKey(sectionIndex, letter);
     setFb((cur) =>
       cur
         ? {
             ...cur,
-            picks: { ...(cur.picks ?? EMPTY_FEEDBACK.picks!), [part]: [] },
+            picks: { ...(cur.picks ?? {}), [part]: [] },
             marks: { ...cur.marks, [part]: zero ? 0 : null },
           }
         : cur,
@@ -277,7 +316,8 @@ export function AttemptViewPage() {
     setSaveMsg('');
   }
 
-  function setComment(part: FeedbackPart, text: string) {
+  function setComment(sectionIndex: number, letter: PartLetter, text: string) {
+    const part = partKey(sectionIndex, letter);
     setFb((cur) => (cur ? { ...cur, comments: { ...cur.comments, [part]: text } } : cur));
     setDirty(true);
     setSaveMsg('');
@@ -321,11 +361,12 @@ export function AttemptViewPage() {
   /** Teacher's marking for one part of the paper: the marking key with its
    *  numbers as buttons, the running mark those buttons add up to, and a
    *  comment for the student. */
-  function markEditor(part: FeedbackPart) {
+  function markEditor(section: AttemptSection, sectionIndex: number, letter: PartLetter) {
     if (!marking || !fb) return null;
-    const max = maxFor(part);
-    const mark = fb.marks[part];
-    const sections = sectionsFor(part, sourceSet!);
+    const part = partKey(sectionIndex, letter);
+    const max = maxFor(section, letter);
+    const mark = fb.marks[part] ?? null;
+    const keySections = keySectionsFor(section, letter);
     return (
       <div className="feedback-edit">
         <div className="label">Your marking</div>
@@ -336,31 +377,127 @@ export function AttemptViewPage() {
           <span className="how">{markHint(part, mark)}</span>
           <span className="spacer" />
           {mark !== 0 && (
-            <button type="button" onClick={() => resetPart(part, true)}>
+            <button type="button" onClick={() => resetPart(sectionIndex, letter, true)}>
               No marks
             </button>
           )}
           {mark !== null && (
-            <button type="button" onClick={() => resetPart(part, false)}>
+            <button type="button" onClick={() => resetPart(sectionIndex, letter, false)}>
               Start again
             </button>
           )}
         </div>
         <MarkingKeyPicker
-          sections={sections}
+          sections={keySections}
           picks={picksFor(part)}
-          onPick={(si, ri, m) => pickRow(part, si, ri, m)}
-          onClearSection={(si) => clearSection(part, si)}
+          onPick={(si, ri, m) => pickRow(section, sectionIndex, letter, si, ri, m)}
+          onClearSection={(si) => clearKeySection(section, sectionIndex, letter, si)}
         />
         <textarea
           rows={2}
           placeholder="Comment for the student (optional)"
-          value={fb.comments[part]}
-          onChange={(e) => setComment(part, e.target.value)}
+          value={fb.comments[part] ?? ''}
+          onChange={(e) => setComment(sectionIndex, letter, e.target.value)}
         />
       </div>
     );
   }
+
+  function renderSourceSection(section: SourceSection, i: number) {
+    const sourceSet = getSourceSet(section.sourceSetId)!;
+    return (
+      <div key={i}>
+        <div className="paper-head" style={i > 0 ? { marginTop: 30 } : undefined}>
+          <div className="exam-title">
+            Section {sectionWord(i)} — Source Analysis: {getUnit(section.unit).name}
+          </div>
+          <div className="exam-sub">{sourceSet.title} — 20 marks</div>
+        </div>
+        <div className="paper-body">
+          {sourceSet.sources.map((s) => (
+            <SourceCard key={s.n} source={s} />
+          ))}
+          {sourceSet.questions.map((q) => {
+            const part = partKey(i, q.letter);
+            return (
+              <div className="question-block" key={q.letter}>
+                <SAQuestionText q={q} />
+                <div className="answer-label">
+                  {attempt!.studentName}’s answer · {wordCount(section.answers[q.letter])} words
+                </div>
+                <AnswerBlock text={section.answers[q.letter]} />
+                {returned && (
+                  <FeedbackBox fb={returned} part={part} max={q.marks} sections={q.key} />
+                )}
+                {markEditor(section, i, q.letter)}
+                {marking ? (
+                  <MarkersNotesKey
+                    label={'Markers’ notes — question (' + q.letter + ')'}
+                    notes={q.notes}
+                  />
+                ) : (
+                  <MarkingKey q={q} picks={returned?.picks?.[part]} />
+                )}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  }
+
+  function renderEssaySection(section: EssaySection, i: number) {
+    const essays = section.essayIds.map((eid) => getEssay(eid)!);
+    const chosenEssay = section.essayChoice !== null ? essays[section.essayChoice] : null;
+    const part = partKey(i, 'essay');
+    return (
+      <div key={i}>
+        <div className="paper-head" style={i > 0 ? { marginTop: 30 } : undefined}>
+          <div className="exam-title">
+            Section {sectionWord(i)} — Essay: {getUnit(section.unit).name}
+          </div>
+          <div className="exam-sub">One question chosen from three — 30 marks</div>
+        </div>
+        <div className="paper-body">
+          {essays.map((e, ei) => (
+            <div
+              className={'essay-choice' + (section.essayChoice === ei ? ' selected' : '')}
+              key={e.id}
+              style={{ cursor: 'default' }}
+            >
+              <span>
+                <strong>Question {ei + 1}.</strong> {e.text} <span className="marks">(30 marks)</span>
+                {section.essayChoice === ei && (
+                  <span className="frame-tag">✔ chosen by {attempt!.studentName}</span>
+                )}
+              </span>
+            </div>
+          ))}
+          <div className="question-block">
+            <div className="answer-label">
+              {attempt!.studentName}’s essay · {wordCount(section.essayText)} words
+            </div>
+            <AnswerBlock text={section.essayText} />
+            {returned && (
+              <FeedbackBox fb={returned} part={part} max={30} sections={ESSAY_SECTIONS} />
+            )}
+            {markEditor(section, i, 'essay')}
+          </div>
+          {!marking && <EssayRubric picks={returned?.picks?.[part]} />}
+          {chosenEssay && (
+            <details className="key">
+              <summary>Markers’ notes for the chosen question</summary>
+              <div className="key-inner">
+                <EssayNotes notes={chosenEssay.notes} />
+              </div>
+            </details>
+          )}
+        </div>
+      </div>
+    );
+  }
+
+  const currentSection = sections[Math.min(Math.max(attempt.page, 1), sections.length) - 1];
 
   return (
     <div className="page">
@@ -393,7 +530,7 @@ export function AttemptViewPage() {
           <span>
             In progress — updating as {attempt.studentName} types. Last activity{' '}
             {timeAgo(attempt.updatedAt)} · currently on{' '}
-            {attempt.page === 1 ? 'Section One (Source Analysis)' : 'Section Two (Essay)'}.
+            {sectionTitle(currentSection, attempt.page - 1)}.
           </span>
         </div>
       )}
@@ -403,8 +540,8 @@ export function AttemptViewPage() {
       {returned && (
         <div className="feedback-banner">
           <div className="total">
-            {feedbackComplete(returned)
-              ? 'Marked: ' + feedbackTotal(returned) + ' / 50'
+            {feedbackComplete(returned, sections)
+              ? 'Marked: ' + feedbackTotal(returned) + ' / ' + totalMax
               : 'Your teacher has marked part of this exam (' + feedbackTotal(returned) + ' marks so far).'}
           </div>
           <div>
@@ -414,76 +551,9 @@ export function AttemptViewPage() {
         </div>
       )}
 
-      <div className="paper-head">
-        <div className="exam-title">Modern History — Nazism in Germany</div>
-        <div className="exam-sub">Section One: Source Analysis — 20 marks</div>
-      </div>
-      <div className="paper-body">
-        {sourceSet.sources.map((s) => (
-          <SourceCard key={s.n} source={s} />
-        ))}
-        {sourceSet.questions.map((q) => (
-          <div className="question-block" key={q.letter}>
-            <SAQuestionText q={q} />
-            <div className="answer-label">
-              {attempt.studentName}’s answer · {wordCount(attempt.answers[q.letter])} words
-            </div>
-            <AnswerBlock text={attempt.answers[q.letter]} />
-            {returned && (
-              <FeedbackBox fb={returned} part={q.letter} max={q.marks} sections={q.key} />
-            )}
-            {markEditor(q.letter)}
-            {marking ? (
-              <MarkersNotesKey
-                label={'Markers’ notes — question (' + q.letter + ')'}
-                notes={q.notes}
-              />
-            ) : (
-              <MarkingKey q={q} picks={returned?.picks?.[q.letter]} />
-            )}
-          </div>
-        ))}
-      </div>
-
-      <div className="paper-head" style={{ marginTop: 30 }}>
-        <div className="exam-title">Section Two: Essay — 30 marks</div>
-        <div className="exam-sub">One question chosen from three</div>
-      </div>
-      <div className="paper-body">
-        {essays.map((e, i) => (
-          <div
-            className={'essay-choice' + (attempt.essayChoice === i ? ' selected' : '')}
-            key={e!.id}
-            style={{ cursor: 'default' }}
-          >
-            <span>
-              <strong>Question {i + 1}.</strong> {e!.text} <span className="marks">(30 marks)</span>
-              {attempt.essayChoice === i && (
-                <span className="frame-tag">✔ chosen by {attempt.studentName}</span>
-              )}
-            </span>
-          </div>
-        ))}
-        <div className="question-block">
-          <div className="answer-label">
-            {attempt.studentName}’s essay · {wordCount(attempt.essayText)} words
-          </div>
-          <AnswerBlock text={attempt.essayText} />
-          {returned && (
-            <FeedbackBox fb={returned} part="essay" max={30} sections={ESSAY_SECTIONS} />
-          )}
-          {markEditor('essay')}
-        </div>
-        {!marking && <EssayRubric picks={returned?.picks?.essay} />}
-        {chosenEssay && (
-          <details className="key">
-            <summary>Markers’ notes for the chosen question</summary>
-            <div className="key-inner">
-              <EssayNotes notes={chosenEssay.notes} />
-            </div>
-          </details>
-        )}
-      </div>
+      {sections.map((s, i) =>
+        s.kind === 'source' ? renderSourceSection(s, i) : renderEssaySection(s, i),
+      )}
 
       {returned && returned.overall.trim() && (
         <div className="paper-body" style={{ marginTop: 20 }}>
@@ -498,8 +568,8 @@ export function AttemptViewPage() {
         <div className="marking-panel">
           <h3 style={{ marginTop: 0 }}>Marking summary</h3>
           <div className="mark-row" style={{ fontSize: 16 }}>
-            <strong>Total: {feedbackTotal(fb)} / 50</strong>
-            {!feedbackComplete(fb) && (
+            <strong>Total: {feedbackTotal(fb)} / {totalMax}</strong>
+            {!feedbackComplete(fb, sections) && (
               <span style={{ color: 'var(--ink-soft)', fontSize: 14 }}>
                 (some parts not yet marked)
               </span>
