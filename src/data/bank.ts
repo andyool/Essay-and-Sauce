@@ -24,6 +24,7 @@ import { CAP_SOURCE_SETS } from './capSourceSets';
 import { CAP_SOURCE_SETS_2 } from './capSourceSets2';
 import { CAP_SOURCE_SETS_3 } from './capSourceSets3';
 import { CAP_SOURCE_SETS_4 } from './capSourceSets4';
+import { CAP_SOURCE_SETS_5 } from './capSourceSets5';
 import { CAP_ESSAYS } from './capEssays';
 import { CAP_ESSAYS_2 } from './capEssays2';
 import { CAP_ESSAYS_3 } from './capEssays3';
@@ -67,7 +68,7 @@ const NAZISM_SOURCE_SETS: SourceSet[] = [
 const NAZISM_ESSAYS: EssayQuestion[] = [...ESSAYS_1, ...ESSAYS_2, ...ESSAYS_3, ...ESSAYS_4];
 
 export const SOURCE_SETS_BY_UNIT: Record<UnitId, SourceSet[]> = {
-  capitalism: [...CAP_SOURCE_SETS, ...CAP_SOURCE_SETS_2, ...CAP_SOURCE_SETS_3, ...CAP_SOURCE_SETS_4],
+  capitalism: [...CAP_SOURCE_SETS, ...CAP_SOURCE_SETS_2, ...CAP_SOURCE_SETS_3, ...CAP_SOURCE_SETS_4, ...CAP_SOURCE_SETS_5],
   nazism: NAZISM_SOURCE_SETS,
   russia: [...RUS_SOURCE_SETS, ...RUS_SOURCE_SETS_2, ...RUS_SOURCE_SETS_3, ...RUS_SOURCE_SETS_4],
   europe: [...EUR_SOURCE_SETS, ...EUR_SOURCE_SETS_2, ...EUR_SOURCE_SETS_3, ...EUR_SOURCE_SETS_4],
