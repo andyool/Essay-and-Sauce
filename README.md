@@ -47,7 +47,7 @@ and essay) and lives in `src/data/`:
 - `essays1–4.ts` — 85 Nazism essay questions (frames E1–E10) with markers' notes
 - `capSourceSets*.ts` / `capEssays*.ts` — Capitalism bank (28 sets, 44 essays)
 - `rusSourceSets*.ts` / `rusEssays*.ts` — Russia & USSR bank (25 sets, 39 essays)
-- `eurSourceSets*.ts` / `eurEssays*.ts` — Changing European world bank (19 sets, 39 essays)
+- `eurSourceSets*.ts` / `eurEssays*.ts` — Changing European world bank (21 sets, 39 essays)
 - `units.ts` — the four electives and their syllabus checklists
 
 Every source set in every unit carries 1–2 real historical images (photographs,
